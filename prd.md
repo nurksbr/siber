@@ -16,8 +16,8 @@ CYBERLY, kullanıcıların siber güvenlik konusunda farkındalığını artırm
 
 ### 3.1 Kullanıcı Yönetimi ve Profil
 
-- [ ] Kullanıcı kaydı ve giriş sistemi
-- [ ] Rol tabanlı erişim kontrolü (admin, eğitmen, kullanıcı)
+- [x] Kullanıcı kaydı ve giriş sistemi
+- [x] Rol tabanlı erişim kontrolü (admin, eğitmen, kullanıcı)
 - [ ] Profil yönetimi ve kişiselleştirme
 - [ ] Kullanıcı ilerleme takibi ve başarı rozetleri
 - [ ] Çok faktörlü kimlik doğrulama (2FA) desteği

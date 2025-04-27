@@ -36,17 +36,27 @@ model User {
 
 // Kullanıcı profili
 model Profile {
-  id             String  @id @default(cuid())
-  bio            String?
-  organization   String?
-  title          String?
-  location       String?
-  interests      String[]
-  socialLinks    Json?
-
+  id                String        @id @default(cuid())
+  bio               String?
+  organization      String?
+  title             String?
+  location          String?
+  interests         String[]
+  socialLinks       Json?
+  
+  // Kişiselleştirme özellikleri
+  theme             Theme         @default(LIGHT)
+  notificationPrefs NotificationPreferences?
+  securityLevel     SecurityLevel @default(BEGINNER)
+  avatarUrl         String?
+  coverImageUrl     String?
+  preferredLanguage String?       @default("tr")
+  contentPreferences String[]     // İlgilenilen içerik kategorileri
+  lastSeen          DateTime?
+  
   // İlişkiler
-  userId         String  @unique
-  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String        @unique
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 // Blog yazıları
@@ -248,4 +258,32 @@ enum ThreatType {
   RANSOMWARE
   APT
   OTHER
+}
+
+enum Theme {
+  LIGHT
+  DARK
+  SYSTEM
+}
+
+enum SecurityLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+// Bildirim tercihleri modeli
+model NotificationPreferences {
+  id                String   @id @default(cuid())
+  emailNotifications Boolean  @default(true)
+  smsNotifications   Boolean  @default(false)
+  securityAlerts     Boolean  @default(true)
+  newsUpdates        Boolean  @default(true)
+  courseUpdates      Boolean  @default(true)
+  marketingEmails    Boolean  @default(false)
+  
+  // İlişkiler
+  profileId          String   @unique
+  profile            Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
 }

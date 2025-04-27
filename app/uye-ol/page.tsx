@@ -80,20 +80,35 @@ export default function RegisterPage() {
     setIsLoading(true)
     
     try {
-      // Gerçek uygulamada burada API çağrısı yapılacak
-      // Şimdilik sahte bir kayıt simülasyonu
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      // API'ye kayıt isteği gönder
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      })
+      
+      const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Kayıt işlemi başarısız oldu')
+      }
       
       // Başarılı kayıt
       setIsSuccess(true)
       
-      // 3 saniye sonra ana sayfaya yönlendir
+      // 3 saniye sonra giriş sayfasına yönlendir
       setTimeout(() => {
         router.push('/giris')
       }, 3000)
       
-    } catch (error) {
-      setRegisterError('Kayıt işlemi sırasında bir hata oluştu. Lütfen tekrar deneyin.')
+    } catch (error: any) {
+      setRegisterError(error.message || 'Kayıt işlemi sırasında bir hata oluştu. Lütfen tekrar deneyin.')
     } finally {
       setIsLoading(false)
     }
@@ -333,4 +348,4 @@ export default function RegisterPage() {
       </div>
     </div>
   )
-} 
+}
