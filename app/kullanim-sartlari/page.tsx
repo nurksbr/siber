@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -54,8 +53,8 @@ export default function TermsOfServicePage() {
             <div className="prose prose-invert prose-cyan max-w-none">
               <h2>1. Giriş</h2>
               <p>
-                CYBERLY platformunu ("Platform", "Biz", "Bizim") kullanırken, bu kullanım şartları ("Şartlar") geçerlidir. 
-                CYBERLY'yi kullanarak, bu şartları kabul etmiş olursunuz. Şartları kabul etmiyorsanız, lütfen 
+                CYBERLY platformunu (&quot;Platform&quot;, &quot;Biz&quot;, &quot;Bizim&quot;) kullanırken, bu kullanım şartları (&quot;Şartlar&quot;) geçerlidir. 
+                CYBERLY&apos;yi kullanarak, bu şartları kabul etmiş olursunuz. Şartları kabul etmiyorsanız, lütfen 
                 platformumuzu kullanmayın.
               </p>
               
@@ -72,7 +71,7 @@ export default function TermsOfServicePage() {
               
               <h2>3. Üyelik ve Hesap Güvenliği</h2>
               <p>
-                3.1. CYBERLY'ye üye olmak için 18 yaşından büyük olmanız gerekmektedir.
+                3.1. CYBERLY&apos;ye üye olmak için 18 yaşından büyük olmanız gerekmektedir.
               </p>
               <p>
                 3.2. Kayıt sırasında doğru, güncel ve eksiksiz bilgiler vermeyi kabul edersiniz.
@@ -109,7 +108,7 @@ export default function TermsOfServicePage() {
               <ul>
                 <li>İçeriği çoğaltabilir, değiştirebilir veya üçüncü şahıslara dağıtabilirsiniz.</li>
                 <li>İçeriği ticari amaçlar için kullanabilirsiniz.</li>
-                <li>Platformdan herhangi bir işaret, logo veya başka özel bilgilyi kaldırabilirsiniz.</li>
+                <li>Platformdan herhangi bir işaret, logo veya başka özel bilgiyi kaldırabilirsiniz.</li>
               </ul>
               
               <h2>6. Gizlilik</h2>

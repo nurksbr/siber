@@ -72,7 +72,7 @@ export default function ResourcesPage() {
                 <ul className="text-gray-300 space-y-2">
                   <li>• Güvenlik Bültenleri</li>
                   <li>• Blog Yazıları</li>
-                  <li>• Podcast'ler</li>
+                  <li>• Podcast&apos;ler</li>
                   <li>• Araştırma Raporları</li>
                 </ul>
               </div>

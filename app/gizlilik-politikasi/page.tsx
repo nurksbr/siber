@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -54,9 +53,8 @@ export default function PrivacyPolicyPage() {
             <div className="prose prose-invert prose-cyan max-w-none">
               <h2>1. Giriş</h2>
               <p>
-                CYBERLY ("biz", "bizim", "şirket") olarak, kişisel verilerinizin gizliliğini korumaya büyük önem veriyoruz. 
-                Bu Gizlilik Politikası, hizmetlerimizi kullanırken sizden topladığımız bilgileri, bu bilgileri nasıl 
-                kullandığımızı ve koruduğumuzu açıklamaktadır.
+                CYBERLY (&quot;Biz&quot;, &quot;Bizim&quot;, &quot;Platform&quot;) olarak, kişisel verilerinizin gizliliğini korumayı taahhüt ediyoruz. 
+                Bu gizlilik politikası, verilerinizin nasıl toplandığını, kullanıldığını ve korunduğunu açıklar.
               </p>
               <p>
                 Platformumuzu kullanarak, bu politikada belirtilen uygulamaları kabul etmiş olursunuz. Herhangi bir sorunuz 

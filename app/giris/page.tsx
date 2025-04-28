@@ -267,7 +267,7 @@ export default function LoginPage() {
       <div className="hidden lg:flex lg:flex-1 relative overflow-hidden">
         <div className="absolute inset-0 bg-cyan-900/20 z-10"></div>
         <div className="absolute inset-0 flex flex-col justify-center items-center z-20 p-10">
-          <h3 className="text-3xl font-bold text-cyan-300 mb-4">CYBERLY'ye Hoş Geldiniz</h3>
+          <h3 className="text-3xl font-bold text-cyan-300 mb-4">CYBERLY&apos;ye Hoş Geldiniz</h3>
           <p className="text-center text-lg text-gray-300 max-w-md">
             Siber güvenliğiniz için güvenilir çözümler sunan platformumuza giriş yaparak tüm özelliklerden faydalanabilirsiniz.
           </p>

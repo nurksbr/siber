@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useState, useEffect, createContext, useContext, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 // Kullanıcı tipi tanımı
 export interface User {
@@ -44,7 +44,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   // Kullanıcı token'ından veri çıkarma işlevi
   const extractUserFromToken = (token: string): User | null => {
     try {
-      const decoded: any = jwt_decode(token);
+      const decoded: {
+        userId: string;
+        email: string;
+        firstName?: string;
+        lastName?: string;
+        role?: string;
+        avatarUrl?: string;
+      } = jwtDecode(token);
       return {
         id: decoded.userId,
         email: decoded.email,
@@ -60,7 +67,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   // Oturum kontrolü
-  const checkSession = async (): Promise<boolean> => {
+  const checkSession = useCallback(async (): Promise<boolean> => {
     try {
       setLoading(true);
       const token = Cookies.get('auth_token');
@@ -97,12 +104,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [setUser, setLoading]);
 
   // Sayfa yüklendiğinde kullanıcı oturumunu kontrol et
   useEffect(() => {
     checkSession();
-  }, []);
+  }, [checkSession]);
 
   // Giriş fonksiyonu
   const login = async (email: string, password: string): Promise<{ success: boolean; message?: string; twoFactorRequired?: boolean }> => {
@@ -153,9 +160,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
       
       return { success: true, message: 'Giriş başarılı' };
-    } catch (error: any) {
-      setError(error.message || 'Giriş sırasında bir hata oluştu');
-      return { success: false, message: error.message || 'Giriş sırasında bir hata oluştu' };
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Giriş sırasında bir hata oluştu';
+      setError(errorMessage);
+      return { success: false, message: errorMessage };
     } finally {
       setLoading(false);
     }
@@ -200,9 +208,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
       
       return { success: true, message: 'Doğrulama başarılı' };
-    } catch (error: any) {
-      setError(error.message || 'Doğrulama sırasında bir hata oluştu');
-      return { success: false, message: error.message || 'Doğrulama sırasında bir hata oluştu' };
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Doğrulama sırasında bir hata oluştu';
+      setError(errorMessage);
+      return { success: false, message: errorMessage };
     } finally {
       setLoading(false);
     }

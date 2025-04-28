@@ -219,8 +219,8 @@ export default function NewsPage() {
                             src={item.imageUrl}
                             alt={item.title}
                             className="w-full h-full object-cover"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
+                            onError={(_) => {
+                              const target = _.target as HTMLImageElement;
                               const defaultImages = [
                                 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=800&fit=crop',
                                 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=800&fit=crop',

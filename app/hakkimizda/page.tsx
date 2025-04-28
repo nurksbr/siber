@@ -8,7 +8,7 @@ const teamMembers = [
   {
     name: 'Ali Yılmaz',
     title: 'Kurucu & CEO',
-    bio: 'Siber güvenlik alanında 15 yıldan fazla deneyime sahip olan Ali, CYBERLY\'yi siber güvenlik eğitimini herkes için erişilebilir kılma vizyonuyla kurdu.',
+    bio: 'Siber güvenlik alanında 15 yıldan fazla deneyime sahip olan Ali, CYBERLY&apos;yi siber güvenlik eğitimini herkes için erişilebilir kılma vizyonuyla kurdu.',
     image: 'https://placehold.co/150',
   },
   {

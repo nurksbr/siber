@@ -26,7 +26,25 @@ interface ProfileData {
     push: boolean;
     marketing: boolean;
   };
-  [key: string]: any; // Diğer dinamik alanlar için
+  securitySettings?: {
+    twoFactorEnabled: boolean;
+    lastPasswordChange?: string;
+  };
+  progressData?: {
+    completedCourses?: number;
+    certificates?: string[];
+    level?: number;
+  };
+  // Diğer özellikler için isteğe bağlı alanlar
+  biography?: string;
+  jobTitle?: string;
+  location?: string;
+  socialLinks?: {
+    twitter?: string;
+    linkedin?: string;
+    github?: string;
+  };
+  settings?: Record<string, boolean | string | number>;
 }
 
 export default function ProfilePage() {
@@ -78,8 +96,8 @@ export default function ProfilePage() {
           const data = await response.json();
           console.log('Profil verisi başarıyla alındı:', data);
           setProfileData(data);
-        } catch (jsonError) {
-          console.error('API yanıtı JSON formatında değil:', jsonError);
+        } catch (error) {
+          console.error('API yanıtı JSON formatında değil:', error);
           setError('Profil verisi işlenirken bir hata oluştu');
         }
       } else {
