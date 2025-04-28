@@ -9,14 +9,14 @@ const prisma = new PrismaClient();
 
 // Kullanıcı kimlik doğrulama işlevi
 async function authenticateUser(request: NextRequest) {
-  const token = request.cookies.get('auth-token')?.value;
+  const token = request.cookies.get('auth_token')?.value;
   
   if (!token) {
     return null;
   }
   
   try {
-    const decoded = verify(token, process.env.JWT_SECRET || 'fallback_secret') as { id: string };
+    const decoded = verify(token, process.env.JWT_SECRET || 'fallback_secret') as { userId: string };
     return decoded;
   } catch (error) {
     return null;
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
 
     // Kullanıcıyı bul
     const user = await prisma.user.findUnique({
-      where: { id: decodedToken.id },
+      where: { id: decodedToken.userId },
       select: { email: true, twoFactorEnabled: true }
     });
 
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
 
     // Kullanıcı veritabanını güncelle
     await prisma.user.update({
-      where: { id: decodedToken.id },
+      where: { id: decodedToken.userId },
       data: {
         twoFactorSecret: secret,
         backupCodes: backupCodes,

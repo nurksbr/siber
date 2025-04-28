@@ -107,8 +107,11 @@ export default function RegisterPage() {
         router.push('/giris')
       }, 3000)
       
-    } catch (error: any) {
-      setRegisterError(error.message || 'Kayıt işlemi sırasında bir hata oluştu. Lütfen tekrar deneyin.')
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : 'Kayıt işlemi sırasında bir hata oluştu. Lütfen tekrar deneyin.';
+      setRegisterError(errorMessage)
     } finally {
       setIsLoading(false)
     }

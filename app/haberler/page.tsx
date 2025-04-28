@@ -58,7 +58,22 @@ export default function NewsPage() {
             const data = await response.json()
             
             if (data.items) {
-              const items = data.items.map((item: any) => {
+              const items = data.items.map((item: {
+                title?: string;
+                pubDate?: string;
+                contentSnippet?: string;
+                link?: string;
+                thumbnail?: string;
+                enclosure?: { link?: string };
+                image?: { url?: string; link?: string };
+                media?: { 
+                  content?: { url?: string };
+                  thumbnail?: { url?: string };
+                };
+                'media:content'?: { $: { url?: string } };
+                'media:thumbnail'?: { $: { url?: string } };
+                content?: string;
+              }) => {
                 // Resim URL'sini farklı alanlardan almayı dene
                 let imageUrl = item.thumbnail || 
                              item.enclosure?.link || 
@@ -87,7 +102,7 @@ export default function NewsPage() {
                     const url = new URL(imageUrl);
                     imageUrl = url.toString();
                   } catch (e) {
-                    imageUrl = null;
+                    imageUrl = undefined;
                   }
                 }
 
@@ -130,9 +145,9 @@ export default function NewsPage() {
         // İlk 5 haberi öne çıkan haberler olarak ayarla
         setFeaturedNews(allNews.slice(0, 5))
         setNews(allNews)
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Error fetching news:', error)
-        setError(error.message || 'Haberler yüklenirken bir hata oluştu.')
+        setError(error instanceof Error ? error.message : 'Haberler yüklenirken bir hata oluştu.')
       } finally {
         setLoading(false)
       }

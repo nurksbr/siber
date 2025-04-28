@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { useAuth } from '../context/AuthContext'
+import UserMenu from './UserMenu'
 
 // Navigasyon linkleri
 const NAV_LINKS = [
@@ -17,9 +19,16 @@ const NAV_LINKS = [
   { name: 'Haberler', path: '/haberler' }
 ]
 
+// Kullanıcı giriş yaptığında görünecek linkler
+const USER_LINKS = [
+  { name: 'Profil', path: '/profil' },
+  { name: 'Eğitimlerim', path: '/egitimlerim' },
+]
+
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
+  const { user, loading, logout } = useAuth()
 
   // Link prefetching için - sayfa yüklendiğinde en sık ziyaret edilen sayfaları önceden yükle
   useEffect(() => {
@@ -45,6 +54,22 @@ function Navbar() {
     }
     setIsMenuOpen(false)
   }
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setIsMenuOpen(false);
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Çıkış yapılırken hata:', error);
+    }
+  }
+
+  const handleMobileNavigation = (path) => (e) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    window.location.href = path;
+  };
 
   return (
     <nav className="relative bg-gray-900/20 text-white shadow-lg border-b border-cyan-700 backdrop-blur-sm z-[3]">
@@ -83,6 +108,24 @@ function Navbar() {
                 </Link>
               )
             })}
+            
+            {/* Kullanıcı giriş yaptıysa */}
+            {user && USER_LINKS.map((link) => {
+              const isActive = pathname === link.path
+              return (
+                <Link 
+                  key={link.path}
+                  href={link.path} 
+                  prefetch={true}
+                  className={`px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
+                    isActive ? 'text-cyan-400 bg-gray-800/30' : 'text-white'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              )
+            })}
+            
             <a 
               href="#iletisim" 
               onClick={scrollToContact}
@@ -90,20 +133,31 @@ function Navbar() {
             >
               İletişim
             </a>
-            <div className="ml-4 flex items-center space-x-2">
-              <Link 
-                href="/giris" 
-                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
-              >
-                Giriş Yap
-              </Link>
-              <Link 
-                href="/uye-ol" 
-                className="px-4 py-2 rounded-md text-sm font-medium bg-cyan-500/80 hover:bg-cyan-600 transition-colors"
-              >
-                Üye Ol
-              </Link>
-            </div>
+            
+            {/* Kullanıcı giriş yapmadıysa giriş/kayıt butonları göster */}
+            {!loading && !user ? (
+              <div className="ml-4 flex items-center space-x-2">
+                <Link 
+                  href="/giris" 
+                  className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                >
+                  Giriş Yap
+                </Link>
+                <Link 
+                  href="/uye-ol" 
+                  className="px-4 py-2 rounded-md text-sm font-medium bg-cyan-500/80 hover:bg-cyan-600 transition-colors"
+                >
+                  Üye Ol
+                </Link>
+              </div>
+            ) : null}
+            
+            {/* Kullanıcı giriş yaptıysa kullanıcı menüsünü göster */}
+            {!loading && user && (
+              <div className="ml-4">
+                <UserMenu />
+              </div>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -159,6 +213,25 @@ function Navbar() {
               </Link>
             )
           })}
+          
+          {/* Kullanıcı giriş yaptıysa gösterilecek menü öğeleri */}
+          {user && USER_LINKS.map((link) => {
+            const isActive = pathname === link.path
+            return (
+              <Link 
+                key={link.path}
+                href={link.path} 
+                prefetch={true}
+                className={`block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
+                  isActive ? 'text-cyan-400 bg-gray-800/30' : 'text-white'
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            )
+          })}
+          
           <a 
             href="#iletisim" 
             onClick={scrollToContact}
@@ -166,20 +239,62 @@ function Navbar() {
           >
             İletişim
           </a>
-          <Link 
-            href="/giris" 
-            className="block px-3 py-2 mt-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Giriş Yap
-          </Link>
-          <Link 
-            href="/uye-ol" 
-            className="block px-3 py-2 mt-2 rounded-md text-base font-medium bg-cyan-500/80 hover:bg-cyan-600 transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Üye Ol
-          </Link>
+          
+          {/* Kullanıcı giriş yapmadıysa giriş/kayıt butonları göster */}
+          {!loading && !user ? (
+            <>
+              <Link 
+                href="/giris" 
+                className="block px-3 py-2 mt-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Giriş Yap
+              </Link>
+              <Link 
+                href="/uye-ol" 
+                className="block px-3 py-2 mt-2 rounded-md text-base font-medium bg-cyan-500/80 hover:bg-cyan-600 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Üye Ol
+              </Link>
+            </>
+          ) : null}
+          
+          {/* Kullanıcı giriş yaptıysa profil ve çıkış butonları göster */}
+          {!loading && user ? (
+            <>
+              <div className="border-t border-gray-700 my-2"></div>
+              <div className="px-3 py-2 text-sm font-medium text-cyan-400">
+                {user.name || user.email}
+              </div>
+              <button 
+                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                onClick={handleMobileNavigation('/profil')}
+              >
+                Profil
+              </button>
+              <button 
+                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                onClick={handleMobileNavigation('/ayarlar')}
+              >
+                Ayarlar
+              </button>
+              {user.role === 'ADMIN' && (
+                <button 
+                  className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                  onClick={handleMobileNavigation('/panel')}
+                >
+                  Yönetim Paneli
+                </button>
+              )}
+              <button
+                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-400 hover:bg-gray-800/30 transition-colors"
+                onClick={handleLogout}
+              >
+                Çıkış Yap
+              </button>
+            </>
+          ) : null}
         </div>
       </div>
     </nav>

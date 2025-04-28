@@ -4,9 +4,11 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useAuth } from '../context/AuthContext'
 
 export default function LoginPage() {
   const router = useRouter()
+  const { login } = useAuth()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -60,28 +62,16 @@ export default function LoginPage() {
     setIsLoading(true)
     
     try {
-      // API'ye giriş isteği gönder
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      })
-      
-      const data = await response.json()
-      
-      if (!response.ok) {
-        throw new Error(data.error || 'Giriş yapılırken bir hata oluştu')
-      }
+      // AuthContext'teki login fonksiyonunu kullan
+      await login(formData.email, formData.password)
       
       // Başarılı giriş sonrası yönlendirme
       router.push('/')
-    } catch (error: any) {
-      setLoginError(error.message || 'Giriş yapılırken bir hata oluştu. Lütfen tekrar deneyin.')
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : 'Giriş yapılırken bir hata oluştu. Lütfen tekrar deneyin.';
+      setLoginError(errorMessage)
     } finally {
       setIsLoading(false)
     }

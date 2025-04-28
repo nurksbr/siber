@@ -3,6 +3,15 @@ import { Button, Card, Divider, Input, message, Steps, Typography } from 'antd';
 import { QrcodeOutlined, LockOutlined, SecurityScanOutlined } from '@ant-design/icons';
 import Image from 'next/image';
 
+// Antd React 19 uyarısını bastırmak için
+const originalConsoleError = console.error;
+console.error = function filterWarnings(msg, ...args) {
+  if (typeof msg === 'string' && msg.includes('Warning: [antd: compatible] antd v5 support React is 16 ~ 18')) {
+    return;
+  }
+  return originalConsoleError(msg, ...args);
+};
+
 const { Title, Text, Paragraph } = Typography;
 const { Step } = Steps;
 

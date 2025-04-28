@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 import Image from 'next/image';
@@ -14,12 +14,58 @@ import ProgressTracking from '../components/profile/ProgressTracking';
 
 type ProfileTab = 'info' | 'security' | 'notifications' | 'appearance' | 'progress';
 
+// Profil verisi için tip tanımı
+interface ProfileData {
+  id: string;
+  name?: string;
+  email: string;
+  avatarUrl?: string;
+  theme?: string;
+  notificationSettings?: {
+    email: boolean;
+    push: boolean;
+    marketing: boolean;
+  };
+  [key: string]: any; // Diğer dinamik alanlar için
+}
+
 export default function ProfilePage() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<ProfileTab>('info');
   const [isLoading, setIsLoading] = useState(true);
-  const [profileData, setProfileData] = useState<any>(null);
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+
+  const fetchProfileData = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      if (!user?.id) {
+        console.error('Kullanıcı ID bulunamadı');
+        return;
+      }
+      
+      const response = await fetch(`/api/profile/${user.id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        cache: 'no-store',
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setProfileData(data);
+      } else {
+        const errorData = await response.json();
+        console.error('Profil bilgileri alınamadı:', errorData);
+      }
+    } catch (error) {
+      console.error('Profil bilgileri alınırken hata oluştu:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [user?.id]);
 
   useEffect(() => {
     // Redirect if not logged in
@@ -32,24 +78,7 @@ export default function ProfilePage() {
     if (user) {
       fetchProfileData();
     }
-  }, [user, loading, router]);
-
-  const fetchProfileData = async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetch(`/api/profile/${user?.id}`);
-      if (response.ok) {
-        const data = await response.json();
-        setProfileData(data);
-      } else {
-        console.error('Profil bilgileri alınamadı');
-      }
-    } catch (error) {
-      console.error('Profil bilgileri alınırken hata oluştu:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, [user, loading, router, fetchProfileData]);
 
   if (loading || isLoading) {
     return (

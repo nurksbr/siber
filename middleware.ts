@@ -1,97 +1,54 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { verify } from 'jsonwebtoken';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { jwtVerify } from 'jose';
 
-// Korumalı rotalar
-const protectedRoutes = [
-  '/profil',
-  '/egitimler',
-  '/panel',
-];
+// Middleware'in çalışacağı korumalı rotalar
+export const config = {
+  matcher: [
+    // Sadece korumalı sayfalar için çalıştır
+    '/profil/:path*',
+    '/egitimler/:path*',
+    '/panel/:path*',
+    '/ayarlar/:path*',
+  ],
+};
 
-// Kimlik doğrulama gerektirmeyen rotalar
-const publicRoutes = [
-  '/',
-  '/giris',
-  '/uye-ol',
-  '/hakkimizda',
-  '/blog',
-  '/siber-tehditler',
-  '/haberler',
-  '/ipuclari',
-  '/kaynaklar',
-  '/sss',
-];
-
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+export async function middleware(request: NextRequest) {
+  const token = request.cookies.get('auth_token')?.value;
+  const url = request.nextUrl.clone();
+  const { pathname } = url;
   
-  // API rotaları için özel işlem
-  if (pathname.startsWith('/api/')) {
-    // Auth API'leri hariç diğer API'ler için token kontrolü
-    if (!pathname.startsWith('/api/auth/')) {
-      return validateTokenForApi(request);
-    }
-    return NextResponse.next();
+  // Geçerli URL'i callback için kullan
+  const callbackUrl = encodeURIComponent(url.pathname + url.search);
+  
+  // Token geçerli mi kontrol et
+  const isValidUserToken = token ? await isValidToken(token) : false;
+  
+  // Hata ayıklama için token durumunu logla
+  console.log(`Korumalı sayfa kontrolü - Yol: ${pathname}, Token geçerli: ${isValidUserToken}`);
+
+  // Korumalı sayfalara erişim için token gerekli
+  if (!isValidUserToken) {
+    console.log(`Korumalı rota erişimi engellendi. Şuraya yönlendiriliyor: /giris?callbackUrl=${callbackUrl}`);
+    return NextResponse.redirect(new URL(`/giris?callbackUrl=${callbackUrl}`, request.url));
   }
-  
-  // Korumalı sayfa rotaları için token kontrolü
-  if (protectedRoutes.some(route => pathname.startsWith(route))) {
-    const token = request.cookies.get('auth-token')?.value;
-    
-    if (!token) {
-      // Token yoksa giriş sayfasına yönlendir
-      const url = new URL('/giris', request.url);
-      url.searchParams.set('callbackUrl', encodeURI(pathname));
-      return NextResponse.redirect(url);
-    }
-    
-    try {
-      // Token doğrulama
-      verify(token, process.env.JWT_SECRET || 'fallback_secret');
-      return NextResponse.next();
-    } catch (error) {
-      // Geçersiz token, giriş sayfasına yönlendir
-      const url = new URL('/giris', request.url);
-      url.searchParams.set('callbackUrl', encodeURI(pathname));
-      return NextResponse.redirect(url);
-    }
-  }
-  
+
+  // Token geçerliyse erişime izin ver
   return NextResponse.next();
 }
 
-// API istekleri için token doğrulama
-function validateTokenForApi(request: NextRequest) {
-  const token = request.cookies.get('auth-token')?.value;
-  
-  if (!token) {
-    return NextResponse.json(
-      { error: 'Yetkilendirme hatası: Token bulunamadı' },
-      { status: 401 }
-    );
-  }
-  
+// Token doğrulama fonksiyonu - artık asenkron
+async function isValidToken(token: string): Promise<boolean> {
   try {
-    // Token doğrulama
-    verify(token, process.env.JWT_SECRET || 'fallback_secret');
-    return NextResponse.next();
+    // Edge runtime ile uyumlu jose kütüphanesi kullanıyoruz
+    const secret = process.env.JWT_SECRET || 'default_secret_should_be_changed';
+    const secretBytes = new TextEncoder().encode(secret);
+    
+    // Asenkron olarak token doğrulama
+    await jwtVerify(token, secretBytes);
+    return true;
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Yetkilendirme hatası: Geçersiz token' },
-      { status: 401 }
-    );
+    console.error('Token doğrulama hatası:', error);
+    return false;
   }
 }
-
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
-     */
-    '/((?!_next/static|_next/image|favicon.ico|.*\.svg).*)',
-  ],
-};

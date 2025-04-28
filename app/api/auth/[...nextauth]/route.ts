@@ -1,33 +1,52 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verify } from 'jsonwebtoken';
 import { cookies } from 'next/headers';
+import { JwtPayload } from 'jsonwebtoken';
+import prisma from '@/app/lib/prisma';
 
 // Kullanıcı oturumunu kontrol etme işlevi
 export async function GET(request: NextRequest) {
+  // Kullanıcı oturumunu kontrol et
+  const token = request.cookies.get('auth-token')?.value;
+  
+  if (!token) {
+    return NextResponse.json({ error: 'Oturum bulunamadı' }, { status: 401 });
+  }
+  
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('auth-token')?.value;
+    // Token doğrulama
+    const decodedToken = verify(token, process.env.JWT_SECRET || 'fallback_secret') as JwtPayload;
     
-    if (!token) {
-      return NextResponse.json(
-        { error: 'Oturum açılmamış' },
-        { status: 401 }
-      );
+    // console.log('Decoded token:', decodedToken); // Debug için
+
+    // Kullanıcı ID'sini kontrol et
+    if (!decodedToken.userId && !decodedToken.sub) {
+      console.error('Token içinde userId veya sub bulunamadı:', decodedToken);
+      return NextResponse.json({ error: 'Geçersiz token yapısı' }, { status: 401 });
     }
     
-    // Token doğrulama
-    const decoded = verify(token, process.env.JWT_SECRET || 'fallback_secret');
+    // userId veya sub'ı kullan
+    const userId = decodedToken.userId || decodedToken.sub;
     
-    return NextResponse.json(
-      { authenticated: true, user: decoded },
-      { status: 200 }
-    );
+    // Kullanıcı bilgilerini getir
+    const user = await prisma.user.findUnique({
+      where: { id: userId as string },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+      },
+    });
+    
+    if (!user) {
+      return NextResponse.json({ error: 'Kullanıcı bulunamadı' }, { status: 404 });
+    }
+    
+    return NextResponse.json({ user });
   } catch (error) {
-    console.error('Oturum doğrulama hatası:', error);
-    return NextResponse.json(
-      { error: 'Geçersiz veya süresi dolmuş oturum' },
-      { status: 401 }
-    );
+    console.error('Token doğrulama hatası:', error);
+    return NextResponse.json({ error: 'Geçersiz veya süresi dolmuş oturum' }, { status: 401 });
   }
 }
 

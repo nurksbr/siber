@@ -1,28 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
+import { verify } from 'jsonwebtoken';
 import prisma from '@/app/lib/prisma';
 
 // GET /api/profile/[id]
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    // Get the current session to verify the user
-    const session = await getServerSession();
+    // Auth token'ı al
+    const token = request.cookies.get('auth_token')?.value;
     
-    if (!session?.user) {
+    if (!token) {
       return NextResponse.json({ error: 'Oturum açmanız gerekiyor' }, { status: 401 });
     }
     
-    // Check if the user is requesting their own profile or has admin rights
-    const userId = params.id;
-    const currentUser = await prisma.user.findUnique({
-      where: { email: session.user.email as string },
-    });
+    // Token'ı doğrula
+    let decodedToken;
+    try {
+      decodedToken = verify(token, process.env.JWT_SECRET || 'fallback_secret') as { 
+        userId: string;
+        role?: string;
+      };
+    } catch (error) {
+      return NextResponse.json({ error: 'Geçersiz veya süresi dolmuş oturum' }, { status: 401 });
+    }
     
-    if (!currentUser || (currentUser.id !== userId && currentUser.role !== 'ADMIN')) {
+    // Kullanıcı kimliğini doğrula
+    const userId = params.id;
+    
+    // Kullanıcı kendi profilini istiyor mu veya admin mi kontrol et
+    if (decodedToken.userId !== userId && decodedToken.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Bu işlem için yetkiniz bulunmuyor' }, { status: 403 });
     }
     
-    // Get the user profile
+    // Kullanıcı profilini getir
     const profile = await prisma.profile.findUnique({
       where: { userId },
       include: {
@@ -30,7 +39,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       },
     });
     
-    // If profile doesn't exist, create a default one
+    // Profil yoksa, varsayılan bir profil oluştur
     if (!profile) {
       const newProfile = await prisma.profile.create({
         data: {
@@ -38,8 +47,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
           theme: 'LIGHT',
           securityLevel: 'BEGINNER',
           preferredLanguage: 'tr',
-          contentPreferences: [],
-          interests: [],
+          contentPreferences: '', // Boş string olarak ayarla
+          interests: '', // Boş string olarak ayarla
           notificationPrefs: {
             create: {
               emailNotifications: true,
