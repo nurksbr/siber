@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/app/lib/prisma';
 import { z } from 'zod';
 import * as bcrypt from 'bcrypt';
-
-const prisma = new PrismaClient();
 
 // Kayıt şeması doğrulama
 const registerSchema = z.object({
@@ -53,6 +51,7 @@ export async function POST(request: NextRequest) {
         name,
         email,
         password: hashedPassword,
+        backupCodes: JSON.stringify([]), // SQLite için String tipinde boş bir array
       },
     });
     
@@ -69,7 +68,5 @@ export async function POST(request: NextRequest) {
       { error: 'Kullanıcı oluşturulurken bir hata oluştu' },
       { status: 500 }
     );
-  } finally {
-    await prisma.$disconnect();
   }
 }

@@ -18,9 +18,14 @@ CYBERLY, kullanıcıların siber güvenlik konusunda farkındalığını artırm
 
 - [x] Kullanıcı kaydı ve giriş sistemi
 - [x] Rol tabanlı erişim kontrolü (admin, eğitmen, kullanıcı)
-- [ ] Profil yönetimi ve kişiselleştirme
-- [ ] Kullanıcı ilerleme takibi ve başarı rozetleri
-- [ ] Çok faktörlü kimlik doğrulama (2FA) desteği
+- [x] Profil yönetimi ve kişiselleştirme
+- [x] Kullanıcı ilerleme takibi ve başarı rozetleri
+  - Kullanıcı seviye sistemi ve deneyim puanları
+  - Çeşitli kategorilerde kazanılabilir rozetler (kurs tamamlama, düzenli giriş, güvenlik farkındalığı vb.)
+  - Haftalık ve aylık öğrenme hedefleri
+  - Sosyal karşılaştırma ve liderlik tabloları
+  - Özel meydan okumalar ve zaman sınırlı etkinlikler
+- [x] Çok faktörlü kimlik doğrulama (2FA) desteği
 
 ### 3.2 Siber Güvenlik Eğitimleri
 

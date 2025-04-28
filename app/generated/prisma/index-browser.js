@@ -126,7 +126,10 @@ exports.Prisma.UserScalarFieldEnum = {
   image: 'image',
   role: 'role',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  twoFactorEnabled: 'twoFactorEnabled',
+  twoFactorSecret: 'twoFactorSecret',
+  backupCodes: 'backupCodes'
 };
 
 exports.Prisma.ProfileScalarFieldEnum = {
@@ -137,6 +140,13 @@ exports.Prisma.ProfileScalarFieldEnum = {
   location: 'location',
   interests: 'interests',
   socialLinks: 'socialLinks',
+  theme: 'theme',
+  securityLevel: 'securityLevel',
+  avatarUrl: 'avatarUrl',
+  coverImageUrl: 'coverImageUrl',
+  preferredLanguage: 'preferredLanguage',
+  contentPreferences: 'contentPreferences',
+  lastSeen: 'lastSeen',
   userId: 'userId'
 };
 
@@ -232,8 +242,67 @@ exports.Prisma.CourseProgressScalarFieldEnum = {
   completedLessons: 'completedLessons',
   startedAt: 'startedAt',
   completedAt: 'completedAt',
+  lastAccessedAt: 'lastAccessedAt',
+  progressPercentage: 'progressPercentage',
   userId: 'userId',
   courseId: 'courseId'
+};
+
+exports.Prisma.BadgeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  imageUrl: 'imageUrl',
+  category: 'category',
+  difficulty: 'difficulty',
+  points: 'points',
+  isHidden: 'isHidden',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserBadgeScalarFieldEnum = {
+  id: 'id',
+  earnedAt: 'earnedAt',
+  showcased: 'showcased',
+  userId: 'userId',
+  badgeId: 'badgeId'
+};
+
+exports.Prisma.UserAchievementScalarFieldEnum = {
+  id: 'id',
+  totalPoints: 'totalPoints',
+  level: 'level',
+  streak: 'streak',
+  longestStreak: 'longestStreak',
+  lastLoginDate: 'lastLoginDate',
+  completedCourses: 'completedCourses',
+  completedLessons: 'completedLessons',
+  phishingScore: 'phishingScore',
+  securityScore: 'securityScore',
+  weeklyGoal: 'weeklyGoal',
+  weeklyProgress: 'weeklyProgress',
+  userId: 'userId'
+};
+
+exports.Prisma.ChallengeScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isActive: 'isActive',
+  points: 'points',
+  maxParticipants: 'maxParticipants'
+};
+
+exports.Prisma.UserChallengeScalarFieldEnum = {
+  id: 'id',
+  joinedAt: 'joinedAt',
+  completedAt: 'completedAt',
+  progress: 'progress',
+  userId: 'userId',
+  challengeId: 'challengeId'
 };
 
 exports.Prisma.ThreatIntelScalarFieldEnum = {
@@ -246,6 +315,17 @@ exports.Prisma.ThreatIntelScalarFieldEnum = {
   publishedAt: 'publishedAt',
   updatedAt: 'updatedAt',
   source: 'source'
+};
+
+exports.Prisma.NotificationPreferencesScalarFieldEnum = {
+  id: 'id',
+  emailNotifications: 'emailNotifications',
+  smsNotifications: 'smsNotifications',
+  securityAlerts: 'securityAlerts',
+  newsUpdates: 'newsUpdates',
+  courseUpdates: 'courseUpdates',
+  marketingEmails: 'marketingEmails',
+  profileId: 'profileId'
 };
 
 exports.Prisma.SortOrder = {
@@ -283,11 +363,34 @@ exports.Role = exports.$Enums.Role = {
   ADMIN: 'ADMIN'
 };
 
+exports.Theme = exports.$Enums.Theme = {
+  LIGHT: 'LIGHT',
+  DARK: 'DARK',
+  SYSTEM: 'SYSTEM'
+};
+
+exports.SecurityLevel = exports.$Enums.SecurityLevel = {
+  BEGINNER: 'BEGINNER',
+  INTERMEDIATE: 'INTERMEDIATE',
+  ADVANCED: 'ADVANCED',
+  EXPERT: 'EXPERT'
+};
+
 exports.Level = exports.$Enums.Level = {
   BEGINNER: 'BEGINNER',
   INTERMEDIATE: 'INTERMEDIATE',
   ADVANCED: 'ADVANCED',
   EXPERT: 'EXPERT'
+};
+
+exports.BadgeCategory = exports.$Enums.BadgeCategory = {
+  COURSE_COMPLETION: 'COURSE_COMPLETION',
+  STREAK: 'STREAK',
+  SECURITY_AWARENESS: 'SECURITY_AWARENESS',
+  PHISHING_MASTER: 'PHISHING_MASTER',
+  COMMUNITY: 'COMMUNITY',
+  SPECIAL_EVENT: 'SPECIAL_EVENT',
+  CHALLENGE_WINNER: 'CHALLENGE_WINNER'
 };
 
 exports.SeverityLevel = exports.$Enums.SeverityLevel = {
@@ -320,7 +423,13 @@ exports.Prisma.ModelName = {
   Module: 'Module',
   Lesson: 'Lesson',
   CourseProgress: 'CourseProgress',
-  ThreatIntel: 'ThreatIntel'
+  Badge: 'Badge',
+  UserBadge: 'UserBadge',
+  UserAchievement: 'UserAchievement',
+  Challenge: 'Challenge',
+  UserChallenge: 'UserChallenge',
+  ThreatIntel: 'ThreatIntel',
+  NotificationPreferences: 'NotificationPreferences'
 };
 
 /**

@@ -79,10 +79,40 @@ export type Lesson = $Result.DefaultSelection<Prisma.$LessonPayload>
  */
 export type CourseProgress = $Result.DefaultSelection<Prisma.$CourseProgressPayload>
 /**
+ * Model Badge
+ * 
+ */
+export type Badge = $Result.DefaultSelection<Prisma.$BadgePayload>
+/**
+ * Model UserBadge
+ * 
+ */
+export type UserBadge = $Result.DefaultSelection<Prisma.$UserBadgePayload>
+/**
+ * Model UserAchievement
+ * 
+ */
+export type UserAchievement = $Result.DefaultSelection<Prisma.$UserAchievementPayload>
+/**
+ * Model Challenge
+ * 
+ */
+export type Challenge = $Result.DefaultSelection<Prisma.$ChallengePayload>
+/**
+ * Model UserChallenge
+ * 
+ */
+export type UserChallenge = $Result.DefaultSelection<Prisma.$UserChallengePayload>
+/**
  * Model ThreatIntel
  * 
  */
 export type ThreatIntel = $Result.DefaultSelection<Prisma.$ThreatIntelPayload>
+/**
+ * Model NotificationPreferences
+ * 
+ */
+export type NotificationPreferences = $Result.DefaultSelection<Prisma.$NotificationPreferencesPayload>
 
 /**
  * Enums
@@ -128,6 +158,38 @@ export const ThreatType: {
 
 export type ThreatType = (typeof ThreatType)[keyof typeof ThreatType]
 
+
+export const Theme: {
+  LIGHT: 'LIGHT',
+  DARK: 'DARK',
+  SYSTEM: 'SYSTEM'
+};
+
+export type Theme = (typeof Theme)[keyof typeof Theme]
+
+
+export const SecurityLevel: {
+  BEGINNER: 'BEGINNER',
+  INTERMEDIATE: 'INTERMEDIATE',
+  ADVANCED: 'ADVANCED',
+  EXPERT: 'EXPERT'
+};
+
+export type SecurityLevel = (typeof SecurityLevel)[keyof typeof SecurityLevel]
+
+
+export const BadgeCategory: {
+  COURSE_COMPLETION: 'COURSE_COMPLETION',
+  STREAK: 'STREAK',
+  SECURITY_AWARENESS: 'SECURITY_AWARENESS',
+  PHISHING_MASTER: 'PHISHING_MASTER',
+  COMMUNITY: 'COMMUNITY',
+  SPECIAL_EVENT: 'SPECIAL_EVENT',
+  CHALLENGE_WINNER: 'CHALLENGE_WINNER'
+};
+
+export type BadgeCategory = (typeof BadgeCategory)[keyof typeof BadgeCategory]
+
 }
 
 export type Role = $Enums.Role
@@ -145,6 +207,18 @@ export const SeverityLevel: typeof $Enums.SeverityLevel
 export type ThreatType = $Enums.ThreatType
 
 export const ThreatType: typeof $Enums.ThreatType
+
+export type Theme = $Enums.Theme
+
+export const Theme: typeof $Enums.Theme
+
+export type SecurityLevel = $Enums.SecurityLevel
+
+export const SecurityLevel: typeof $Enums.SecurityLevel
+
+export type BadgeCategory = $Enums.BadgeCategory
+
+export const BadgeCategory: typeof $Enums.BadgeCategory
 
 /**
  * ##  Prisma Client ʲˢ
@@ -402,6 +476,56 @@ export class PrismaClient<
   get courseProgress(): Prisma.CourseProgressDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.badge`: Exposes CRUD operations for the **Badge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Badges
+    * const badges = await prisma.badge.findMany()
+    * ```
+    */
+  get badge(): Prisma.BadgeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userBadge`: Exposes CRUD operations for the **UserBadge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserBadges
+    * const userBadges = await prisma.userBadge.findMany()
+    * ```
+    */
+  get userBadge(): Prisma.UserBadgeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userAchievement`: Exposes CRUD operations for the **UserAchievement** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserAchievements
+    * const userAchievements = await prisma.userAchievement.findMany()
+    * ```
+    */
+  get userAchievement(): Prisma.UserAchievementDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.challenge`: Exposes CRUD operations for the **Challenge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Challenges
+    * const challenges = await prisma.challenge.findMany()
+    * ```
+    */
+  get challenge(): Prisma.ChallengeDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userChallenge`: Exposes CRUD operations for the **UserChallenge** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserChallenges
+    * const userChallenges = await prisma.userChallenge.findMany()
+    * ```
+    */
+  get userChallenge(): Prisma.UserChallengeDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.threatIntel`: Exposes CRUD operations for the **ThreatIntel** model.
     * Example usage:
     * ```ts
@@ -410,6 +534,16 @@ export class PrismaClient<
     * ```
     */
   get threatIntel(): Prisma.ThreatIntelDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.notificationPreferences`: Exposes CRUD operations for the **NotificationPreferences** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more NotificationPreferences
+    * const notificationPreferences = await prisma.notificationPreferences.findMany()
+    * ```
+    */
+  get notificationPreferences(): Prisma.NotificationPreferencesDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -863,7 +997,13 @@ export namespace Prisma {
     Module: 'Module',
     Lesson: 'Lesson',
     CourseProgress: 'CourseProgress',
-    ThreatIntel: 'ThreatIntel'
+    Badge: 'Badge',
+    UserBadge: 'UserBadge',
+    UserAchievement: 'UserAchievement',
+    Challenge: 'Challenge',
+    UserChallenge: 'UserChallenge',
+    ThreatIntel: 'ThreatIntel',
+    NotificationPreferences: 'NotificationPreferences'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -882,7 +1022,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "profile" | "post" | "category" | "tag" | "categoryOnPost" | "tagOnPost" | "comment" | "bookmark" | "course" | "module" | "lesson" | "courseProgress" | "threatIntel"
+      modelProps: "user" | "profile" | "post" | "category" | "tag" | "categoryOnPost" | "tagOnPost" | "comment" | "bookmark" | "course" | "module" | "lesson" | "courseProgress" | "badge" | "userBadge" | "userAchievement" | "challenge" | "userChallenge" | "threatIntel" | "notificationPreferences"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1848,6 +1988,376 @@ export namespace Prisma {
           }
         }
       }
+      Badge: {
+        payload: Prisma.$BadgePayload<ExtArgs>
+        fields: Prisma.BadgeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BadgeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BadgeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>
+          }
+          findFirst: {
+            args: Prisma.BadgeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BadgeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>
+          }
+          findMany: {
+            args: Prisma.BadgeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>[]
+          }
+          create: {
+            args: Prisma.BadgeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>
+          }
+          createMany: {
+            args: Prisma.BadgeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BadgeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>[]
+          }
+          delete: {
+            args: Prisma.BadgeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>
+          }
+          update: {
+            args: Prisma.BadgeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>
+          }
+          deleteMany: {
+            args: Prisma.BadgeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BadgeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BadgeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>[]
+          }
+          upsert: {
+            args: Prisma.BadgeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BadgePayload>
+          }
+          aggregate: {
+            args: Prisma.BadgeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBadge>
+          }
+          groupBy: {
+            args: Prisma.BadgeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BadgeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BadgeCountArgs<ExtArgs>
+            result: $Utils.Optional<BadgeCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserBadge: {
+        payload: Prisma.$UserBadgePayload<ExtArgs>
+        fields: Prisma.UserBadgeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserBadgeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserBadgeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          findFirst: {
+            args: Prisma.UserBadgeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserBadgeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          findMany: {
+            args: Prisma.UserBadgeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
+          }
+          create: {
+            args: Prisma.UserBadgeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          createMany: {
+            args: Prisma.UserBadgeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserBadgeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
+          }
+          delete: {
+            args: Prisma.UserBadgeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          update: {
+            args: Prisma.UserBadgeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          deleteMany: {
+            args: Prisma.UserBadgeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserBadgeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserBadgeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>[]
+          }
+          upsert: {
+            args: Prisma.UserBadgeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserBadgePayload>
+          }
+          aggregate: {
+            args: Prisma.UserBadgeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserBadge>
+          }
+          groupBy: {
+            args: Prisma.UserBadgeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserBadgeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserBadgeCountArgs<ExtArgs>
+            result: $Utils.Optional<UserBadgeCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserAchievement: {
+        payload: Prisma.$UserAchievementPayload<ExtArgs>
+        fields: Prisma.UserAchievementFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserAchievementFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserAchievementFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>
+          }
+          findFirst: {
+            args: Prisma.UserAchievementFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserAchievementFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>
+          }
+          findMany: {
+            args: Prisma.UserAchievementFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>[]
+          }
+          create: {
+            args: Prisma.UserAchievementCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>
+          }
+          createMany: {
+            args: Prisma.UserAchievementCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserAchievementCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>[]
+          }
+          delete: {
+            args: Prisma.UserAchievementDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>
+          }
+          update: {
+            args: Prisma.UserAchievementUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserAchievementDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserAchievementUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserAchievementUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserAchievementUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>
+          }
+          aggregate: {
+            args: Prisma.UserAchievementAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserAchievement>
+          }
+          groupBy: {
+            args: Prisma.UserAchievementGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserAchievementGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserAchievementCountArgs<ExtArgs>
+            result: $Utils.Optional<UserAchievementCountAggregateOutputType> | number
+          }
+        }
+      }
+      Challenge: {
+        payload: Prisma.$ChallengePayload<ExtArgs>
+        fields: Prisma.ChallengeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChallengeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChallengeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          findFirst: {
+            args: Prisma.ChallengeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChallengeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          findMany: {
+            args: Prisma.ChallengeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>[]
+          }
+          create: {
+            args: Prisma.ChallengeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          createMany: {
+            args: Prisma.ChallengeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ChallengeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>[]
+          }
+          delete: {
+            args: Prisma.ChallengeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          update: {
+            args: Prisma.ChallengeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          deleteMany: {
+            args: Prisma.ChallengeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChallengeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ChallengeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>[]
+          }
+          upsert: {
+            args: Prisma.ChallengeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChallengePayload>
+          }
+          aggregate: {
+            args: Prisma.ChallengeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChallenge>
+          }
+          groupBy: {
+            args: Prisma.ChallengeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChallengeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChallengeCountArgs<ExtArgs>
+            result: $Utils.Optional<ChallengeCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserChallenge: {
+        payload: Prisma.$UserChallengePayload<ExtArgs>
+        fields: Prisma.UserChallengeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserChallengeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserChallengeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          findFirst: {
+            args: Prisma.UserChallengeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserChallengeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          findMany: {
+            args: Prisma.UserChallengeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>[]
+          }
+          create: {
+            args: Prisma.UserChallengeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          createMany: {
+            args: Prisma.UserChallengeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserChallengeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>[]
+          }
+          delete: {
+            args: Prisma.UserChallengeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          update: {
+            args: Prisma.UserChallengeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          deleteMany: {
+            args: Prisma.UserChallengeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserChallengeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserChallengeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>[]
+          }
+          upsert: {
+            args: Prisma.UserChallengeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserChallengePayload>
+          }
+          aggregate: {
+            args: Prisma.UserChallengeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserChallenge>
+          }
+          groupBy: {
+            args: Prisma.UserChallengeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserChallengeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserChallengeCountArgs<ExtArgs>
+            result: $Utils.Optional<UserChallengeCountAggregateOutputType> | number
+          }
+        }
+      }
       ThreatIntel: {
         payload: Prisma.$ThreatIntelPayload<ExtArgs>
         fields: Prisma.ThreatIntelFieldRefs
@@ -1919,6 +2429,80 @@ export namespace Prisma {
           count: {
             args: Prisma.ThreatIntelCountArgs<ExtArgs>
             result: $Utils.Optional<ThreatIntelCountAggregateOutputType> | number
+          }
+        }
+      }
+      NotificationPreferences: {
+        payload: Prisma.$NotificationPreferencesPayload<ExtArgs>
+        fields: Prisma.NotificationPreferencesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NotificationPreferencesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPreferencesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NotificationPreferencesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPreferencesPayload>
+          }
+          findFirst: {
+            args: Prisma.NotificationPreferencesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPreferencesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NotificationPreferencesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPreferencesPayload>
+          }
+          findMany: {
+            args: Prisma.NotificationPreferencesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPreferencesPayload>[]
+          }
+          create: {
+            args: Prisma.NotificationPreferencesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPreferencesPayload>
+          }
+          createMany: {
+            args: Prisma.NotificationPreferencesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.NotificationPreferencesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPreferencesPayload>[]
+          }
+          delete: {
+            args: Prisma.NotificationPreferencesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPreferencesPayload>
+          }
+          update: {
+            args: Prisma.NotificationPreferencesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPreferencesPayload>
+          }
+          deleteMany: {
+            args: Prisma.NotificationPreferencesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NotificationPreferencesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.NotificationPreferencesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPreferencesPayload>[]
+          }
+          upsert: {
+            args: Prisma.NotificationPreferencesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPreferencesPayload>
+          }
+          aggregate: {
+            args: Prisma.NotificationPreferencesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNotificationPreferences>
+          }
+          groupBy: {
+            args: Prisma.NotificationPreferencesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NotificationPreferencesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NotificationPreferencesCountArgs<ExtArgs>
+            result: $Utils.Optional<NotificationPreferencesCountAggregateOutputType> | number
           }
         }
       }
@@ -2019,7 +2603,13 @@ export namespace Prisma {
     module?: ModuleOmit
     lesson?: LessonOmit
     courseProgress?: CourseProgressOmit
+    badge?: BadgeOmit
+    userBadge?: UserBadgeOmit
+    userAchievement?: UserAchievementOmit
+    challenge?: ChallengeOmit
+    userChallenge?: UserChallengeOmit
     threatIntel?: ThreatIntelOmit
+    notificationPreferences?: NotificationPreferencesOmit
   }
 
   /* Types for Logging */
@@ -2118,6 +2708,8 @@ export namespace Prisma {
     comments: number
     bookmarks: number
     courseProgress: number
+    badges: number
+    challenges: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2125,6 +2717,8 @@ export namespace Prisma {
     comments?: boolean | UserCountOutputTypeCountCommentsArgs
     bookmarks?: boolean | UserCountOutputTypeCountBookmarksArgs
     courseProgress?: boolean | UserCountOutputTypeCountCourseProgressArgs
+    badges?: boolean | UserCountOutputTypeCountBadgesArgs
+    challenges?: boolean | UserCountOutputTypeCountChallengesArgs
   }
 
   // Custom InputTypes
@@ -2164,6 +2758,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountCourseProgressArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CourseProgressWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBadgesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserBadgeWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountChallengesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserChallengeWhereInput
   }
 
 
@@ -2390,6 +2998,68 @@ export namespace Prisma {
 
 
   /**
+   * Count Type BadgeCountOutputType
+   */
+
+  export type BadgeCountOutputType = {
+    userBadges: number
+  }
+
+  export type BadgeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    userBadges?: boolean | BadgeCountOutputTypeCountUserBadgesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * BadgeCountOutputType without action
+   */
+  export type BadgeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BadgeCountOutputType
+     */
+    select?: BadgeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * BadgeCountOutputType without action
+   */
+  export type BadgeCountOutputTypeCountUserBadgesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserBadgeWhereInput
+  }
+
+
+  /**
+   * Count Type ChallengeCountOutputType
+   */
+
+  export type ChallengeCountOutputType = {
+    participants: number
+  }
+
+  export type ChallengeCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    participants?: boolean | ChallengeCountOutputTypeCountParticipantsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ChallengeCountOutputType without action
+   */
+  export type ChallengeCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChallengeCountOutputType
+     */
+    select?: ChallengeCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ChallengeCountOutputType without action
+   */
+  export type ChallengeCountOutputTypeCountParticipantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserChallengeWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -2413,6 +3083,8 @@ export namespace Prisma {
     role: $Enums.Role | null
     createdAt: Date | null
     updatedAt: Date | null
+    twoFactorEnabled: boolean | null
+    twoFactorSecret: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -2425,6 +3097,8 @@ export namespace Prisma {
     role: $Enums.Role | null
     createdAt: Date | null
     updatedAt: Date | null
+    twoFactorEnabled: boolean | null
+    twoFactorSecret: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -2437,6 +3111,9 @@ export namespace Prisma {
     role: number
     createdAt: number
     updatedAt: number
+    twoFactorEnabled: number
+    twoFactorSecret: number
+    backupCodes: number
     _all: number
   }
 
@@ -2451,6 +3128,8 @@ export namespace Prisma {
     role?: true
     createdAt?: true
     updatedAt?: true
+    twoFactorEnabled?: true
+    twoFactorSecret?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -2463,6 +3142,8 @@ export namespace Prisma {
     role?: true
     createdAt?: true
     updatedAt?: true
+    twoFactorEnabled?: true
+    twoFactorSecret?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -2475,6 +3156,9 @@ export namespace Prisma {
     role?: true
     createdAt?: true
     updatedAt?: true
+    twoFactorEnabled?: true
+    twoFactorSecret?: true
+    backupCodes?: true
     _all?: true
   }
 
@@ -2560,6 +3244,9 @@ export namespace Prisma {
     role: $Enums.Role
     createdAt: Date
     updatedAt: Date
+    twoFactorEnabled: boolean
+    twoFactorSecret: string | null
+    backupCodes: string[]
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -2589,11 +3276,17 @@ export namespace Prisma {
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: boolean
+    backupCodes?: boolean
     profile?: boolean | User$profileArgs<ExtArgs>
     posts?: boolean | User$postsArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
     bookmarks?: boolean | User$bookmarksArgs<ExtArgs>
     courseProgress?: boolean | User$courseProgressArgs<ExtArgs>
+    badges?: boolean | User$badgesArgs<ExtArgs>
+    achievement?: boolean | User$achievementArgs<ExtArgs>
+    challenges?: boolean | User$challengesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2607,6 +3300,9 @@ export namespace Prisma {
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: boolean
+    backupCodes?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2619,6 +3315,9 @@ export namespace Prisma {
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: boolean
+    backupCodes?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2631,15 +3330,21 @@ export namespace Prisma {
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: boolean
+    backupCodes?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "password" | "image" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "password" | "image" | "role" | "createdAt" | "updatedAt" | "twoFactorEnabled" | "twoFactorSecret" | "backupCodes", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     profile?: boolean | User$profileArgs<ExtArgs>
     posts?: boolean | User$postsArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
     bookmarks?: boolean | User$bookmarksArgs<ExtArgs>
     courseProgress?: boolean | User$courseProgressArgs<ExtArgs>
+    badges?: boolean | User$badgesArgs<ExtArgs>
+    achievement?: boolean | User$achievementArgs<ExtArgs>
+    challenges?: boolean | User$challengesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2653,6 +3358,9 @@ export namespace Prisma {
       comments: Prisma.$CommentPayload<ExtArgs>[]
       bookmarks: Prisma.$BookmarkPayload<ExtArgs>[]
       courseProgress: Prisma.$CourseProgressPayload<ExtArgs>[]
+      badges: Prisma.$UserBadgePayload<ExtArgs>[]
+      achievement: Prisma.$UserAchievementPayload<ExtArgs> | null
+      challenges: Prisma.$UserChallengePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2664,6 +3372,9 @@ export namespace Prisma {
       role: $Enums.Role
       createdAt: Date
       updatedAt: Date
+      twoFactorEnabled: boolean
+      twoFactorSecret: string | null
+      backupCodes: string[]
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -3063,6 +3774,9 @@ export namespace Prisma {
     comments<T extends User$commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     bookmarks<T extends User$bookmarksArgs<ExtArgs> = {}>(args?: Subset<T, User$bookmarksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BookmarkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     courseProgress<T extends User$courseProgressArgs<ExtArgs> = {}>(args?: Subset<T, User$courseProgressArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CourseProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    badges<T extends User$badgesArgs<ExtArgs> = {}>(args?: Subset<T, User$badgesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    achievement<T extends User$achievementArgs<ExtArgs> = {}>(args?: Subset<T, User$achievementArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    challenges<T extends User$challengesArgs<ExtArgs> = {}>(args?: Subset<T, User$challengesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3101,6 +3815,9 @@ export namespace Prisma {
     readonly role: FieldRef<"User", 'Role'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly twoFactorEnabled: FieldRef<"User", 'Boolean'>
+    readonly twoFactorSecret: FieldRef<"User", 'String'>
+    readonly backupCodes: FieldRef<"User", 'String[]'>
   }
     
 
@@ -3604,6 +4321,73 @@ export namespace Prisma {
   }
 
   /**
+   * User.badges
+   */
+  export type User$badgesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    where?: UserBadgeWhereInput
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    cursor?: UserBadgeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * User.achievement
+   */
+  export type User$achievementArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    where?: UserAchievementWhereInput
+  }
+
+  /**
+   * User.challenges
+   */
+  export type User$challengesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    where?: UserChallengeWhereInput
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    cursor?: UserChallengeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3638,6 +4422,12 @@ export namespace Prisma {
     organization: string | null
     title: string | null
     location: string | null
+    theme: $Enums.Theme | null
+    securityLevel: $Enums.SecurityLevel | null
+    avatarUrl: string | null
+    coverImageUrl: string | null
+    preferredLanguage: string | null
+    lastSeen: Date | null
     userId: string | null
   }
 
@@ -3647,6 +4437,12 @@ export namespace Prisma {
     organization: string | null
     title: string | null
     location: string | null
+    theme: $Enums.Theme | null
+    securityLevel: $Enums.SecurityLevel | null
+    avatarUrl: string | null
+    coverImageUrl: string | null
+    preferredLanguage: string | null
+    lastSeen: Date | null
     userId: string | null
   }
 
@@ -3658,6 +4454,13 @@ export namespace Prisma {
     location: number
     interests: number
     socialLinks: number
+    theme: number
+    securityLevel: number
+    avatarUrl: number
+    coverImageUrl: number
+    preferredLanguage: number
+    contentPreferences: number
+    lastSeen: number
     userId: number
     _all: number
   }
@@ -3669,6 +4472,12 @@ export namespace Prisma {
     organization?: true
     title?: true
     location?: true
+    theme?: true
+    securityLevel?: true
+    avatarUrl?: true
+    coverImageUrl?: true
+    preferredLanguage?: true
+    lastSeen?: true
     userId?: true
   }
 
@@ -3678,6 +4487,12 @@ export namespace Prisma {
     organization?: true
     title?: true
     location?: true
+    theme?: true
+    securityLevel?: true
+    avatarUrl?: true
+    coverImageUrl?: true
+    preferredLanguage?: true
+    lastSeen?: true
     userId?: true
   }
 
@@ -3689,6 +4504,13 @@ export namespace Prisma {
     location?: true
     interests?: true
     socialLinks?: true
+    theme?: true
+    securityLevel?: true
+    avatarUrl?: true
+    coverImageUrl?: true
+    preferredLanguage?: true
+    contentPreferences?: true
+    lastSeen?: true
     userId?: true
     _all?: true
   }
@@ -3773,6 +4595,13 @@ export namespace Prisma {
     location: string | null
     interests: string[]
     socialLinks: JsonValue | null
+    theme: $Enums.Theme
+    securityLevel: $Enums.SecurityLevel
+    avatarUrl: string | null
+    coverImageUrl: string | null
+    preferredLanguage: string | null
+    contentPreferences: string[]
+    lastSeen: Date | null
     userId: string
     _count: ProfileCountAggregateOutputType | null
     _min: ProfileMinAggregateOutputType | null
@@ -3801,7 +4630,15 @@ export namespace Prisma {
     location?: boolean
     interests?: boolean
     socialLinks?: boolean
+    theme?: boolean
+    securityLevel?: boolean
+    avatarUrl?: boolean
+    coverImageUrl?: boolean
+    preferredLanguage?: boolean
+    contentPreferences?: boolean
+    lastSeen?: boolean
     userId?: boolean
+    notificationPrefs?: boolean | Profile$notificationPrefsArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["profile"]>
 
@@ -3813,6 +4650,13 @@ export namespace Prisma {
     location?: boolean
     interests?: boolean
     socialLinks?: boolean
+    theme?: boolean
+    securityLevel?: boolean
+    avatarUrl?: boolean
+    coverImageUrl?: boolean
+    preferredLanguage?: boolean
+    contentPreferences?: boolean
+    lastSeen?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["profile"]>
@@ -3825,6 +4669,13 @@ export namespace Prisma {
     location?: boolean
     interests?: boolean
     socialLinks?: boolean
+    theme?: boolean
+    securityLevel?: boolean
+    avatarUrl?: boolean
+    coverImageUrl?: boolean
+    preferredLanguage?: boolean
+    contentPreferences?: boolean
+    lastSeen?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["profile"]>
@@ -3837,11 +4688,19 @@ export namespace Prisma {
     location?: boolean
     interests?: boolean
     socialLinks?: boolean
+    theme?: boolean
+    securityLevel?: boolean
+    avatarUrl?: boolean
+    coverImageUrl?: boolean
+    preferredLanguage?: boolean
+    contentPreferences?: boolean
+    lastSeen?: boolean
     userId?: boolean
   }
 
-  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bio" | "organization" | "title" | "location" | "interests" | "socialLinks" | "userId", ExtArgs["result"]["profile"]>
+  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "bio" | "organization" | "title" | "location" | "interests" | "socialLinks" | "theme" | "securityLevel" | "avatarUrl" | "coverImageUrl" | "preferredLanguage" | "contentPreferences" | "lastSeen" | "userId", ExtArgs["result"]["profile"]>
   export type ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notificationPrefs?: boolean | Profile$notificationPrefsArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type ProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3854,6 +4713,7 @@ export namespace Prisma {
   export type $ProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Profile"
     objects: {
+      notificationPrefs: Prisma.$NotificationPreferencesPayload<ExtArgs> | null
       user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -3864,6 +4724,13 @@ export namespace Prisma {
       location: string | null
       interests: string[]
       socialLinks: Prisma.JsonValue | null
+      theme: $Enums.Theme
+      securityLevel: $Enums.SecurityLevel
+      avatarUrl: string | null
+      coverImageUrl: string | null
+      preferredLanguage: string | null
+      contentPreferences: string[]
+      lastSeen: Date | null
       userId: string
     }, ExtArgs["result"]["profile"]>
     composites: {}
@@ -4259,6 +5126,7 @@ export namespace Prisma {
    */
   export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    notificationPrefs<T extends Profile$notificationPrefsArgs<ExtArgs> = {}>(args?: Subset<T, Profile$notificationPrefsArgs<ExtArgs>>): Prisma__NotificationPreferencesClient<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4296,6 +5164,13 @@ export namespace Prisma {
     readonly location: FieldRef<"Profile", 'String'>
     readonly interests: FieldRef<"Profile", 'String[]'>
     readonly socialLinks: FieldRef<"Profile", 'Json'>
+    readonly theme: FieldRef<"Profile", 'Theme'>
+    readonly securityLevel: FieldRef<"Profile", 'SecurityLevel'>
+    readonly avatarUrl: FieldRef<"Profile", 'String'>
+    readonly coverImageUrl: FieldRef<"Profile", 'String'>
+    readonly preferredLanguage: FieldRef<"Profile", 'String'>
+    readonly contentPreferences: FieldRef<"Profile", 'String[]'>
+    readonly lastSeen: FieldRef<"Profile", 'DateTime'>
     readonly userId: FieldRef<"Profile", 'String'>
   }
     
@@ -4690,6 +5565,25 @@ export namespace Prisma {
      * Limit how many Profiles to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Profile.notificationPrefs
+   */
+  export type Profile$notificationPrefsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesInclude<ExtArgs> | null
+    where?: NotificationPreferencesWhereInput
   }
 
   /**
@@ -15825,14 +16719,26 @@ export namespace Prisma {
 
   export type AggregateCourseProgress = {
     _count: CourseProgressCountAggregateOutputType | null
+    _avg: CourseProgressAvgAggregateOutputType | null
+    _sum: CourseProgressSumAggregateOutputType | null
     _min: CourseProgressMinAggregateOutputType | null
     _max: CourseProgressMaxAggregateOutputType | null
+  }
+
+  export type CourseProgressAvgAggregateOutputType = {
+    progressPercentage: number | null
+  }
+
+  export type CourseProgressSumAggregateOutputType = {
+    progressPercentage: number | null
   }
 
   export type CourseProgressMinAggregateOutputType = {
     id: string | null
     startedAt: Date | null
     completedAt: Date | null
+    lastAccessedAt: Date | null
+    progressPercentage: number | null
     userId: string | null
     courseId: string | null
   }
@@ -15841,6 +16747,8 @@ export namespace Prisma {
     id: string | null
     startedAt: Date | null
     completedAt: Date | null
+    lastAccessedAt: Date | null
+    progressPercentage: number | null
     userId: string | null
     courseId: string | null
   }
@@ -15850,16 +16758,28 @@ export namespace Prisma {
     completedLessons: number
     startedAt: number
     completedAt: number
+    lastAccessedAt: number
+    progressPercentage: number
     userId: number
     courseId: number
     _all: number
   }
 
 
+  export type CourseProgressAvgAggregateInputType = {
+    progressPercentage?: true
+  }
+
+  export type CourseProgressSumAggregateInputType = {
+    progressPercentage?: true
+  }
+
   export type CourseProgressMinAggregateInputType = {
     id?: true
     startedAt?: true
     completedAt?: true
+    lastAccessedAt?: true
+    progressPercentage?: true
     userId?: true
     courseId?: true
   }
@@ -15868,6 +16788,8 @@ export namespace Prisma {
     id?: true
     startedAt?: true
     completedAt?: true
+    lastAccessedAt?: true
+    progressPercentage?: true
     userId?: true
     courseId?: true
   }
@@ -15877,6 +16799,8 @@ export namespace Prisma {
     completedLessons?: true
     startedAt?: true
     completedAt?: true
+    lastAccessedAt?: true
+    progressPercentage?: true
     userId?: true
     courseId?: true
     _all?: true
@@ -15920,6 +16844,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: CourseProgressAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CourseProgressSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: CourseProgressMinAggregateInputType
@@ -15950,6 +16886,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: CourseProgressCountAggregateInputType | true
+    _avg?: CourseProgressAvgAggregateInputType
+    _sum?: CourseProgressSumAggregateInputType
     _min?: CourseProgressMinAggregateInputType
     _max?: CourseProgressMaxAggregateInputType
   }
@@ -15959,9 +16897,13 @@ export namespace Prisma {
     completedLessons: JsonValue
     startedAt: Date
     completedAt: Date | null
+    lastAccessedAt: Date
+    progressPercentage: number
     userId: string
     courseId: string
     _count: CourseProgressCountAggregateOutputType | null
+    _avg: CourseProgressAvgAggregateOutputType | null
+    _sum: CourseProgressSumAggregateOutputType | null
     _min: CourseProgressMinAggregateOutputType | null
     _max: CourseProgressMaxAggregateOutputType | null
   }
@@ -15985,6 +16927,8 @@ export namespace Prisma {
     completedLessons?: boolean
     startedAt?: boolean
     completedAt?: boolean
+    lastAccessedAt?: boolean
+    progressPercentage?: boolean
     userId?: boolean
     courseId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -15996,6 +16940,8 @@ export namespace Prisma {
     completedLessons?: boolean
     startedAt?: boolean
     completedAt?: boolean
+    lastAccessedAt?: boolean
+    progressPercentage?: boolean
     userId?: boolean
     courseId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -16007,6 +16953,8 @@ export namespace Prisma {
     completedLessons?: boolean
     startedAt?: boolean
     completedAt?: boolean
+    lastAccessedAt?: boolean
+    progressPercentage?: boolean
     userId?: boolean
     courseId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -16018,11 +16966,13 @@ export namespace Prisma {
     completedLessons?: boolean
     startedAt?: boolean
     completedAt?: boolean
+    lastAccessedAt?: boolean
+    progressPercentage?: boolean
     userId?: boolean
     courseId?: boolean
   }
 
-  export type CourseProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "completedLessons" | "startedAt" | "completedAt" | "userId" | "courseId", ExtArgs["result"]["courseProgress"]>
+  export type CourseProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "completedLessons" | "startedAt" | "completedAt" | "lastAccessedAt" | "progressPercentage" | "userId" | "courseId", ExtArgs["result"]["courseProgress"]>
   export type CourseProgressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
@@ -16047,6 +16997,8 @@ export namespace Prisma {
       completedLessons: Prisma.JsonValue
       startedAt: Date
       completedAt: Date | null
+      lastAccessedAt: Date
+      progressPercentage: number
       userId: string
       courseId: string
     }, ExtArgs["result"]["courseProgress"]>
@@ -16478,6 +17430,8 @@ export namespace Prisma {
     readonly completedLessons: FieldRef<"CourseProgress", 'Json'>
     readonly startedAt: FieldRef<"CourseProgress", 'DateTime'>
     readonly completedAt: FieldRef<"CourseProgress", 'DateTime'>
+    readonly lastAccessedAt: FieldRef<"CourseProgress", 'DateTime'>
+    readonly progressPercentage: FieldRef<"CourseProgress", 'Float'>
     readonly userId: FieldRef<"CourseProgress", 'String'>
     readonly courseId: FieldRef<"CourseProgress", 'String'>
   }
@@ -16891,6 +17845,5733 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: CourseProgressInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Badge
+   */
+
+  export type AggregateBadge = {
+    _count: BadgeCountAggregateOutputType | null
+    _avg: BadgeAvgAggregateOutputType | null
+    _sum: BadgeSumAggregateOutputType | null
+    _min: BadgeMinAggregateOutputType | null
+    _max: BadgeMaxAggregateOutputType | null
+  }
+
+  export type BadgeAvgAggregateOutputType = {
+    points: number | null
+  }
+
+  export type BadgeSumAggregateOutputType = {
+    points: number | null
+  }
+
+  export type BadgeMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    imageUrl: string | null
+    category: $Enums.BadgeCategory | null
+    difficulty: $Enums.Level | null
+    points: number | null
+    isHidden: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BadgeMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    imageUrl: string | null
+    category: $Enums.BadgeCategory | null
+    difficulty: $Enums.Level | null
+    points: number | null
+    isHidden: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BadgeCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    imageUrl: number
+    category: number
+    difficulty: number
+    points: number
+    isHidden: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BadgeAvgAggregateInputType = {
+    points?: true
+  }
+
+  export type BadgeSumAggregateInputType = {
+    points?: true
+  }
+
+  export type BadgeMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    imageUrl?: true
+    category?: true
+    difficulty?: true
+    points?: true
+    isHidden?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BadgeMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    imageUrl?: true
+    category?: true
+    difficulty?: true
+    points?: true
+    isHidden?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BadgeCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    imageUrl?: true
+    category?: true
+    difficulty?: true
+    points?: true
+    isHidden?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BadgeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Badge to aggregate.
+     */
+    where?: BadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Badges to fetch.
+     */
+    orderBy?: BadgeOrderByWithRelationInput | BadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Badges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Badges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Badges
+    **/
+    _count?: true | BadgeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BadgeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BadgeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BadgeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BadgeMaxAggregateInputType
+  }
+
+  export type GetBadgeAggregateType<T extends BadgeAggregateArgs> = {
+        [P in keyof T & keyof AggregateBadge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBadge[P]>
+      : GetScalarType<T[P], AggregateBadge[P]>
+  }
+
+
+
+
+  export type BadgeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BadgeWhereInput
+    orderBy?: BadgeOrderByWithAggregationInput | BadgeOrderByWithAggregationInput[]
+    by: BadgeScalarFieldEnum[] | BadgeScalarFieldEnum
+    having?: BadgeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BadgeCountAggregateInputType | true
+    _avg?: BadgeAvgAggregateInputType
+    _sum?: BadgeSumAggregateInputType
+    _min?: BadgeMinAggregateInputType
+    _max?: BadgeMaxAggregateInputType
+  }
+
+  export type BadgeGroupByOutputType = {
+    id: string
+    name: string
+    description: string
+    imageUrl: string
+    category: $Enums.BadgeCategory
+    difficulty: $Enums.Level
+    points: number
+    isHidden: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: BadgeCountAggregateOutputType | null
+    _avg: BadgeAvgAggregateOutputType | null
+    _sum: BadgeSumAggregateOutputType | null
+    _min: BadgeMinAggregateOutputType | null
+    _max: BadgeMaxAggregateOutputType | null
+  }
+
+  type GetBadgeGroupByPayload<T extends BadgeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BadgeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BadgeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BadgeGroupByOutputType[P]>
+            : GetScalarType<T[P], BadgeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BadgeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    imageUrl?: boolean
+    category?: boolean
+    difficulty?: boolean
+    points?: boolean
+    isHidden?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userBadges?: boolean | Badge$userBadgesArgs<ExtArgs>
+    _count?: boolean | BadgeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["badge"]>
+
+  export type BadgeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    imageUrl?: boolean
+    category?: boolean
+    difficulty?: boolean
+    points?: boolean
+    isHidden?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["badge"]>
+
+  export type BadgeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    imageUrl?: boolean
+    category?: boolean
+    difficulty?: boolean
+    points?: boolean
+    isHidden?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["badge"]>
+
+  export type BadgeSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    imageUrl?: boolean
+    category?: boolean
+    difficulty?: boolean
+    points?: boolean
+    isHidden?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type BadgeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "imageUrl" | "category" | "difficulty" | "points" | "isHidden" | "createdAt" | "updatedAt", ExtArgs["result"]["badge"]>
+  export type BadgeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    userBadges?: boolean | Badge$userBadgesArgs<ExtArgs>
+    _count?: boolean | BadgeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type BadgeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type BadgeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $BadgePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Badge"
+    objects: {
+      userBadges: Prisma.$UserBadgePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string
+      imageUrl: string
+      category: $Enums.BadgeCategory
+      difficulty: $Enums.Level
+      points: number
+      isHidden: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["badge"]>
+    composites: {}
+  }
+
+  type BadgeGetPayload<S extends boolean | null | undefined | BadgeDefaultArgs> = $Result.GetResult<Prisma.$BadgePayload, S>
+
+  type BadgeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BadgeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BadgeCountAggregateInputType | true
+    }
+
+  export interface BadgeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Badge'], meta: { name: 'Badge' } }
+    /**
+     * Find zero or one Badge that matches the filter.
+     * @param {BadgeFindUniqueArgs} args - Arguments to find a Badge
+     * @example
+     * // Get one Badge
+     * const badge = await prisma.badge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BadgeFindUniqueArgs>(args: SelectSubset<T, BadgeFindUniqueArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Badge that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BadgeFindUniqueOrThrowArgs} args - Arguments to find a Badge
+     * @example
+     * // Get one Badge
+     * const badge = await prisma.badge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BadgeFindUniqueOrThrowArgs>(args: SelectSubset<T, BadgeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Badge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeFindFirstArgs} args - Arguments to find a Badge
+     * @example
+     * // Get one Badge
+     * const badge = await prisma.badge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BadgeFindFirstArgs>(args?: SelectSubset<T, BadgeFindFirstArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Badge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeFindFirstOrThrowArgs} args - Arguments to find a Badge
+     * @example
+     * // Get one Badge
+     * const badge = await prisma.badge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BadgeFindFirstOrThrowArgs>(args?: SelectSubset<T, BadgeFindFirstOrThrowArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Badges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Badges
+     * const badges = await prisma.badge.findMany()
+     * 
+     * // Get first 10 Badges
+     * const badges = await prisma.badge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const badgeWithIdOnly = await prisma.badge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BadgeFindManyArgs>(args?: SelectSubset<T, BadgeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Badge.
+     * @param {BadgeCreateArgs} args - Arguments to create a Badge.
+     * @example
+     * // Create one Badge
+     * const Badge = await prisma.badge.create({
+     *   data: {
+     *     // ... data to create a Badge
+     *   }
+     * })
+     * 
+     */
+    create<T extends BadgeCreateArgs>(args: SelectSubset<T, BadgeCreateArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Badges.
+     * @param {BadgeCreateManyArgs} args - Arguments to create many Badges.
+     * @example
+     * // Create many Badges
+     * const badge = await prisma.badge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BadgeCreateManyArgs>(args?: SelectSubset<T, BadgeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Badges and returns the data saved in the database.
+     * @param {BadgeCreateManyAndReturnArgs} args - Arguments to create many Badges.
+     * @example
+     * // Create many Badges
+     * const badge = await prisma.badge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Badges and only return the `id`
+     * const badgeWithIdOnly = await prisma.badge.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BadgeCreateManyAndReturnArgs>(args?: SelectSubset<T, BadgeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Badge.
+     * @param {BadgeDeleteArgs} args - Arguments to delete one Badge.
+     * @example
+     * // Delete one Badge
+     * const Badge = await prisma.badge.delete({
+     *   where: {
+     *     // ... filter to delete one Badge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BadgeDeleteArgs>(args: SelectSubset<T, BadgeDeleteArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Badge.
+     * @param {BadgeUpdateArgs} args - Arguments to update one Badge.
+     * @example
+     * // Update one Badge
+     * const badge = await prisma.badge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BadgeUpdateArgs>(args: SelectSubset<T, BadgeUpdateArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Badges.
+     * @param {BadgeDeleteManyArgs} args - Arguments to filter Badges to delete.
+     * @example
+     * // Delete a few Badges
+     * const { count } = await prisma.badge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BadgeDeleteManyArgs>(args?: SelectSubset<T, BadgeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Badges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Badges
+     * const badge = await prisma.badge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BadgeUpdateManyArgs>(args: SelectSubset<T, BadgeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Badges and returns the data updated in the database.
+     * @param {BadgeUpdateManyAndReturnArgs} args - Arguments to update many Badges.
+     * @example
+     * // Update many Badges
+     * const badge = await prisma.badge.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Badges and only return the `id`
+     * const badgeWithIdOnly = await prisma.badge.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BadgeUpdateManyAndReturnArgs>(args: SelectSubset<T, BadgeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Badge.
+     * @param {BadgeUpsertArgs} args - Arguments to update or create a Badge.
+     * @example
+     * // Update or create a Badge
+     * const badge = await prisma.badge.upsert({
+     *   create: {
+     *     // ... data to create a Badge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Badge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BadgeUpsertArgs>(args: SelectSubset<T, BadgeUpsertArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Badges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeCountArgs} args - Arguments to filter Badges to count.
+     * @example
+     * // Count the number of Badges
+     * const count = await prisma.badge.count({
+     *   where: {
+     *     // ... the filter for the Badges we want to count
+     *   }
+     * })
+    **/
+    count<T extends BadgeCountArgs>(
+      args?: Subset<T, BadgeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BadgeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Badge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BadgeAggregateArgs>(args: Subset<T, BadgeAggregateArgs>): Prisma.PrismaPromise<GetBadgeAggregateType<T>>
+
+    /**
+     * Group by Badge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BadgeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BadgeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BadgeGroupByArgs['orderBy'] }
+        : { orderBy?: BadgeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BadgeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBadgeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Badge model
+   */
+  readonly fields: BadgeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Badge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BadgeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    userBadges<T extends Badge$userBadgesArgs<ExtArgs> = {}>(args?: Subset<T, Badge$userBadgesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Badge model
+   */
+  interface BadgeFieldRefs {
+    readonly id: FieldRef<"Badge", 'String'>
+    readonly name: FieldRef<"Badge", 'String'>
+    readonly description: FieldRef<"Badge", 'String'>
+    readonly imageUrl: FieldRef<"Badge", 'String'>
+    readonly category: FieldRef<"Badge", 'BadgeCategory'>
+    readonly difficulty: FieldRef<"Badge", 'Level'>
+    readonly points: FieldRef<"Badge", 'Int'>
+    readonly isHidden: FieldRef<"Badge", 'Boolean'>
+    readonly createdAt: FieldRef<"Badge", 'DateTime'>
+    readonly updatedAt: FieldRef<"Badge", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Badge findUnique
+   */
+  export type BadgeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which Badge to fetch.
+     */
+    where: BadgeWhereUniqueInput
+  }
+
+  /**
+   * Badge findUniqueOrThrow
+   */
+  export type BadgeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which Badge to fetch.
+     */
+    where: BadgeWhereUniqueInput
+  }
+
+  /**
+   * Badge findFirst
+   */
+  export type BadgeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which Badge to fetch.
+     */
+    where?: BadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Badges to fetch.
+     */
+    orderBy?: BadgeOrderByWithRelationInput | BadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Badges.
+     */
+    cursor?: BadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Badges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Badges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Badges.
+     */
+    distinct?: BadgeScalarFieldEnum | BadgeScalarFieldEnum[]
+  }
+
+  /**
+   * Badge findFirstOrThrow
+   */
+  export type BadgeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which Badge to fetch.
+     */
+    where?: BadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Badges to fetch.
+     */
+    orderBy?: BadgeOrderByWithRelationInput | BadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Badges.
+     */
+    cursor?: BadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Badges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Badges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Badges.
+     */
+    distinct?: BadgeScalarFieldEnum | BadgeScalarFieldEnum[]
+  }
+
+  /**
+   * Badge findMany
+   */
+  export type BadgeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which Badges to fetch.
+     */
+    where?: BadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Badges to fetch.
+     */
+    orderBy?: BadgeOrderByWithRelationInput | BadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Badges.
+     */
+    cursor?: BadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Badges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Badges.
+     */
+    skip?: number
+    distinct?: BadgeScalarFieldEnum | BadgeScalarFieldEnum[]
+  }
+
+  /**
+   * Badge create
+   */
+  export type BadgeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Badge.
+     */
+    data: XOR<BadgeCreateInput, BadgeUncheckedCreateInput>
+  }
+
+  /**
+   * Badge createMany
+   */
+  export type BadgeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Badges.
+     */
+    data: BadgeCreateManyInput | BadgeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Badge createManyAndReturn
+   */
+  export type BadgeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * The data used to create many Badges.
+     */
+    data: BadgeCreateManyInput | BadgeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Badge update
+   */
+  export type BadgeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Badge.
+     */
+    data: XOR<BadgeUpdateInput, BadgeUncheckedUpdateInput>
+    /**
+     * Choose, which Badge to update.
+     */
+    where: BadgeWhereUniqueInput
+  }
+
+  /**
+   * Badge updateMany
+   */
+  export type BadgeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Badges.
+     */
+    data: XOR<BadgeUpdateManyMutationInput, BadgeUncheckedUpdateManyInput>
+    /**
+     * Filter which Badges to update
+     */
+    where?: BadgeWhereInput
+    /**
+     * Limit how many Badges to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Badge updateManyAndReturn
+   */
+  export type BadgeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * The data used to update Badges.
+     */
+    data: XOR<BadgeUpdateManyMutationInput, BadgeUncheckedUpdateManyInput>
+    /**
+     * Filter which Badges to update
+     */
+    where?: BadgeWhereInput
+    /**
+     * Limit how many Badges to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Badge upsert
+   */
+  export type BadgeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Badge to update in case it exists.
+     */
+    where: BadgeWhereUniqueInput
+    /**
+     * In case the Badge found by the `where` argument doesn't exist, create a new Badge with this data.
+     */
+    create: XOR<BadgeCreateInput, BadgeUncheckedCreateInput>
+    /**
+     * In case the Badge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BadgeUpdateInput, BadgeUncheckedUpdateInput>
+  }
+
+  /**
+   * Badge delete
+   */
+  export type BadgeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+    /**
+     * Filter which Badge to delete.
+     */
+    where: BadgeWhereUniqueInput
+  }
+
+  /**
+   * Badge deleteMany
+   */
+  export type BadgeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Badges to delete
+     */
+    where?: BadgeWhereInput
+    /**
+     * Limit how many Badges to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Badge.userBadges
+   */
+  export type Badge$userBadgesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    where?: UserBadgeWhereInput
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    cursor?: UserBadgeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * Badge without action
+   */
+  export type BadgeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Badge
+     */
+    select?: BadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Badge
+     */
+    omit?: BadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BadgeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserBadge
+   */
+
+  export type AggregateUserBadge = {
+    _count: UserBadgeCountAggregateOutputType | null
+    _min: UserBadgeMinAggregateOutputType | null
+    _max: UserBadgeMaxAggregateOutputType | null
+  }
+
+  export type UserBadgeMinAggregateOutputType = {
+    id: string | null
+    earnedAt: Date | null
+    showcased: boolean | null
+    userId: string | null
+    badgeId: string | null
+  }
+
+  export type UserBadgeMaxAggregateOutputType = {
+    id: string | null
+    earnedAt: Date | null
+    showcased: boolean | null
+    userId: string | null
+    badgeId: string | null
+  }
+
+  export type UserBadgeCountAggregateOutputType = {
+    id: number
+    earnedAt: number
+    showcased: number
+    userId: number
+    badgeId: number
+    _all: number
+  }
+
+
+  export type UserBadgeMinAggregateInputType = {
+    id?: true
+    earnedAt?: true
+    showcased?: true
+    userId?: true
+    badgeId?: true
+  }
+
+  export type UserBadgeMaxAggregateInputType = {
+    id?: true
+    earnedAt?: true
+    showcased?: true
+    userId?: true
+    badgeId?: true
+  }
+
+  export type UserBadgeCountAggregateInputType = {
+    id?: true
+    earnedAt?: true
+    showcased?: true
+    userId?: true
+    badgeId?: true
+    _all?: true
+  }
+
+  export type UserBadgeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserBadge to aggregate.
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBadges to fetch.
+     */
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBadges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserBadges
+    **/
+    _count?: true | UserBadgeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserBadgeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserBadgeMaxAggregateInputType
+  }
+
+  export type GetUserBadgeAggregateType<T extends UserBadgeAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserBadge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserBadge[P]>
+      : GetScalarType<T[P], AggregateUserBadge[P]>
+  }
+
+
+
+
+  export type UserBadgeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserBadgeWhereInput
+    orderBy?: UserBadgeOrderByWithAggregationInput | UserBadgeOrderByWithAggregationInput[]
+    by: UserBadgeScalarFieldEnum[] | UserBadgeScalarFieldEnum
+    having?: UserBadgeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserBadgeCountAggregateInputType | true
+    _min?: UserBadgeMinAggregateInputType
+    _max?: UserBadgeMaxAggregateInputType
+  }
+
+  export type UserBadgeGroupByOutputType = {
+    id: string
+    earnedAt: Date
+    showcased: boolean
+    userId: string
+    badgeId: string
+    _count: UserBadgeCountAggregateOutputType | null
+    _min: UserBadgeMinAggregateOutputType | null
+    _max: UserBadgeMaxAggregateOutputType | null
+  }
+
+  type GetUserBadgeGroupByPayload<T extends UserBadgeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserBadgeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserBadgeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserBadgeGroupByOutputType[P]>
+            : GetScalarType<T[P], UserBadgeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserBadgeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    earnedAt?: boolean
+    showcased?: boolean
+    userId?: boolean
+    badgeId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | BadgeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userBadge"]>
+
+  export type UserBadgeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    earnedAt?: boolean
+    showcased?: boolean
+    userId?: boolean
+    badgeId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | BadgeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userBadge"]>
+
+  export type UserBadgeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    earnedAt?: boolean
+    showcased?: boolean
+    userId?: boolean
+    badgeId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | BadgeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userBadge"]>
+
+  export type UserBadgeSelectScalar = {
+    id?: boolean
+    earnedAt?: boolean
+    showcased?: boolean
+    userId?: boolean
+    badgeId?: boolean
+  }
+
+  export type UserBadgeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "earnedAt" | "showcased" | "userId" | "badgeId", ExtArgs["result"]["userBadge"]>
+  export type UserBadgeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | BadgeDefaultArgs<ExtArgs>
+  }
+  export type UserBadgeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | BadgeDefaultArgs<ExtArgs>
+  }
+  export type UserBadgeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    badge?: boolean | BadgeDefaultArgs<ExtArgs>
+  }
+
+  export type $UserBadgePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserBadge"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      badge: Prisma.$BadgePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      earnedAt: Date
+      showcased: boolean
+      userId: string
+      badgeId: string
+    }, ExtArgs["result"]["userBadge"]>
+    composites: {}
+  }
+
+  type UserBadgeGetPayload<S extends boolean | null | undefined | UserBadgeDefaultArgs> = $Result.GetResult<Prisma.$UserBadgePayload, S>
+
+  type UserBadgeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserBadgeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserBadgeCountAggregateInputType | true
+    }
+
+  export interface UserBadgeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserBadge'], meta: { name: 'UserBadge' } }
+    /**
+     * Find zero or one UserBadge that matches the filter.
+     * @param {UserBadgeFindUniqueArgs} args - Arguments to find a UserBadge
+     * @example
+     * // Get one UserBadge
+     * const userBadge = await prisma.userBadge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserBadgeFindUniqueArgs>(args: SelectSubset<T, UserBadgeFindUniqueArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserBadge that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserBadgeFindUniqueOrThrowArgs} args - Arguments to find a UserBadge
+     * @example
+     * // Get one UserBadge
+     * const userBadge = await prisma.userBadge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserBadgeFindUniqueOrThrowArgs>(args: SelectSubset<T, UserBadgeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserBadge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeFindFirstArgs} args - Arguments to find a UserBadge
+     * @example
+     * // Get one UserBadge
+     * const userBadge = await prisma.userBadge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserBadgeFindFirstArgs>(args?: SelectSubset<T, UserBadgeFindFirstArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserBadge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeFindFirstOrThrowArgs} args - Arguments to find a UserBadge
+     * @example
+     * // Get one UserBadge
+     * const userBadge = await prisma.userBadge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserBadgeFindFirstOrThrowArgs>(args?: SelectSubset<T, UserBadgeFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserBadges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserBadges
+     * const userBadges = await prisma.userBadge.findMany()
+     * 
+     * // Get first 10 UserBadges
+     * const userBadges = await prisma.userBadge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userBadgeWithIdOnly = await prisma.userBadge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserBadgeFindManyArgs>(args?: SelectSubset<T, UserBadgeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserBadge.
+     * @param {UserBadgeCreateArgs} args - Arguments to create a UserBadge.
+     * @example
+     * // Create one UserBadge
+     * const UserBadge = await prisma.userBadge.create({
+     *   data: {
+     *     // ... data to create a UserBadge
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserBadgeCreateArgs>(args: SelectSubset<T, UserBadgeCreateArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserBadges.
+     * @param {UserBadgeCreateManyArgs} args - Arguments to create many UserBadges.
+     * @example
+     * // Create many UserBadges
+     * const userBadge = await prisma.userBadge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserBadgeCreateManyArgs>(args?: SelectSubset<T, UserBadgeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserBadges and returns the data saved in the database.
+     * @param {UserBadgeCreateManyAndReturnArgs} args - Arguments to create many UserBadges.
+     * @example
+     * // Create many UserBadges
+     * const userBadge = await prisma.userBadge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserBadges and only return the `id`
+     * const userBadgeWithIdOnly = await prisma.userBadge.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserBadgeCreateManyAndReturnArgs>(args?: SelectSubset<T, UserBadgeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserBadge.
+     * @param {UserBadgeDeleteArgs} args - Arguments to delete one UserBadge.
+     * @example
+     * // Delete one UserBadge
+     * const UserBadge = await prisma.userBadge.delete({
+     *   where: {
+     *     // ... filter to delete one UserBadge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserBadgeDeleteArgs>(args: SelectSubset<T, UserBadgeDeleteArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserBadge.
+     * @param {UserBadgeUpdateArgs} args - Arguments to update one UserBadge.
+     * @example
+     * // Update one UserBadge
+     * const userBadge = await prisma.userBadge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserBadgeUpdateArgs>(args: SelectSubset<T, UserBadgeUpdateArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserBadges.
+     * @param {UserBadgeDeleteManyArgs} args - Arguments to filter UserBadges to delete.
+     * @example
+     * // Delete a few UserBadges
+     * const { count } = await prisma.userBadge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserBadgeDeleteManyArgs>(args?: SelectSubset<T, UserBadgeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserBadges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserBadges
+     * const userBadge = await prisma.userBadge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserBadgeUpdateManyArgs>(args: SelectSubset<T, UserBadgeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserBadges and returns the data updated in the database.
+     * @param {UserBadgeUpdateManyAndReturnArgs} args - Arguments to update many UserBadges.
+     * @example
+     * // Update many UserBadges
+     * const userBadge = await prisma.userBadge.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserBadges and only return the `id`
+     * const userBadgeWithIdOnly = await prisma.userBadge.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserBadgeUpdateManyAndReturnArgs>(args: SelectSubset<T, UserBadgeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserBadge.
+     * @param {UserBadgeUpsertArgs} args - Arguments to update or create a UserBadge.
+     * @example
+     * // Update or create a UserBadge
+     * const userBadge = await prisma.userBadge.upsert({
+     *   create: {
+     *     // ... data to create a UserBadge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserBadge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserBadgeUpsertArgs>(args: SelectSubset<T, UserBadgeUpsertArgs<ExtArgs>>): Prisma__UserBadgeClient<$Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserBadges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeCountArgs} args - Arguments to filter UserBadges to count.
+     * @example
+     * // Count the number of UserBadges
+     * const count = await prisma.userBadge.count({
+     *   where: {
+     *     // ... the filter for the UserBadges we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserBadgeCountArgs>(
+      args?: Subset<T, UserBadgeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserBadgeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserBadge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserBadgeAggregateArgs>(args: Subset<T, UserBadgeAggregateArgs>): Prisma.PrismaPromise<GetUserBadgeAggregateType<T>>
+
+    /**
+     * Group by UserBadge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserBadgeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserBadgeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserBadgeGroupByArgs['orderBy'] }
+        : { orderBy?: UserBadgeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserBadgeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserBadgeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserBadge model
+   */
+  readonly fields: UserBadgeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserBadge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserBadgeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    badge<T extends BadgeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BadgeDefaultArgs<ExtArgs>>): Prisma__BadgeClient<$Result.GetResult<Prisma.$BadgePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserBadge model
+   */
+  interface UserBadgeFieldRefs {
+    readonly id: FieldRef<"UserBadge", 'String'>
+    readonly earnedAt: FieldRef<"UserBadge", 'DateTime'>
+    readonly showcased: FieldRef<"UserBadge", 'Boolean'>
+    readonly userId: FieldRef<"UserBadge", 'String'>
+    readonly badgeId: FieldRef<"UserBadge", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserBadge findUnique
+   */
+  export type UserBadgeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadge to fetch.
+     */
+    where: UserBadgeWhereUniqueInput
+  }
+
+  /**
+   * UserBadge findUniqueOrThrow
+   */
+  export type UserBadgeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadge to fetch.
+     */
+    where: UserBadgeWhereUniqueInput
+  }
+
+  /**
+   * UserBadge findFirst
+   */
+  export type UserBadgeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadge to fetch.
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBadges to fetch.
+     */
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserBadges.
+     */
+    cursor?: UserBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBadges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserBadges.
+     */
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * UserBadge findFirstOrThrow
+   */
+  export type UserBadgeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadge to fetch.
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBadges to fetch.
+     */
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserBadges.
+     */
+    cursor?: UserBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBadges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserBadges.
+     */
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * UserBadge findMany
+   */
+  export type UserBadgeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserBadges to fetch.
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserBadges to fetch.
+     */
+    orderBy?: UserBadgeOrderByWithRelationInput | UserBadgeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserBadges.
+     */
+    cursor?: UserBadgeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserBadges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserBadges.
+     */
+    skip?: number
+    distinct?: UserBadgeScalarFieldEnum | UserBadgeScalarFieldEnum[]
+  }
+
+  /**
+   * UserBadge create
+   */
+  export type UserBadgeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserBadge.
+     */
+    data: XOR<UserBadgeCreateInput, UserBadgeUncheckedCreateInput>
+  }
+
+  /**
+   * UserBadge createMany
+   */
+  export type UserBadgeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserBadges.
+     */
+    data: UserBadgeCreateManyInput | UserBadgeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserBadge createManyAndReturn
+   */
+  export type UserBadgeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserBadges.
+     */
+    data: UserBadgeCreateManyInput | UserBadgeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserBadge update
+   */
+  export type UserBadgeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserBadge.
+     */
+    data: XOR<UserBadgeUpdateInput, UserBadgeUncheckedUpdateInput>
+    /**
+     * Choose, which UserBadge to update.
+     */
+    where: UserBadgeWhereUniqueInput
+  }
+
+  /**
+   * UserBadge updateMany
+   */
+  export type UserBadgeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserBadges.
+     */
+    data: XOR<UserBadgeUpdateManyMutationInput, UserBadgeUncheckedUpdateManyInput>
+    /**
+     * Filter which UserBadges to update
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * Limit how many UserBadges to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserBadge updateManyAndReturn
+   */
+  export type UserBadgeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * The data used to update UserBadges.
+     */
+    data: XOR<UserBadgeUpdateManyMutationInput, UserBadgeUncheckedUpdateManyInput>
+    /**
+     * Filter which UserBadges to update
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * Limit how many UserBadges to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserBadge upsert
+   */
+  export type UserBadgeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserBadge to update in case it exists.
+     */
+    where: UserBadgeWhereUniqueInput
+    /**
+     * In case the UserBadge found by the `where` argument doesn't exist, create a new UserBadge with this data.
+     */
+    create: XOR<UserBadgeCreateInput, UserBadgeUncheckedCreateInput>
+    /**
+     * In case the UserBadge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserBadgeUpdateInput, UserBadgeUncheckedUpdateInput>
+  }
+
+  /**
+   * UserBadge delete
+   */
+  export type UserBadgeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+    /**
+     * Filter which UserBadge to delete.
+     */
+    where: UserBadgeWhereUniqueInput
+  }
+
+  /**
+   * UserBadge deleteMany
+   */
+  export type UserBadgeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserBadges to delete
+     */
+    where?: UserBadgeWhereInput
+    /**
+     * Limit how many UserBadges to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserBadge without action
+   */
+  export type UserBadgeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserBadge
+     */
+    select?: UserBadgeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserBadge
+     */
+    omit?: UserBadgeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserBadgeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserAchievement
+   */
+
+  export type AggregateUserAchievement = {
+    _count: UserAchievementCountAggregateOutputType | null
+    _avg: UserAchievementAvgAggregateOutputType | null
+    _sum: UserAchievementSumAggregateOutputType | null
+    _min: UserAchievementMinAggregateOutputType | null
+    _max: UserAchievementMaxAggregateOutputType | null
+  }
+
+  export type UserAchievementAvgAggregateOutputType = {
+    totalPoints: number | null
+    level: number | null
+    streak: number | null
+    longestStreak: number | null
+    completedCourses: number | null
+    completedLessons: number | null
+    phishingScore: number | null
+    securityScore: number | null
+    weeklyGoal: number | null
+    weeklyProgress: number | null
+  }
+
+  export type UserAchievementSumAggregateOutputType = {
+    totalPoints: number | null
+    level: number | null
+    streak: number | null
+    longestStreak: number | null
+    completedCourses: number | null
+    completedLessons: number | null
+    phishingScore: number | null
+    securityScore: number | null
+    weeklyGoal: number | null
+    weeklyProgress: number | null
+  }
+
+  export type UserAchievementMinAggregateOutputType = {
+    id: string | null
+    totalPoints: number | null
+    level: number | null
+    streak: number | null
+    longestStreak: number | null
+    lastLoginDate: Date | null
+    completedCourses: number | null
+    completedLessons: number | null
+    phishingScore: number | null
+    securityScore: number | null
+    weeklyGoal: number | null
+    weeklyProgress: number | null
+    userId: string | null
+  }
+
+  export type UserAchievementMaxAggregateOutputType = {
+    id: string | null
+    totalPoints: number | null
+    level: number | null
+    streak: number | null
+    longestStreak: number | null
+    lastLoginDate: Date | null
+    completedCourses: number | null
+    completedLessons: number | null
+    phishingScore: number | null
+    securityScore: number | null
+    weeklyGoal: number | null
+    weeklyProgress: number | null
+    userId: string | null
+  }
+
+  export type UserAchievementCountAggregateOutputType = {
+    id: number
+    totalPoints: number
+    level: number
+    streak: number
+    longestStreak: number
+    lastLoginDate: number
+    completedCourses: number
+    completedLessons: number
+    phishingScore: number
+    securityScore: number
+    weeklyGoal: number
+    weeklyProgress: number
+    userId: number
+    _all: number
+  }
+
+
+  export type UserAchievementAvgAggregateInputType = {
+    totalPoints?: true
+    level?: true
+    streak?: true
+    longestStreak?: true
+    completedCourses?: true
+    completedLessons?: true
+    phishingScore?: true
+    securityScore?: true
+    weeklyGoal?: true
+    weeklyProgress?: true
+  }
+
+  export type UserAchievementSumAggregateInputType = {
+    totalPoints?: true
+    level?: true
+    streak?: true
+    longestStreak?: true
+    completedCourses?: true
+    completedLessons?: true
+    phishingScore?: true
+    securityScore?: true
+    weeklyGoal?: true
+    weeklyProgress?: true
+  }
+
+  export type UserAchievementMinAggregateInputType = {
+    id?: true
+    totalPoints?: true
+    level?: true
+    streak?: true
+    longestStreak?: true
+    lastLoginDate?: true
+    completedCourses?: true
+    completedLessons?: true
+    phishingScore?: true
+    securityScore?: true
+    weeklyGoal?: true
+    weeklyProgress?: true
+    userId?: true
+  }
+
+  export type UserAchievementMaxAggregateInputType = {
+    id?: true
+    totalPoints?: true
+    level?: true
+    streak?: true
+    longestStreak?: true
+    lastLoginDate?: true
+    completedCourses?: true
+    completedLessons?: true
+    phishingScore?: true
+    securityScore?: true
+    weeklyGoal?: true
+    weeklyProgress?: true
+    userId?: true
+  }
+
+  export type UserAchievementCountAggregateInputType = {
+    id?: true
+    totalPoints?: true
+    level?: true
+    streak?: true
+    longestStreak?: true
+    lastLoginDate?: true
+    completedCourses?: true
+    completedLessons?: true
+    phishingScore?: true
+    securityScore?: true
+    weeklyGoal?: true
+    weeklyProgress?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type UserAchievementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserAchievement to aggregate.
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserAchievements to fetch.
+     */
+    orderBy?: UserAchievementOrderByWithRelationInput | UserAchievementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserAchievementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserAchievements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserAchievements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserAchievements
+    **/
+    _count?: true | UserAchievementCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserAchievementAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserAchievementSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserAchievementMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserAchievementMaxAggregateInputType
+  }
+
+  export type GetUserAchievementAggregateType<T extends UserAchievementAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserAchievement]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserAchievement[P]>
+      : GetScalarType<T[P], AggregateUserAchievement[P]>
+  }
+
+
+
+
+  export type UserAchievementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserAchievementWhereInput
+    orderBy?: UserAchievementOrderByWithAggregationInput | UserAchievementOrderByWithAggregationInput[]
+    by: UserAchievementScalarFieldEnum[] | UserAchievementScalarFieldEnum
+    having?: UserAchievementScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserAchievementCountAggregateInputType | true
+    _avg?: UserAchievementAvgAggregateInputType
+    _sum?: UserAchievementSumAggregateInputType
+    _min?: UserAchievementMinAggregateInputType
+    _max?: UserAchievementMaxAggregateInputType
+  }
+
+  export type UserAchievementGroupByOutputType = {
+    id: string
+    totalPoints: number
+    level: number
+    streak: number
+    longestStreak: number
+    lastLoginDate: Date
+    completedCourses: number
+    completedLessons: number
+    phishingScore: number | null
+    securityScore: number | null
+    weeklyGoal: number
+    weeklyProgress: number
+    userId: string
+    _count: UserAchievementCountAggregateOutputType | null
+    _avg: UserAchievementAvgAggregateOutputType | null
+    _sum: UserAchievementSumAggregateOutputType | null
+    _min: UserAchievementMinAggregateOutputType | null
+    _max: UserAchievementMaxAggregateOutputType | null
+  }
+
+  type GetUserAchievementGroupByPayload<T extends UserAchievementGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserAchievementGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserAchievementGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserAchievementGroupByOutputType[P]>
+            : GetScalarType<T[P], UserAchievementGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserAchievementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    totalPoints?: boolean
+    level?: boolean
+    streak?: boolean
+    longestStreak?: boolean
+    lastLoginDate?: boolean
+    completedCourses?: boolean
+    completedLessons?: boolean
+    phishingScore?: boolean
+    securityScore?: boolean
+    weeklyGoal?: boolean
+    weeklyProgress?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userAchievement"]>
+
+  export type UserAchievementSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    totalPoints?: boolean
+    level?: boolean
+    streak?: boolean
+    longestStreak?: boolean
+    lastLoginDate?: boolean
+    completedCourses?: boolean
+    completedLessons?: boolean
+    phishingScore?: boolean
+    securityScore?: boolean
+    weeklyGoal?: boolean
+    weeklyProgress?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userAchievement"]>
+
+  export type UserAchievementSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    totalPoints?: boolean
+    level?: boolean
+    streak?: boolean
+    longestStreak?: boolean
+    lastLoginDate?: boolean
+    completedCourses?: boolean
+    completedLessons?: boolean
+    phishingScore?: boolean
+    securityScore?: boolean
+    weeklyGoal?: boolean
+    weeklyProgress?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userAchievement"]>
+
+  export type UserAchievementSelectScalar = {
+    id?: boolean
+    totalPoints?: boolean
+    level?: boolean
+    streak?: boolean
+    longestStreak?: boolean
+    lastLoginDate?: boolean
+    completedCourses?: boolean
+    completedLessons?: boolean
+    phishingScore?: boolean
+    securityScore?: boolean
+    weeklyGoal?: boolean
+    weeklyProgress?: boolean
+    userId?: boolean
+  }
+
+  export type UserAchievementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "totalPoints" | "level" | "streak" | "longestStreak" | "lastLoginDate" | "completedCourses" | "completedLessons" | "phishingScore" | "securityScore" | "weeklyGoal" | "weeklyProgress" | "userId", ExtArgs["result"]["userAchievement"]>
+  export type UserAchievementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserAchievementIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserAchievementIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserAchievementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserAchievement"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      totalPoints: number
+      level: number
+      streak: number
+      longestStreak: number
+      lastLoginDate: Date
+      completedCourses: number
+      completedLessons: number
+      phishingScore: number | null
+      securityScore: number | null
+      weeklyGoal: number
+      weeklyProgress: number
+      userId: string
+    }, ExtArgs["result"]["userAchievement"]>
+    composites: {}
+  }
+
+  type UserAchievementGetPayload<S extends boolean | null | undefined | UserAchievementDefaultArgs> = $Result.GetResult<Prisma.$UserAchievementPayload, S>
+
+  type UserAchievementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserAchievementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserAchievementCountAggregateInputType | true
+    }
+
+  export interface UserAchievementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserAchievement'], meta: { name: 'UserAchievement' } }
+    /**
+     * Find zero or one UserAchievement that matches the filter.
+     * @param {UserAchievementFindUniqueArgs} args - Arguments to find a UserAchievement
+     * @example
+     * // Get one UserAchievement
+     * const userAchievement = await prisma.userAchievement.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserAchievementFindUniqueArgs>(args: SelectSubset<T, UserAchievementFindUniqueArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserAchievement that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserAchievementFindUniqueOrThrowArgs} args - Arguments to find a UserAchievement
+     * @example
+     * // Get one UserAchievement
+     * const userAchievement = await prisma.userAchievement.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserAchievementFindUniqueOrThrowArgs>(args: SelectSubset<T, UserAchievementFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserAchievement that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementFindFirstArgs} args - Arguments to find a UserAchievement
+     * @example
+     * // Get one UserAchievement
+     * const userAchievement = await prisma.userAchievement.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserAchievementFindFirstArgs>(args?: SelectSubset<T, UserAchievementFindFirstArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserAchievement that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementFindFirstOrThrowArgs} args - Arguments to find a UserAchievement
+     * @example
+     * // Get one UserAchievement
+     * const userAchievement = await prisma.userAchievement.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserAchievementFindFirstOrThrowArgs>(args?: SelectSubset<T, UserAchievementFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserAchievements that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserAchievements
+     * const userAchievements = await prisma.userAchievement.findMany()
+     * 
+     * // Get first 10 UserAchievements
+     * const userAchievements = await prisma.userAchievement.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userAchievementWithIdOnly = await prisma.userAchievement.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserAchievementFindManyArgs>(args?: SelectSubset<T, UserAchievementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserAchievement.
+     * @param {UserAchievementCreateArgs} args - Arguments to create a UserAchievement.
+     * @example
+     * // Create one UserAchievement
+     * const UserAchievement = await prisma.userAchievement.create({
+     *   data: {
+     *     // ... data to create a UserAchievement
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserAchievementCreateArgs>(args: SelectSubset<T, UserAchievementCreateArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserAchievements.
+     * @param {UserAchievementCreateManyArgs} args - Arguments to create many UserAchievements.
+     * @example
+     * // Create many UserAchievements
+     * const userAchievement = await prisma.userAchievement.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserAchievementCreateManyArgs>(args?: SelectSubset<T, UserAchievementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserAchievements and returns the data saved in the database.
+     * @param {UserAchievementCreateManyAndReturnArgs} args - Arguments to create many UserAchievements.
+     * @example
+     * // Create many UserAchievements
+     * const userAchievement = await prisma.userAchievement.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserAchievements and only return the `id`
+     * const userAchievementWithIdOnly = await prisma.userAchievement.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserAchievementCreateManyAndReturnArgs>(args?: SelectSubset<T, UserAchievementCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserAchievement.
+     * @param {UserAchievementDeleteArgs} args - Arguments to delete one UserAchievement.
+     * @example
+     * // Delete one UserAchievement
+     * const UserAchievement = await prisma.userAchievement.delete({
+     *   where: {
+     *     // ... filter to delete one UserAchievement
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserAchievementDeleteArgs>(args: SelectSubset<T, UserAchievementDeleteArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserAchievement.
+     * @param {UserAchievementUpdateArgs} args - Arguments to update one UserAchievement.
+     * @example
+     * // Update one UserAchievement
+     * const userAchievement = await prisma.userAchievement.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserAchievementUpdateArgs>(args: SelectSubset<T, UserAchievementUpdateArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserAchievements.
+     * @param {UserAchievementDeleteManyArgs} args - Arguments to filter UserAchievements to delete.
+     * @example
+     * // Delete a few UserAchievements
+     * const { count } = await prisma.userAchievement.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserAchievementDeleteManyArgs>(args?: SelectSubset<T, UserAchievementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserAchievements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserAchievements
+     * const userAchievement = await prisma.userAchievement.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserAchievementUpdateManyArgs>(args: SelectSubset<T, UserAchievementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserAchievements and returns the data updated in the database.
+     * @param {UserAchievementUpdateManyAndReturnArgs} args - Arguments to update many UserAchievements.
+     * @example
+     * // Update many UserAchievements
+     * const userAchievement = await prisma.userAchievement.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserAchievements and only return the `id`
+     * const userAchievementWithIdOnly = await prisma.userAchievement.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserAchievementUpdateManyAndReturnArgs>(args: SelectSubset<T, UserAchievementUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserAchievement.
+     * @param {UserAchievementUpsertArgs} args - Arguments to update or create a UserAchievement.
+     * @example
+     * // Update or create a UserAchievement
+     * const userAchievement = await prisma.userAchievement.upsert({
+     *   create: {
+     *     // ... data to create a UserAchievement
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserAchievement we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserAchievementUpsertArgs>(args: SelectSubset<T, UserAchievementUpsertArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserAchievements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementCountArgs} args - Arguments to filter UserAchievements to count.
+     * @example
+     * // Count the number of UserAchievements
+     * const count = await prisma.userAchievement.count({
+     *   where: {
+     *     // ... the filter for the UserAchievements we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserAchievementCountArgs>(
+      args?: Subset<T, UserAchievementCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserAchievementCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserAchievement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAchievementAggregateArgs>(args: Subset<T, UserAchievementAggregateArgs>): Prisma.PrismaPromise<GetUserAchievementAggregateType<T>>
+
+    /**
+     * Group by UserAchievement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserAchievementGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserAchievementGroupByArgs['orderBy'] }
+        : { orderBy?: UserAchievementGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserAchievementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserAchievementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserAchievement model
+   */
+  readonly fields: UserAchievementFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserAchievement.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserAchievementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserAchievement model
+   */
+  interface UserAchievementFieldRefs {
+    readonly id: FieldRef<"UserAchievement", 'String'>
+    readonly totalPoints: FieldRef<"UserAchievement", 'Int'>
+    readonly level: FieldRef<"UserAchievement", 'Int'>
+    readonly streak: FieldRef<"UserAchievement", 'Int'>
+    readonly longestStreak: FieldRef<"UserAchievement", 'Int'>
+    readonly lastLoginDate: FieldRef<"UserAchievement", 'DateTime'>
+    readonly completedCourses: FieldRef<"UserAchievement", 'Int'>
+    readonly completedLessons: FieldRef<"UserAchievement", 'Int'>
+    readonly phishingScore: FieldRef<"UserAchievement", 'Float'>
+    readonly securityScore: FieldRef<"UserAchievement", 'Float'>
+    readonly weeklyGoal: FieldRef<"UserAchievement", 'Int'>
+    readonly weeklyProgress: FieldRef<"UserAchievement", 'Int'>
+    readonly userId: FieldRef<"UserAchievement", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserAchievement findUnique
+   */
+  export type UserAchievementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which UserAchievement to fetch.
+     */
+    where: UserAchievementWhereUniqueInput
+  }
+
+  /**
+   * UserAchievement findUniqueOrThrow
+   */
+  export type UserAchievementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which UserAchievement to fetch.
+     */
+    where: UserAchievementWhereUniqueInput
+  }
+
+  /**
+   * UserAchievement findFirst
+   */
+  export type UserAchievementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which UserAchievement to fetch.
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserAchievements to fetch.
+     */
+    orderBy?: UserAchievementOrderByWithRelationInput | UserAchievementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserAchievements.
+     */
+    cursor?: UserAchievementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserAchievements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserAchievements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserAchievements.
+     */
+    distinct?: UserAchievementScalarFieldEnum | UserAchievementScalarFieldEnum[]
+  }
+
+  /**
+   * UserAchievement findFirstOrThrow
+   */
+  export type UserAchievementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which UserAchievement to fetch.
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserAchievements to fetch.
+     */
+    orderBy?: UserAchievementOrderByWithRelationInput | UserAchievementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserAchievements.
+     */
+    cursor?: UserAchievementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserAchievements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserAchievements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserAchievements.
+     */
+    distinct?: UserAchievementScalarFieldEnum | UserAchievementScalarFieldEnum[]
+  }
+
+  /**
+   * UserAchievement findMany
+   */
+  export type UserAchievementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which UserAchievements to fetch.
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserAchievements to fetch.
+     */
+    orderBy?: UserAchievementOrderByWithRelationInput | UserAchievementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserAchievements.
+     */
+    cursor?: UserAchievementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserAchievements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserAchievements.
+     */
+    skip?: number
+    distinct?: UserAchievementScalarFieldEnum | UserAchievementScalarFieldEnum[]
+  }
+
+  /**
+   * UserAchievement create
+   */
+  export type UserAchievementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserAchievement.
+     */
+    data: XOR<UserAchievementCreateInput, UserAchievementUncheckedCreateInput>
+  }
+
+  /**
+   * UserAchievement createMany
+   */
+  export type UserAchievementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserAchievements.
+     */
+    data: UserAchievementCreateManyInput | UserAchievementCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserAchievement createManyAndReturn
+   */
+  export type UserAchievementCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserAchievements.
+     */
+    data: UserAchievementCreateManyInput | UserAchievementCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserAchievement update
+   */
+  export type UserAchievementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserAchievement.
+     */
+    data: XOR<UserAchievementUpdateInput, UserAchievementUncheckedUpdateInput>
+    /**
+     * Choose, which UserAchievement to update.
+     */
+    where: UserAchievementWhereUniqueInput
+  }
+
+  /**
+   * UserAchievement updateMany
+   */
+  export type UserAchievementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserAchievements.
+     */
+    data: XOR<UserAchievementUpdateManyMutationInput, UserAchievementUncheckedUpdateManyInput>
+    /**
+     * Filter which UserAchievements to update
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * Limit how many UserAchievements to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserAchievement updateManyAndReturn
+   */
+  export type UserAchievementUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * The data used to update UserAchievements.
+     */
+    data: XOR<UserAchievementUpdateManyMutationInput, UserAchievementUncheckedUpdateManyInput>
+    /**
+     * Filter which UserAchievements to update
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * Limit how many UserAchievements to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserAchievement upsert
+   */
+  export type UserAchievementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserAchievement to update in case it exists.
+     */
+    where: UserAchievementWhereUniqueInput
+    /**
+     * In case the UserAchievement found by the `where` argument doesn't exist, create a new UserAchievement with this data.
+     */
+    create: XOR<UserAchievementCreateInput, UserAchievementUncheckedCreateInput>
+    /**
+     * In case the UserAchievement was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserAchievementUpdateInput, UserAchievementUncheckedUpdateInput>
+  }
+
+  /**
+   * UserAchievement delete
+   */
+  export type UserAchievementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * Filter which UserAchievement to delete.
+     */
+    where: UserAchievementWhereUniqueInput
+  }
+
+  /**
+   * UserAchievement deleteMany
+   */
+  export type UserAchievementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserAchievements to delete
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * Limit how many UserAchievements to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserAchievement without action
+   */
+  export type UserAchievementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Challenge
+   */
+
+  export type AggregateChallenge = {
+    _count: ChallengeCountAggregateOutputType | null
+    _avg: ChallengeAvgAggregateOutputType | null
+    _sum: ChallengeSumAggregateOutputType | null
+    _min: ChallengeMinAggregateOutputType | null
+    _max: ChallengeMaxAggregateOutputType | null
+  }
+
+  export type ChallengeAvgAggregateOutputType = {
+    points: number | null
+    maxParticipants: number | null
+  }
+
+  export type ChallengeSumAggregateOutputType = {
+    points: number | null
+    maxParticipants: number | null
+  }
+
+  export type ChallengeMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    startDate: Date | null
+    endDate: Date | null
+    isActive: boolean | null
+    points: number | null
+    maxParticipants: number | null
+  }
+
+  export type ChallengeMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    startDate: Date | null
+    endDate: Date | null
+    isActive: boolean | null
+    points: number | null
+    maxParticipants: number | null
+  }
+
+  export type ChallengeCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    startDate: number
+    endDate: number
+    isActive: number
+    points: number
+    maxParticipants: number
+    _all: number
+  }
+
+
+  export type ChallengeAvgAggregateInputType = {
+    points?: true
+    maxParticipants?: true
+  }
+
+  export type ChallengeSumAggregateInputType = {
+    points?: true
+    maxParticipants?: true
+  }
+
+  export type ChallengeMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    startDate?: true
+    endDate?: true
+    isActive?: true
+    points?: true
+    maxParticipants?: true
+  }
+
+  export type ChallengeMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    startDate?: true
+    endDate?: true
+    isActive?: true
+    points?: true
+    maxParticipants?: true
+  }
+
+  export type ChallengeCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    startDate?: true
+    endDate?: true
+    isActive?: true
+    points?: true
+    maxParticipants?: true
+    _all?: true
+  }
+
+  export type ChallengeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Challenge to aggregate.
+     */
+    where?: ChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Challenges to fetch.
+     */
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Challenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Challenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Challenges
+    **/
+    _count?: true | ChallengeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ChallengeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ChallengeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChallengeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChallengeMaxAggregateInputType
+  }
+
+  export type GetChallengeAggregateType<T extends ChallengeAggregateArgs> = {
+        [P in keyof T & keyof AggregateChallenge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChallenge[P]>
+      : GetScalarType<T[P], AggregateChallenge[P]>
+  }
+
+
+
+
+  export type ChallengeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChallengeWhereInput
+    orderBy?: ChallengeOrderByWithAggregationInput | ChallengeOrderByWithAggregationInput[]
+    by: ChallengeScalarFieldEnum[] | ChallengeScalarFieldEnum
+    having?: ChallengeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChallengeCountAggregateInputType | true
+    _avg?: ChallengeAvgAggregateInputType
+    _sum?: ChallengeSumAggregateInputType
+    _min?: ChallengeMinAggregateInputType
+    _max?: ChallengeMaxAggregateInputType
+  }
+
+  export type ChallengeGroupByOutputType = {
+    id: string
+    title: string
+    description: string
+    startDate: Date
+    endDate: Date
+    isActive: boolean
+    points: number
+    maxParticipants: number | null
+    _count: ChallengeCountAggregateOutputType | null
+    _avg: ChallengeAvgAggregateOutputType | null
+    _sum: ChallengeSumAggregateOutputType | null
+    _min: ChallengeMinAggregateOutputType | null
+    _max: ChallengeMaxAggregateOutputType | null
+  }
+
+  type GetChallengeGroupByPayload<T extends ChallengeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChallengeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChallengeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChallengeGroupByOutputType[P]>
+            : GetScalarType<T[P], ChallengeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChallengeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isActive?: boolean
+    points?: boolean
+    maxParticipants?: boolean
+    participants?: boolean | Challenge$participantsArgs<ExtArgs>
+    _count?: boolean | ChallengeCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["challenge"]>
+
+  export type ChallengeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isActive?: boolean
+    points?: boolean
+    maxParticipants?: boolean
+  }, ExtArgs["result"]["challenge"]>
+
+  export type ChallengeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isActive?: boolean
+    points?: boolean
+    maxParticipants?: boolean
+  }, ExtArgs["result"]["challenge"]>
+
+  export type ChallengeSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isActive?: boolean
+    points?: boolean
+    maxParticipants?: boolean
+  }
+
+  export type ChallengeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "startDate" | "endDate" | "isActive" | "points" | "maxParticipants", ExtArgs["result"]["challenge"]>
+  export type ChallengeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    participants?: boolean | Challenge$participantsArgs<ExtArgs>
+    _count?: boolean | ChallengeCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ChallengeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ChallengeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ChallengePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Challenge"
+    objects: {
+      participants: Prisma.$UserChallengePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      description: string
+      startDate: Date
+      endDate: Date
+      isActive: boolean
+      points: number
+      maxParticipants: number | null
+    }, ExtArgs["result"]["challenge"]>
+    composites: {}
+  }
+
+  type ChallengeGetPayload<S extends boolean | null | undefined | ChallengeDefaultArgs> = $Result.GetResult<Prisma.$ChallengePayload, S>
+
+  type ChallengeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ChallengeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ChallengeCountAggregateInputType | true
+    }
+
+  export interface ChallengeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Challenge'], meta: { name: 'Challenge' } }
+    /**
+     * Find zero or one Challenge that matches the filter.
+     * @param {ChallengeFindUniqueArgs} args - Arguments to find a Challenge
+     * @example
+     * // Get one Challenge
+     * const challenge = await prisma.challenge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChallengeFindUniqueArgs>(args: SelectSubset<T, ChallengeFindUniqueArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Challenge that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ChallengeFindUniqueOrThrowArgs} args - Arguments to find a Challenge
+     * @example
+     * // Get one Challenge
+     * const challenge = await prisma.challenge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChallengeFindUniqueOrThrowArgs>(args: SelectSubset<T, ChallengeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Challenge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeFindFirstArgs} args - Arguments to find a Challenge
+     * @example
+     * // Get one Challenge
+     * const challenge = await prisma.challenge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChallengeFindFirstArgs>(args?: SelectSubset<T, ChallengeFindFirstArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Challenge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeFindFirstOrThrowArgs} args - Arguments to find a Challenge
+     * @example
+     * // Get one Challenge
+     * const challenge = await prisma.challenge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChallengeFindFirstOrThrowArgs>(args?: SelectSubset<T, ChallengeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Challenges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Challenges
+     * const challenges = await prisma.challenge.findMany()
+     * 
+     * // Get first 10 Challenges
+     * const challenges = await prisma.challenge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const challengeWithIdOnly = await prisma.challenge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChallengeFindManyArgs>(args?: SelectSubset<T, ChallengeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Challenge.
+     * @param {ChallengeCreateArgs} args - Arguments to create a Challenge.
+     * @example
+     * // Create one Challenge
+     * const Challenge = await prisma.challenge.create({
+     *   data: {
+     *     // ... data to create a Challenge
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChallengeCreateArgs>(args: SelectSubset<T, ChallengeCreateArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Challenges.
+     * @param {ChallengeCreateManyArgs} args - Arguments to create many Challenges.
+     * @example
+     * // Create many Challenges
+     * const challenge = await prisma.challenge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChallengeCreateManyArgs>(args?: SelectSubset<T, ChallengeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Challenges and returns the data saved in the database.
+     * @param {ChallengeCreateManyAndReturnArgs} args - Arguments to create many Challenges.
+     * @example
+     * // Create many Challenges
+     * const challenge = await prisma.challenge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Challenges and only return the `id`
+     * const challengeWithIdOnly = await prisma.challenge.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ChallengeCreateManyAndReturnArgs>(args?: SelectSubset<T, ChallengeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Challenge.
+     * @param {ChallengeDeleteArgs} args - Arguments to delete one Challenge.
+     * @example
+     * // Delete one Challenge
+     * const Challenge = await prisma.challenge.delete({
+     *   where: {
+     *     // ... filter to delete one Challenge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChallengeDeleteArgs>(args: SelectSubset<T, ChallengeDeleteArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Challenge.
+     * @param {ChallengeUpdateArgs} args - Arguments to update one Challenge.
+     * @example
+     * // Update one Challenge
+     * const challenge = await prisma.challenge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChallengeUpdateArgs>(args: SelectSubset<T, ChallengeUpdateArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Challenges.
+     * @param {ChallengeDeleteManyArgs} args - Arguments to filter Challenges to delete.
+     * @example
+     * // Delete a few Challenges
+     * const { count } = await prisma.challenge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChallengeDeleteManyArgs>(args?: SelectSubset<T, ChallengeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Challenges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Challenges
+     * const challenge = await prisma.challenge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChallengeUpdateManyArgs>(args: SelectSubset<T, ChallengeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Challenges and returns the data updated in the database.
+     * @param {ChallengeUpdateManyAndReturnArgs} args - Arguments to update many Challenges.
+     * @example
+     * // Update many Challenges
+     * const challenge = await prisma.challenge.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Challenges and only return the `id`
+     * const challengeWithIdOnly = await prisma.challenge.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ChallengeUpdateManyAndReturnArgs>(args: SelectSubset<T, ChallengeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Challenge.
+     * @param {ChallengeUpsertArgs} args - Arguments to update or create a Challenge.
+     * @example
+     * // Update or create a Challenge
+     * const challenge = await prisma.challenge.upsert({
+     *   create: {
+     *     // ... data to create a Challenge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Challenge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChallengeUpsertArgs>(args: SelectSubset<T, ChallengeUpsertArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Challenges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeCountArgs} args - Arguments to filter Challenges to count.
+     * @example
+     * // Count the number of Challenges
+     * const count = await prisma.challenge.count({
+     *   where: {
+     *     // ... the filter for the Challenges we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChallengeCountArgs>(
+      args?: Subset<T, ChallengeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChallengeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Challenge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChallengeAggregateArgs>(args: Subset<T, ChallengeAggregateArgs>): Prisma.PrismaPromise<GetChallengeAggregateType<T>>
+
+    /**
+     * Group by Challenge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChallengeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChallengeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChallengeGroupByArgs['orderBy'] }
+        : { orderBy?: ChallengeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChallengeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChallengeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Challenge model
+   */
+  readonly fields: ChallengeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Challenge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChallengeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    participants<T extends Challenge$participantsArgs<ExtArgs> = {}>(args?: Subset<T, Challenge$participantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Challenge model
+   */
+  interface ChallengeFieldRefs {
+    readonly id: FieldRef<"Challenge", 'String'>
+    readonly title: FieldRef<"Challenge", 'String'>
+    readonly description: FieldRef<"Challenge", 'String'>
+    readonly startDate: FieldRef<"Challenge", 'DateTime'>
+    readonly endDate: FieldRef<"Challenge", 'DateTime'>
+    readonly isActive: FieldRef<"Challenge", 'Boolean'>
+    readonly points: FieldRef<"Challenge", 'Int'>
+    readonly maxParticipants: FieldRef<"Challenge", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Challenge findUnique
+   */
+  export type ChallengeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Challenge
+     */
+    omit?: ChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenge to fetch.
+     */
+    where: ChallengeWhereUniqueInput
+  }
+
+  /**
+   * Challenge findUniqueOrThrow
+   */
+  export type ChallengeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Challenge
+     */
+    omit?: ChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenge to fetch.
+     */
+    where: ChallengeWhereUniqueInput
+  }
+
+  /**
+   * Challenge findFirst
+   */
+  export type ChallengeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Challenge
+     */
+    omit?: ChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenge to fetch.
+     */
+    where?: ChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Challenges to fetch.
+     */
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Challenges.
+     */
+    cursor?: ChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Challenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Challenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Challenges.
+     */
+    distinct?: ChallengeScalarFieldEnum | ChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge findFirstOrThrow
+   */
+  export type ChallengeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Challenge
+     */
+    omit?: ChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenge to fetch.
+     */
+    where?: ChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Challenges to fetch.
+     */
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Challenges.
+     */
+    cursor?: ChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Challenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Challenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Challenges.
+     */
+    distinct?: ChallengeScalarFieldEnum | ChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge findMany
+   */
+  export type ChallengeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Challenge
+     */
+    omit?: ChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which Challenges to fetch.
+     */
+    where?: ChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Challenges to fetch.
+     */
+    orderBy?: ChallengeOrderByWithRelationInput | ChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Challenges.
+     */
+    cursor?: ChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Challenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Challenges.
+     */
+    skip?: number
+    distinct?: ChallengeScalarFieldEnum | ChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge create
+   */
+  export type ChallengeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Challenge
+     */
+    omit?: ChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Challenge.
+     */
+    data: XOR<ChallengeCreateInput, ChallengeUncheckedCreateInput>
+  }
+
+  /**
+   * Challenge createMany
+   */
+  export type ChallengeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Challenges.
+     */
+    data: ChallengeCreateManyInput | ChallengeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Challenge createManyAndReturn
+   */
+  export type ChallengeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Challenge
+     */
+    omit?: ChallengeOmit<ExtArgs> | null
+    /**
+     * The data used to create many Challenges.
+     */
+    data: ChallengeCreateManyInput | ChallengeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Challenge update
+   */
+  export type ChallengeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Challenge
+     */
+    omit?: ChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Challenge.
+     */
+    data: XOR<ChallengeUpdateInput, ChallengeUncheckedUpdateInput>
+    /**
+     * Choose, which Challenge to update.
+     */
+    where: ChallengeWhereUniqueInput
+  }
+
+  /**
+   * Challenge updateMany
+   */
+  export type ChallengeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Challenges.
+     */
+    data: XOR<ChallengeUpdateManyMutationInput, ChallengeUncheckedUpdateManyInput>
+    /**
+     * Filter which Challenges to update
+     */
+    where?: ChallengeWhereInput
+    /**
+     * Limit how many Challenges to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Challenge updateManyAndReturn
+   */
+  export type ChallengeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Challenge
+     */
+    omit?: ChallengeOmit<ExtArgs> | null
+    /**
+     * The data used to update Challenges.
+     */
+    data: XOR<ChallengeUpdateManyMutationInput, ChallengeUncheckedUpdateManyInput>
+    /**
+     * Filter which Challenges to update
+     */
+    where?: ChallengeWhereInput
+    /**
+     * Limit how many Challenges to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Challenge upsert
+   */
+  export type ChallengeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Challenge
+     */
+    omit?: ChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Challenge to update in case it exists.
+     */
+    where: ChallengeWhereUniqueInput
+    /**
+     * In case the Challenge found by the `where` argument doesn't exist, create a new Challenge with this data.
+     */
+    create: XOR<ChallengeCreateInput, ChallengeUncheckedCreateInput>
+    /**
+     * In case the Challenge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChallengeUpdateInput, ChallengeUncheckedUpdateInput>
+  }
+
+  /**
+   * Challenge delete
+   */
+  export type ChallengeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Challenge
+     */
+    omit?: ChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+    /**
+     * Filter which Challenge to delete.
+     */
+    where: ChallengeWhereUniqueInput
+  }
+
+  /**
+   * Challenge deleteMany
+   */
+  export type ChallengeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Challenges to delete
+     */
+    where?: ChallengeWhereInput
+    /**
+     * Limit how many Challenges to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Challenge.participants
+   */
+  export type Challenge$participantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    where?: UserChallengeWhereInput
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    cursor?: UserChallengeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * Challenge without action
+   */
+  export type ChallengeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Challenge
+     */
+    select?: ChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Challenge
+     */
+    omit?: ChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChallengeInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserChallenge
+   */
+
+  export type AggregateUserChallenge = {
+    _count: UserChallengeCountAggregateOutputType | null
+    _avg: UserChallengeAvgAggregateOutputType | null
+    _sum: UserChallengeSumAggregateOutputType | null
+    _min: UserChallengeMinAggregateOutputType | null
+    _max: UserChallengeMaxAggregateOutputType | null
+  }
+
+  export type UserChallengeAvgAggregateOutputType = {
+    progress: number | null
+  }
+
+  export type UserChallengeSumAggregateOutputType = {
+    progress: number | null
+  }
+
+  export type UserChallengeMinAggregateOutputType = {
+    id: string | null
+    joinedAt: Date | null
+    completedAt: Date | null
+    progress: number | null
+    userId: string | null
+    challengeId: string | null
+  }
+
+  export type UserChallengeMaxAggregateOutputType = {
+    id: string | null
+    joinedAt: Date | null
+    completedAt: Date | null
+    progress: number | null
+    userId: string | null
+    challengeId: string | null
+  }
+
+  export type UserChallengeCountAggregateOutputType = {
+    id: number
+    joinedAt: number
+    completedAt: number
+    progress: number
+    userId: number
+    challengeId: number
+    _all: number
+  }
+
+
+  export type UserChallengeAvgAggregateInputType = {
+    progress?: true
+  }
+
+  export type UserChallengeSumAggregateInputType = {
+    progress?: true
+  }
+
+  export type UserChallengeMinAggregateInputType = {
+    id?: true
+    joinedAt?: true
+    completedAt?: true
+    progress?: true
+    userId?: true
+    challengeId?: true
+  }
+
+  export type UserChallengeMaxAggregateInputType = {
+    id?: true
+    joinedAt?: true
+    completedAt?: true
+    progress?: true
+    userId?: true
+    challengeId?: true
+  }
+
+  export type UserChallengeCountAggregateInputType = {
+    id?: true
+    joinedAt?: true
+    completedAt?: true
+    progress?: true
+    userId?: true
+    challengeId?: true
+    _all?: true
+  }
+
+  export type UserChallengeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserChallenge to aggregate.
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserChallenges to fetch.
+     */
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserChallenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserChallenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserChallenges
+    **/
+    _count?: true | UserChallengeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserChallengeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserChallengeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserChallengeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserChallengeMaxAggregateInputType
+  }
+
+  export type GetUserChallengeAggregateType<T extends UserChallengeAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserChallenge]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserChallenge[P]>
+      : GetScalarType<T[P], AggregateUserChallenge[P]>
+  }
+
+
+
+
+  export type UserChallengeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserChallengeWhereInput
+    orderBy?: UserChallengeOrderByWithAggregationInput | UserChallengeOrderByWithAggregationInput[]
+    by: UserChallengeScalarFieldEnum[] | UserChallengeScalarFieldEnum
+    having?: UserChallengeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserChallengeCountAggregateInputType | true
+    _avg?: UserChallengeAvgAggregateInputType
+    _sum?: UserChallengeSumAggregateInputType
+    _min?: UserChallengeMinAggregateInputType
+    _max?: UserChallengeMaxAggregateInputType
+  }
+
+  export type UserChallengeGroupByOutputType = {
+    id: string
+    joinedAt: Date
+    completedAt: Date | null
+    progress: number
+    userId: string
+    challengeId: string
+    _count: UserChallengeCountAggregateOutputType | null
+    _avg: UserChallengeAvgAggregateOutputType | null
+    _sum: UserChallengeSumAggregateOutputType | null
+    _min: UserChallengeMinAggregateOutputType | null
+    _max: UserChallengeMaxAggregateOutputType | null
+  }
+
+  type GetUserChallengeGroupByPayload<T extends UserChallengeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserChallengeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserChallengeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserChallengeGroupByOutputType[P]>
+            : GetScalarType<T[P], UserChallengeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserChallengeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    joinedAt?: boolean
+    completedAt?: boolean
+    progress?: boolean
+    userId?: boolean
+    challengeId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userChallenge"]>
+
+  export type UserChallengeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    joinedAt?: boolean
+    completedAt?: boolean
+    progress?: boolean
+    userId?: boolean
+    challengeId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userChallenge"]>
+
+  export type UserChallengeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    joinedAt?: boolean
+    completedAt?: boolean
+    progress?: boolean
+    userId?: boolean
+    challengeId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userChallenge"]>
+
+  export type UserChallengeSelectScalar = {
+    id?: boolean
+    joinedAt?: boolean
+    completedAt?: boolean
+    progress?: boolean
+    userId?: boolean
+    challengeId?: boolean
+  }
+
+  export type UserChallengeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "joinedAt" | "completedAt" | "progress" | "userId" | "challengeId", ExtArgs["result"]["userChallenge"]>
+  export type UserChallengeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }
+  export type UserChallengeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }
+  export type UserChallengeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    challenge?: boolean | ChallengeDefaultArgs<ExtArgs>
+  }
+
+  export type $UserChallengePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserChallenge"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      challenge: Prisma.$ChallengePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      joinedAt: Date
+      completedAt: Date | null
+      progress: number
+      userId: string
+      challengeId: string
+    }, ExtArgs["result"]["userChallenge"]>
+    composites: {}
+  }
+
+  type UserChallengeGetPayload<S extends boolean | null | undefined | UserChallengeDefaultArgs> = $Result.GetResult<Prisma.$UserChallengePayload, S>
+
+  type UserChallengeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserChallengeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserChallengeCountAggregateInputType | true
+    }
+
+  export interface UserChallengeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserChallenge'], meta: { name: 'UserChallenge' } }
+    /**
+     * Find zero or one UserChallenge that matches the filter.
+     * @param {UserChallengeFindUniqueArgs} args - Arguments to find a UserChallenge
+     * @example
+     * // Get one UserChallenge
+     * const userChallenge = await prisma.userChallenge.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserChallengeFindUniqueArgs>(args: SelectSubset<T, UserChallengeFindUniqueArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserChallenge that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserChallengeFindUniqueOrThrowArgs} args - Arguments to find a UserChallenge
+     * @example
+     * // Get one UserChallenge
+     * const userChallenge = await prisma.userChallenge.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserChallengeFindUniqueOrThrowArgs>(args: SelectSubset<T, UserChallengeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserChallenge that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeFindFirstArgs} args - Arguments to find a UserChallenge
+     * @example
+     * // Get one UserChallenge
+     * const userChallenge = await prisma.userChallenge.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserChallengeFindFirstArgs>(args?: SelectSubset<T, UserChallengeFindFirstArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserChallenge that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeFindFirstOrThrowArgs} args - Arguments to find a UserChallenge
+     * @example
+     * // Get one UserChallenge
+     * const userChallenge = await prisma.userChallenge.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserChallengeFindFirstOrThrowArgs>(args?: SelectSubset<T, UserChallengeFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserChallenges that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserChallenges
+     * const userChallenges = await prisma.userChallenge.findMany()
+     * 
+     * // Get first 10 UserChallenges
+     * const userChallenges = await prisma.userChallenge.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userChallengeWithIdOnly = await prisma.userChallenge.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserChallengeFindManyArgs>(args?: SelectSubset<T, UserChallengeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserChallenge.
+     * @param {UserChallengeCreateArgs} args - Arguments to create a UserChallenge.
+     * @example
+     * // Create one UserChallenge
+     * const UserChallenge = await prisma.userChallenge.create({
+     *   data: {
+     *     // ... data to create a UserChallenge
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserChallengeCreateArgs>(args: SelectSubset<T, UserChallengeCreateArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserChallenges.
+     * @param {UserChallengeCreateManyArgs} args - Arguments to create many UserChallenges.
+     * @example
+     * // Create many UserChallenges
+     * const userChallenge = await prisma.userChallenge.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserChallengeCreateManyArgs>(args?: SelectSubset<T, UserChallengeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserChallenges and returns the data saved in the database.
+     * @param {UserChallengeCreateManyAndReturnArgs} args - Arguments to create many UserChallenges.
+     * @example
+     * // Create many UserChallenges
+     * const userChallenge = await prisma.userChallenge.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserChallenges and only return the `id`
+     * const userChallengeWithIdOnly = await prisma.userChallenge.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserChallengeCreateManyAndReturnArgs>(args?: SelectSubset<T, UserChallengeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserChallenge.
+     * @param {UserChallengeDeleteArgs} args - Arguments to delete one UserChallenge.
+     * @example
+     * // Delete one UserChallenge
+     * const UserChallenge = await prisma.userChallenge.delete({
+     *   where: {
+     *     // ... filter to delete one UserChallenge
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserChallengeDeleteArgs>(args: SelectSubset<T, UserChallengeDeleteArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserChallenge.
+     * @param {UserChallengeUpdateArgs} args - Arguments to update one UserChallenge.
+     * @example
+     * // Update one UserChallenge
+     * const userChallenge = await prisma.userChallenge.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserChallengeUpdateArgs>(args: SelectSubset<T, UserChallengeUpdateArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserChallenges.
+     * @param {UserChallengeDeleteManyArgs} args - Arguments to filter UserChallenges to delete.
+     * @example
+     * // Delete a few UserChallenges
+     * const { count } = await prisma.userChallenge.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserChallengeDeleteManyArgs>(args?: SelectSubset<T, UserChallengeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserChallenges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserChallenges
+     * const userChallenge = await prisma.userChallenge.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserChallengeUpdateManyArgs>(args: SelectSubset<T, UserChallengeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserChallenges and returns the data updated in the database.
+     * @param {UserChallengeUpdateManyAndReturnArgs} args - Arguments to update many UserChallenges.
+     * @example
+     * // Update many UserChallenges
+     * const userChallenge = await prisma.userChallenge.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserChallenges and only return the `id`
+     * const userChallengeWithIdOnly = await prisma.userChallenge.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserChallengeUpdateManyAndReturnArgs>(args: SelectSubset<T, UserChallengeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserChallenge.
+     * @param {UserChallengeUpsertArgs} args - Arguments to update or create a UserChallenge.
+     * @example
+     * // Update or create a UserChallenge
+     * const userChallenge = await prisma.userChallenge.upsert({
+     *   create: {
+     *     // ... data to create a UserChallenge
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserChallenge we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserChallengeUpsertArgs>(args: SelectSubset<T, UserChallengeUpsertArgs<ExtArgs>>): Prisma__UserChallengeClient<$Result.GetResult<Prisma.$UserChallengePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserChallenges.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeCountArgs} args - Arguments to filter UserChallenges to count.
+     * @example
+     * // Count the number of UserChallenges
+     * const count = await prisma.userChallenge.count({
+     *   where: {
+     *     // ... the filter for the UserChallenges we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserChallengeCountArgs>(
+      args?: Subset<T, UserChallengeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserChallengeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserChallenge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserChallengeAggregateArgs>(args: Subset<T, UserChallengeAggregateArgs>): Prisma.PrismaPromise<GetUserChallengeAggregateType<T>>
+
+    /**
+     * Group by UserChallenge.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserChallengeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserChallengeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserChallengeGroupByArgs['orderBy'] }
+        : { orderBy?: UserChallengeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserChallengeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserChallengeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserChallenge model
+   */
+  readonly fields: UserChallengeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserChallenge.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserChallengeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    challenge<T extends ChallengeDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChallengeDefaultArgs<ExtArgs>>): Prisma__ChallengeClient<$Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserChallenge model
+   */
+  interface UserChallengeFieldRefs {
+    readonly id: FieldRef<"UserChallenge", 'String'>
+    readonly joinedAt: FieldRef<"UserChallenge", 'DateTime'>
+    readonly completedAt: FieldRef<"UserChallenge", 'DateTime'>
+    readonly progress: FieldRef<"UserChallenge", 'Float'>
+    readonly userId: FieldRef<"UserChallenge", 'String'>
+    readonly challengeId: FieldRef<"UserChallenge", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserChallenge findUnique
+   */
+  export type UserChallengeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenge to fetch.
+     */
+    where: UserChallengeWhereUniqueInput
+  }
+
+  /**
+   * UserChallenge findUniqueOrThrow
+   */
+  export type UserChallengeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenge to fetch.
+     */
+    where: UserChallengeWhereUniqueInput
+  }
+
+  /**
+   * UserChallenge findFirst
+   */
+  export type UserChallengeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenge to fetch.
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserChallenges to fetch.
+     */
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserChallenges.
+     */
+    cursor?: UserChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserChallenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserChallenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserChallenges.
+     */
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * UserChallenge findFirstOrThrow
+   */
+  export type UserChallengeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenge to fetch.
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserChallenges to fetch.
+     */
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserChallenges.
+     */
+    cursor?: UserChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserChallenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserChallenges.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserChallenges.
+     */
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * UserChallenge findMany
+   */
+  export type UserChallengeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter, which UserChallenges to fetch.
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserChallenges to fetch.
+     */
+    orderBy?: UserChallengeOrderByWithRelationInput | UserChallengeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserChallenges.
+     */
+    cursor?: UserChallengeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserChallenges from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserChallenges.
+     */
+    skip?: number
+    distinct?: UserChallengeScalarFieldEnum | UserChallengeScalarFieldEnum[]
+  }
+
+  /**
+   * UserChallenge create
+   */
+  export type UserChallengeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserChallenge.
+     */
+    data: XOR<UserChallengeCreateInput, UserChallengeUncheckedCreateInput>
+  }
+
+  /**
+   * UserChallenge createMany
+   */
+  export type UserChallengeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserChallenges.
+     */
+    data: UserChallengeCreateManyInput | UserChallengeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserChallenge createManyAndReturn
+   */
+  export type UserChallengeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserChallenges.
+     */
+    data: UserChallengeCreateManyInput | UserChallengeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserChallenge update
+   */
+  export type UserChallengeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserChallenge.
+     */
+    data: XOR<UserChallengeUpdateInput, UserChallengeUncheckedUpdateInput>
+    /**
+     * Choose, which UserChallenge to update.
+     */
+    where: UserChallengeWhereUniqueInput
+  }
+
+  /**
+   * UserChallenge updateMany
+   */
+  export type UserChallengeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserChallenges.
+     */
+    data: XOR<UserChallengeUpdateManyMutationInput, UserChallengeUncheckedUpdateManyInput>
+    /**
+     * Filter which UserChallenges to update
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * Limit how many UserChallenges to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserChallenge updateManyAndReturn
+   */
+  export type UserChallengeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * The data used to update UserChallenges.
+     */
+    data: XOR<UserChallengeUpdateManyMutationInput, UserChallengeUncheckedUpdateManyInput>
+    /**
+     * Filter which UserChallenges to update
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * Limit how many UserChallenges to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserChallenge upsert
+   */
+  export type UserChallengeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserChallenge to update in case it exists.
+     */
+    where: UserChallengeWhereUniqueInput
+    /**
+     * In case the UserChallenge found by the `where` argument doesn't exist, create a new UserChallenge with this data.
+     */
+    create: XOR<UserChallengeCreateInput, UserChallengeUncheckedCreateInput>
+    /**
+     * In case the UserChallenge was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserChallengeUpdateInput, UserChallengeUncheckedUpdateInput>
+  }
+
+  /**
+   * UserChallenge delete
+   */
+  export type UserChallengeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
+    /**
+     * Filter which UserChallenge to delete.
+     */
+    where: UserChallengeWhereUniqueInput
+  }
+
+  /**
+   * UserChallenge deleteMany
+   */
+  export type UserChallengeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserChallenges to delete
+     */
+    where?: UserChallengeWhereInput
+    /**
+     * Limit how many UserChallenges to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserChallenge without action
+   */
+  export type UserChallengeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserChallenge
+     */
+    select?: UserChallengeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserChallenge
+     */
+    omit?: UserChallengeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserChallengeInclude<ExtArgs> | null
   }
 
 
@@ -17938,6 +24619,1103 @@ export namespace Prisma {
 
 
   /**
+   * Model NotificationPreferences
+   */
+
+  export type AggregateNotificationPreferences = {
+    _count: NotificationPreferencesCountAggregateOutputType | null
+    _min: NotificationPreferencesMinAggregateOutputType | null
+    _max: NotificationPreferencesMaxAggregateOutputType | null
+  }
+
+  export type NotificationPreferencesMinAggregateOutputType = {
+    id: string | null
+    emailNotifications: boolean | null
+    smsNotifications: boolean | null
+    securityAlerts: boolean | null
+    newsUpdates: boolean | null
+    courseUpdates: boolean | null
+    marketingEmails: boolean | null
+    profileId: string | null
+  }
+
+  export type NotificationPreferencesMaxAggregateOutputType = {
+    id: string | null
+    emailNotifications: boolean | null
+    smsNotifications: boolean | null
+    securityAlerts: boolean | null
+    newsUpdates: boolean | null
+    courseUpdates: boolean | null
+    marketingEmails: boolean | null
+    profileId: string | null
+  }
+
+  export type NotificationPreferencesCountAggregateOutputType = {
+    id: number
+    emailNotifications: number
+    smsNotifications: number
+    securityAlerts: number
+    newsUpdates: number
+    courseUpdates: number
+    marketingEmails: number
+    profileId: number
+    _all: number
+  }
+
+
+  export type NotificationPreferencesMinAggregateInputType = {
+    id?: true
+    emailNotifications?: true
+    smsNotifications?: true
+    securityAlerts?: true
+    newsUpdates?: true
+    courseUpdates?: true
+    marketingEmails?: true
+    profileId?: true
+  }
+
+  export type NotificationPreferencesMaxAggregateInputType = {
+    id?: true
+    emailNotifications?: true
+    smsNotifications?: true
+    securityAlerts?: true
+    newsUpdates?: true
+    courseUpdates?: true
+    marketingEmails?: true
+    profileId?: true
+  }
+
+  export type NotificationPreferencesCountAggregateInputType = {
+    id?: true
+    emailNotifications?: true
+    smsNotifications?: true
+    securityAlerts?: true
+    newsUpdates?: true
+    courseUpdates?: true
+    marketingEmails?: true
+    profileId?: true
+    _all?: true
+  }
+
+  export type NotificationPreferencesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which NotificationPreferences to aggregate.
+     */
+    where?: NotificationPreferencesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NotificationPreferences to fetch.
+     */
+    orderBy?: NotificationPreferencesOrderByWithRelationInput | NotificationPreferencesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NotificationPreferencesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NotificationPreferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NotificationPreferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned NotificationPreferences
+    **/
+    _count?: true | NotificationPreferencesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NotificationPreferencesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NotificationPreferencesMaxAggregateInputType
+  }
+
+  export type GetNotificationPreferencesAggregateType<T extends NotificationPreferencesAggregateArgs> = {
+        [P in keyof T & keyof AggregateNotificationPreferences]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNotificationPreferences[P]>
+      : GetScalarType<T[P], AggregateNotificationPreferences[P]>
+  }
+
+
+
+
+  export type NotificationPreferencesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationPreferencesWhereInput
+    orderBy?: NotificationPreferencesOrderByWithAggregationInput | NotificationPreferencesOrderByWithAggregationInput[]
+    by: NotificationPreferencesScalarFieldEnum[] | NotificationPreferencesScalarFieldEnum
+    having?: NotificationPreferencesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NotificationPreferencesCountAggregateInputType | true
+    _min?: NotificationPreferencesMinAggregateInputType
+    _max?: NotificationPreferencesMaxAggregateInputType
+  }
+
+  export type NotificationPreferencesGroupByOutputType = {
+    id: string
+    emailNotifications: boolean
+    smsNotifications: boolean
+    securityAlerts: boolean
+    newsUpdates: boolean
+    courseUpdates: boolean
+    marketingEmails: boolean
+    profileId: string
+    _count: NotificationPreferencesCountAggregateOutputType | null
+    _min: NotificationPreferencesMinAggregateOutputType | null
+    _max: NotificationPreferencesMaxAggregateOutputType | null
+  }
+
+  type GetNotificationPreferencesGroupByPayload<T extends NotificationPreferencesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NotificationPreferencesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NotificationPreferencesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NotificationPreferencesGroupByOutputType[P]>
+            : GetScalarType<T[P], NotificationPreferencesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NotificationPreferencesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    securityAlerts?: boolean
+    newsUpdates?: boolean
+    courseUpdates?: boolean
+    marketingEmails?: boolean
+    profileId?: boolean
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["notificationPreferences"]>
+
+  export type NotificationPreferencesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    securityAlerts?: boolean
+    newsUpdates?: boolean
+    courseUpdates?: boolean
+    marketingEmails?: boolean
+    profileId?: boolean
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["notificationPreferences"]>
+
+  export type NotificationPreferencesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    securityAlerts?: boolean
+    newsUpdates?: boolean
+    courseUpdates?: boolean
+    marketingEmails?: boolean
+    profileId?: boolean
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["notificationPreferences"]>
+
+  export type NotificationPreferencesSelectScalar = {
+    id?: boolean
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    securityAlerts?: boolean
+    newsUpdates?: boolean
+    courseUpdates?: boolean
+    marketingEmails?: boolean
+    profileId?: boolean
+  }
+
+  export type NotificationPreferencesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "emailNotifications" | "smsNotifications" | "securityAlerts" | "newsUpdates" | "courseUpdates" | "marketingEmails" | "profileId", ExtArgs["result"]["notificationPreferences"]>
+  export type NotificationPreferencesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>
+  }
+  export type NotificationPreferencesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>
+  }
+  export type NotificationPreferencesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    profile?: boolean | ProfileDefaultArgs<ExtArgs>
+  }
+
+  export type $NotificationPreferencesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "NotificationPreferences"
+    objects: {
+      profile: Prisma.$ProfilePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      emailNotifications: boolean
+      smsNotifications: boolean
+      securityAlerts: boolean
+      newsUpdates: boolean
+      courseUpdates: boolean
+      marketingEmails: boolean
+      profileId: string
+    }, ExtArgs["result"]["notificationPreferences"]>
+    composites: {}
+  }
+
+  type NotificationPreferencesGetPayload<S extends boolean | null | undefined | NotificationPreferencesDefaultArgs> = $Result.GetResult<Prisma.$NotificationPreferencesPayload, S>
+
+  type NotificationPreferencesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<NotificationPreferencesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: NotificationPreferencesCountAggregateInputType | true
+    }
+
+  export interface NotificationPreferencesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['NotificationPreferences'], meta: { name: 'NotificationPreferences' } }
+    /**
+     * Find zero or one NotificationPreferences that matches the filter.
+     * @param {NotificationPreferencesFindUniqueArgs} args - Arguments to find a NotificationPreferences
+     * @example
+     * // Get one NotificationPreferences
+     * const notificationPreferences = await prisma.notificationPreferences.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NotificationPreferencesFindUniqueArgs>(args: SelectSubset<T, NotificationPreferencesFindUniqueArgs<ExtArgs>>): Prisma__NotificationPreferencesClient<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one NotificationPreferences that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {NotificationPreferencesFindUniqueOrThrowArgs} args - Arguments to find a NotificationPreferences
+     * @example
+     * // Get one NotificationPreferences
+     * const notificationPreferences = await prisma.notificationPreferences.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NotificationPreferencesFindUniqueOrThrowArgs>(args: SelectSubset<T, NotificationPreferencesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NotificationPreferencesClient<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first NotificationPreferences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationPreferencesFindFirstArgs} args - Arguments to find a NotificationPreferences
+     * @example
+     * // Get one NotificationPreferences
+     * const notificationPreferences = await prisma.notificationPreferences.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NotificationPreferencesFindFirstArgs>(args?: SelectSubset<T, NotificationPreferencesFindFirstArgs<ExtArgs>>): Prisma__NotificationPreferencesClient<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first NotificationPreferences that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationPreferencesFindFirstOrThrowArgs} args - Arguments to find a NotificationPreferences
+     * @example
+     * // Get one NotificationPreferences
+     * const notificationPreferences = await prisma.notificationPreferences.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NotificationPreferencesFindFirstOrThrowArgs>(args?: SelectSubset<T, NotificationPreferencesFindFirstOrThrowArgs<ExtArgs>>): Prisma__NotificationPreferencesClient<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more NotificationPreferences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationPreferencesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all NotificationPreferences
+     * const notificationPreferences = await prisma.notificationPreferences.findMany()
+     * 
+     * // Get first 10 NotificationPreferences
+     * const notificationPreferences = await prisma.notificationPreferences.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const notificationPreferencesWithIdOnly = await prisma.notificationPreferences.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends NotificationPreferencesFindManyArgs>(args?: SelectSubset<T, NotificationPreferencesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a NotificationPreferences.
+     * @param {NotificationPreferencesCreateArgs} args - Arguments to create a NotificationPreferences.
+     * @example
+     * // Create one NotificationPreferences
+     * const NotificationPreferences = await prisma.notificationPreferences.create({
+     *   data: {
+     *     // ... data to create a NotificationPreferences
+     *   }
+     * })
+     * 
+     */
+    create<T extends NotificationPreferencesCreateArgs>(args: SelectSubset<T, NotificationPreferencesCreateArgs<ExtArgs>>): Prisma__NotificationPreferencesClient<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many NotificationPreferences.
+     * @param {NotificationPreferencesCreateManyArgs} args - Arguments to create many NotificationPreferences.
+     * @example
+     * // Create many NotificationPreferences
+     * const notificationPreferences = await prisma.notificationPreferences.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NotificationPreferencesCreateManyArgs>(args?: SelectSubset<T, NotificationPreferencesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many NotificationPreferences and returns the data saved in the database.
+     * @param {NotificationPreferencesCreateManyAndReturnArgs} args - Arguments to create many NotificationPreferences.
+     * @example
+     * // Create many NotificationPreferences
+     * const notificationPreferences = await prisma.notificationPreferences.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many NotificationPreferences and only return the `id`
+     * const notificationPreferencesWithIdOnly = await prisma.notificationPreferences.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends NotificationPreferencesCreateManyAndReturnArgs>(args?: SelectSubset<T, NotificationPreferencesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a NotificationPreferences.
+     * @param {NotificationPreferencesDeleteArgs} args - Arguments to delete one NotificationPreferences.
+     * @example
+     * // Delete one NotificationPreferences
+     * const NotificationPreferences = await prisma.notificationPreferences.delete({
+     *   where: {
+     *     // ... filter to delete one NotificationPreferences
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NotificationPreferencesDeleteArgs>(args: SelectSubset<T, NotificationPreferencesDeleteArgs<ExtArgs>>): Prisma__NotificationPreferencesClient<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one NotificationPreferences.
+     * @param {NotificationPreferencesUpdateArgs} args - Arguments to update one NotificationPreferences.
+     * @example
+     * // Update one NotificationPreferences
+     * const notificationPreferences = await prisma.notificationPreferences.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NotificationPreferencesUpdateArgs>(args: SelectSubset<T, NotificationPreferencesUpdateArgs<ExtArgs>>): Prisma__NotificationPreferencesClient<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more NotificationPreferences.
+     * @param {NotificationPreferencesDeleteManyArgs} args - Arguments to filter NotificationPreferences to delete.
+     * @example
+     * // Delete a few NotificationPreferences
+     * const { count } = await prisma.notificationPreferences.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NotificationPreferencesDeleteManyArgs>(args?: SelectSubset<T, NotificationPreferencesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more NotificationPreferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationPreferencesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many NotificationPreferences
+     * const notificationPreferences = await prisma.notificationPreferences.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NotificationPreferencesUpdateManyArgs>(args: SelectSubset<T, NotificationPreferencesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more NotificationPreferences and returns the data updated in the database.
+     * @param {NotificationPreferencesUpdateManyAndReturnArgs} args - Arguments to update many NotificationPreferences.
+     * @example
+     * // Update many NotificationPreferences
+     * const notificationPreferences = await prisma.notificationPreferences.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more NotificationPreferences and only return the `id`
+     * const notificationPreferencesWithIdOnly = await prisma.notificationPreferences.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends NotificationPreferencesUpdateManyAndReturnArgs>(args: SelectSubset<T, NotificationPreferencesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one NotificationPreferences.
+     * @param {NotificationPreferencesUpsertArgs} args - Arguments to update or create a NotificationPreferences.
+     * @example
+     * // Update or create a NotificationPreferences
+     * const notificationPreferences = await prisma.notificationPreferences.upsert({
+     *   create: {
+     *     // ... data to create a NotificationPreferences
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the NotificationPreferences we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NotificationPreferencesUpsertArgs>(args: SelectSubset<T, NotificationPreferencesUpsertArgs<ExtArgs>>): Prisma__NotificationPreferencesClient<$Result.GetResult<Prisma.$NotificationPreferencesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of NotificationPreferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationPreferencesCountArgs} args - Arguments to filter NotificationPreferences to count.
+     * @example
+     * // Count the number of NotificationPreferences
+     * const count = await prisma.notificationPreferences.count({
+     *   where: {
+     *     // ... the filter for the NotificationPreferences we want to count
+     *   }
+     * })
+    **/
+    count<T extends NotificationPreferencesCountArgs>(
+      args?: Subset<T, NotificationPreferencesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NotificationPreferencesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a NotificationPreferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationPreferencesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NotificationPreferencesAggregateArgs>(args: Subset<T, NotificationPreferencesAggregateArgs>): Prisma.PrismaPromise<GetNotificationPreferencesAggregateType<T>>
+
+    /**
+     * Group by NotificationPreferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationPreferencesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NotificationPreferencesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NotificationPreferencesGroupByArgs['orderBy'] }
+        : { orderBy?: NotificationPreferencesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NotificationPreferencesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNotificationPreferencesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the NotificationPreferences model
+   */
+  readonly fields: NotificationPreferencesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for NotificationPreferences.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NotificationPreferencesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    profile<T extends ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProfileDefaultArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the NotificationPreferences model
+   */
+  interface NotificationPreferencesFieldRefs {
+    readonly id: FieldRef<"NotificationPreferences", 'String'>
+    readonly emailNotifications: FieldRef<"NotificationPreferences", 'Boolean'>
+    readonly smsNotifications: FieldRef<"NotificationPreferences", 'Boolean'>
+    readonly securityAlerts: FieldRef<"NotificationPreferences", 'Boolean'>
+    readonly newsUpdates: FieldRef<"NotificationPreferences", 'Boolean'>
+    readonly courseUpdates: FieldRef<"NotificationPreferences", 'Boolean'>
+    readonly marketingEmails: FieldRef<"NotificationPreferences", 'Boolean'>
+    readonly profileId: FieldRef<"NotificationPreferences", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * NotificationPreferences findUnique
+   */
+  export type NotificationPreferencesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesInclude<ExtArgs> | null
+    /**
+     * Filter, which NotificationPreferences to fetch.
+     */
+    where: NotificationPreferencesWhereUniqueInput
+  }
+
+  /**
+   * NotificationPreferences findUniqueOrThrow
+   */
+  export type NotificationPreferencesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesInclude<ExtArgs> | null
+    /**
+     * Filter, which NotificationPreferences to fetch.
+     */
+    where: NotificationPreferencesWhereUniqueInput
+  }
+
+  /**
+   * NotificationPreferences findFirst
+   */
+  export type NotificationPreferencesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesInclude<ExtArgs> | null
+    /**
+     * Filter, which NotificationPreferences to fetch.
+     */
+    where?: NotificationPreferencesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NotificationPreferences to fetch.
+     */
+    orderBy?: NotificationPreferencesOrderByWithRelationInput | NotificationPreferencesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for NotificationPreferences.
+     */
+    cursor?: NotificationPreferencesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NotificationPreferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NotificationPreferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NotificationPreferences.
+     */
+    distinct?: NotificationPreferencesScalarFieldEnum | NotificationPreferencesScalarFieldEnum[]
+  }
+
+  /**
+   * NotificationPreferences findFirstOrThrow
+   */
+  export type NotificationPreferencesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesInclude<ExtArgs> | null
+    /**
+     * Filter, which NotificationPreferences to fetch.
+     */
+    where?: NotificationPreferencesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NotificationPreferences to fetch.
+     */
+    orderBy?: NotificationPreferencesOrderByWithRelationInput | NotificationPreferencesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for NotificationPreferences.
+     */
+    cursor?: NotificationPreferencesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NotificationPreferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NotificationPreferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NotificationPreferences.
+     */
+    distinct?: NotificationPreferencesScalarFieldEnum | NotificationPreferencesScalarFieldEnum[]
+  }
+
+  /**
+   * NotificationPreferences findMany
+   */
+  export type NotificationPreferencesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesInclude<ExtArgs> | null
+    /**
+     * Filter, which NotificationPreferences to fetch.
+     */
+    where?: NotificationPreferencesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NotificationPreferences to fetch.
+     */
+    orderBy?: NotificationPreferencesOrderByWithRelationInput | NotificationPreferencesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing NotificationPreferences.
+     */
+    cursor?: NotificationPreferencesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NotificationPreferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NotificationPreferences.
+     */
+    skip?: number
+    distinct?: NotificationPreferencesScalarFieldEnum | NotificationPreferencesScalarFieldEnum[]
+  }
+
+  /**
+   * NotificationPreferences create
+   */
+  export type NotificationPreferencesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a NotificationPreferences.
+     */
+    data: XOR<NotificationPreferencesCreateInput, NotificationPreferencesUncheckedCreateInput>
+  }
+
+  /**
+   * NotificationPreferences createMany
+   */
+  export type NotificationPreferencesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many NotificationPreferences.
+     */
+    data: NotificationPreferencesCreateManyInput | NotificationPreferencesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * NotificationPreferences createManyAndReturn
+   */
+  export type NotificationPreferencesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * The data used to create many NotificationPreferences.
+     */
+    data: NotificationPreferencesCreateManyInput | NotificationPreferencesCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * NotificationPreferences update
+   */
+  export type NotificationPreferencesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a NotificationPreferences.
+     */
+    data: XOR<NotificationPreferencesUpdateInput, NotificationPreferencesUncheckedUpdateInput>
+    /**
+     * Choose, which NotificationPreferences to update.
+     */
+    where: NotificationPreferencesWhereUniqueInput
+  }
+
+  /**
+   * NotificationPreferences updateMany
+   */
+  export type NotificationPreferencesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update NotificationPreferences.
+     */
+    data: XOR<NotificationPreferencesUpdateManyMutationInput, NotificationPreferencesUncheckedUpdateManyInput>
+    /**
+     * Filter which NotificationPreferences to update
+     */
+    where?: NotificationPreferencesWhereInput
+    /**
+     * Limit how many NotificationPreferences to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * NotificationPreferences updateManyAndReturn
+   */
+  export type NotificationPreferencesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * The data used to update NotificationPreferences.
+     */
+    data: XOR<NotificationPreferencesUpdateManyMutationInput, NotificationPreferencesUncheckedUpdateManyInput>
+    /**
+     * Filter which NotificationPreferences to update
+     */
+    where?: NotificationPreferencesWhereInput
+    /**
+     * Limit how many NotificationPreferences to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * NotificationPreferences upsert
+   */
+  export type NotificationPreferencesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the NotificationPreferences to update in case it exists.
+     */
+    where: NotificationPreferencesWhereUniqueInput
+    /**
+     * In case the NotificationPreferences found by the `where` argument doesn't exist, create a new NotificationPreferences with this data.
+     */
+    create: XOR<NotificationPreferencesCreateInput, NotificationPreferencesUncheckedCreateInput>
+    /**
+     * In case the NotificationPreferences was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NotificationPreferencesUpdateInput, NotificationPreferencesUncheckedUpdateInput>
+  }
+
+  /**
+   * NotificationPreferences delete
+   */
+  export type NotificationPreferencesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesInclude<ExtArgs> | null
+    /**
+     * Filter which NotificationPreferences to delete.
+     */
+    where: NotificationPreferencesWhereUniqueInput
+  }
+
+  /**
+   * NotificationPreferences deleteMany
+   */
+  export type NotificationPreferencesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which NotificationPreferences to delete
+     */
+    where?: NotificationPreferencesWhereInput
+    /**
+     * Limit how many NotificationPreferences to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * NotificationPreferences without action
+   */
+  export type NotificationPreferencesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NotificationPreferences
+     */
+    select?: NotificationPreferencesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NotificationPreferences
+     */
+    omit?: NotificationPreferencesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationPreferencesInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -17960,7 +25738,10 @@ export namespace Prisma {
     image: 'image',
     role: 'role',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    twoFactorEnabled: 'twoFactorEnabled',
+    twoFactorSecret: 'twoFactorSecret',
+    backupCodes: 'backupCodes'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -17974,6 +25755,13 @@ export namespace Prisma {
     location: 'location',
     interests: 'interests',
     socialLinks: 'socialLinks',
+    theme: 'theme',
+    securityLevel: 'securityLevel',
+    avatarUrl: 'avatarUrl',
+    coverImageUrl: 'coverImageUrl',
+    preferredLanguage: 'preferredLanguage',
+    contentPreferences: 'contentPreferences',
+    lastSeen: 'lastSeen',
     userId: 'userId'
   };
 
@@ -18102,11 +25890,85 @@ export namespace Prisma {
     completedLessons: 'completedLessons',
     startedAt: 'startedAt',
     completedAt: 'completedAt',
+    lastAccessedAt: 'lastAccessedAt',
+    progressPercentage: 'progressPercentage',
     userId: 'userId',
     courseId: 'courseId'
   };
 
   export type CourseProgressScalarFieldEnum = (typeof CourseProgressScalarFieldEnum)[keyof typeof CourseProgressScalarFieldEnum]
+
+
+  export const BadgeScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    imageUrl: 'imageUrl',
+    category: 'category',
+    difficulty: 'difficulty',
+    points: 'points',
+    isHidden: 'isHidden',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BadgeScalarFieldEnum = (typeof BadgeScalarFieldEnum)[keyof typeof BadgeScalarFieldEnum]
+
+
+  export const UserBadgeScalarFieldEnum: {
+    id: 'id',
+    earnedAt: 'earnedAt',
+    showcased: 'showcased',
+    userId: 'userId',
+    badgeId: 'badgeId'
+  };
+
+  export type UserBadgeScalarFieldEnum = (typeof UserBadgeScalarFieldEnum)[keyof typeof UserBadgeScalarFieldEnum]
+
+
+  export const UserAchievementScalarFieldEnum: {
+    id: 'id',
+    totalPoints: 'totalPoints',
+    level: 'level',
+    streak: 'streak',
+    longestStreak: 'longestStreak',
+    lastLoginDate: 'lastLoginDate',
+    completedCourses: 'completedCourses',
+    completedLessons: 'completedLessons',
+    phishingScore: 'phishingScore',
+    securityScore: 'securityScore',
+    weeklyGoal: 'weeklyGoal',
+    weeklyProgress: 'weeklyProgress',
+    userId: 'userId'
+  };
+
+  export type UserAchievementScalarFieldEnum = (typeof UserAchievementScalarFieldEnum)[keyof typeof UserAchievementScalarFieldEnum]
+
+
+  export const ChallengeScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    isActive: 'isActive',
+    points: 'points',
+    maxParticipants: 'maxParticipants'
+  };
+
+  export type ChallengeScalarFieldEnum = (typeof ChallengeScalarFieldEnum)[keyof typeof ChallengeScalarFieldEnum]
+
+
+  export const UserChallengeScalarFieldEnum: {
+    id: 'id',
+    joinedAt: 'joinedAt',
+    completedAt: 'completedAt',
+    progress: 'progress',
+    userId: 'userId',
+    challengeId: 'challengeId'
+  };
+
+  export type UserChallengeScalarFieldEnum = (typeof UserChallengeScalarFieldEnum)[keyof typeof UserChallengeScalarFieldEnum]
 
 
   export const ThreatIntelScalarFieldEnum: {
@@ -18122,6 +25984,20 @@ export namespace Prisma {
   };
 
   export type ThreatIntelScalarFieldEnum = (typeof ThreatIntelScalarFieldEnum)[keyof typeof ThreatIntelScalarFieldEnum]
+
+
+  export const NotificationPreferencesScalarFieldEnum: {
+    id: 'id',
+    emailNotifications: 'emailNotifications',
+    smsNotifications: 'smsNotifications',
+    securityAlerts: 'securityAlerts',
+    newsUpdates: 'newsUpdates',
+    courseUpdates: 'courseUpdates',
+    marketingEmails: 'marketingEmails',
+    profileId: 'profileId'
+  };
+
+  export type NotificationPreferencesScalarFieldEnum = (typeof NotificationPreferencesScalarFieldEnum)[keyof typeof NotificationPreferencesScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -18220,6 +26096,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Json'
    */
   export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -18234,9 +26117,30 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
+   * Reference to a field of type 'Theme'
    */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+  export type EnumThemeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Theme'>
+    
+
+
+  /**
+   * Reference to a field of type 'Theme[]'
+   */
+  export type ListEnumThemeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Theme[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'SecurityLevel'
+   */
+  export type EnumSecurityLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SecurityLevel'>
+    
+
+
+  /**
+   * Reference to a field of type 'SecurityLevel[]'
+   */
+  export type ListEnumSecurityLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SecurityLevel[]'>
     
 
 
@@ -18279,6 +26183,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'BadgeCategory'
+   */
+  export type EnumBadgeCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BadgeCategory'>
+    
+
+
+  /**
+   * Reference to a field of type 'BadgeCategory[]'
+   */
+  export type ListEnumBadgeCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BadgeCategory[]'>
     
 
 
@@ -18326,11 +26244,17 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    twoFactorEnabled?: BoolFilter<"User"> | boolean
+    twoFactorSecret?: StringNullableFilter<"User"> | string | null
+    backupCodes?: StringNullableListFilter<"User">
     profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
     posts?: PostListRelationFilter
     comments?: CommentListRelationFilter
     bookmarks?: BookmarkListRelationFilter
     courseProgress?: CourseProgressListRelationFilter
+    badges?: UserBadgeListRelationFilter
+    achievement?: XOR<UserAchievementNullableScalarRelationFilter, UserAchievementWhereInput> | null
+    challenges?: UserChallengeListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -18343,11 +26267,17 @@ export namespace Prisma {
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrderInput | SortOrder
+    backupCodes?: SortOrder
     profile?: ProfileOrderByWithRelationInput
     posts?: PostOrderByRelationAggregateInput
     comments?: CommentOrderByRelationAggregateInput
     bookmarks?: BookmarkOrderByRelationAggregateInput
     courseProgress?: CourseProgressOrderByRelationAggregateInput
+    badges?: UserBadgeOrderByRelationAggregateInput
+    achievement?: UserAchievementOrderByWithRelationInput
+    challenges?: UserChallengeOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -18363,11 +26293,17 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    twoFactorEnabled?: BoolFilter<"User"> | boolean
+    twoFactorSecret?: StringNullableFilter<"User"> | string | null
+    backupCodes?: StringNullableListFilter<"User">
     profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
     posts?: PostListRelationFilter
     comments?: CommentListRelationFilter
     bookmarks?: BookmarkListRelationFilter
     courseProgress?: CourseProgressListRelationFilter
+    badges?: UserBadgeListRelationFilter
+    achievement?: XOR<UserAchievementNullableScalarRelationFilter, UserAchievementWhereInput> | null
+    challenges?: UserChallengeListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -18380,6 +26316,9 @@ export namespace Prisma {
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrderInput | SortOrder
+    backupCodes?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -18398,6 +26337,9 @@ export namespace Prisma {
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    twoFactorEnabled?: BoolWithAggregatesFilter<"User"> | boolean
+    twoFactorSecret?: StringNullableWithAggregatesFilter<"User"> | string | null
+    backupCodes?: StringNullableListFilter<"User">
   }
 
   export type ProfileWhereInput = {
@@ -18411,7 +26353,15 @@ export namespace Prisma {
     location?: StringNullableFilter<"Profile"> | string | null
     interests?: StringNullableListFilter<"Profile">
     socialLinks?: JsonNullableFilter<"Profile">
+    theme?: EnumThemeFilter<"Profile"> | $Enums.Theme
+    securityLevel?: EnumSecurityLevelFilter<"Profile"> | $Enums.SecurityLevel
+    avatarUrl?: StringNullableFilter<"Profile"> | string | null
+    coverImageUrl?: StringNullableFilter<"Profile"> | string | null
+    preferredLanguage?: StringNullableFilter<"Profile"> | string | null
+    contentPreferences?: StringNullableListFilter<"Profile">
+    lastSeen?: DateTimeNullableFilter<"Profile"> | Date | string | null
     userId?: StringFilter<"Profile"> | string
+    notificationPrefs?: XOR<NotificationPreferencesNullableScalarRelationFilter, NotificationPreferencesWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -18423,7 +26373,15 @@ export namespace Prisma {
     location?: SortOrderInput | SortOrder
     interests?: SortOrder
     socialLinks?: SortOrderInput | SortOrder
+    theme?: SortOrder
+    securityLevel?: SortOrder
+    avatarUrl?: SortOrderInput | SortOrder
+    coverImageUrl?: SortOrderInput | SortOrder
+    preferredLanguage?: SortOrderInput | SortOrder
+    contentPreferences?: SortOrder
+    lastSeen?: SortOrderInput | SortOrder
     userId?: SortOrder
+    notificationPrefs?: NotificationPreferencesOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
   }
 
@@ -18439,6 +26397,14 @@ export namespace Prisma {
     location?: StringNullableFilter<"Profile"> | string | null
     interests?: StringNullableListFilter<"Profile">
     socialLinks?: JsonNullableFilter<"Profile">
+    theme?: EnumThemeFilter<"Profile"> | $Enums.Theme
+    securityLevel?: EnumSecurityLevelFilter<"Profile"> | $Enums.SecurityLevel
+    avatarUrl?: StringNullableFilter<"Profile"> | string | null
+    coverImageUrl?: StringNullableFilter<"Profile"> | string | null
+    preferredLanguage?: StringNullableFilter<"Profile"> | string | null
+    contentPreferences?: StringNullableListFilter<"Profile">
+    lastSeen?: DateTimeNullableFilter<"Profile"> | Date | string | null
+    notificationPrefs?: XOR<NotificationPreferencesNullableScalarRelationFilter, NotificationPreferencesWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId">
 
@@ -18450,6 +26416,13 @@ export namespace Prisma {
     location?: SortOrderInput | SortOrder
     interests?: SortOrder
     socialLinks?: SortOrderInput | SortOrder
+    theme?: SortOrder
+    securityLevel?: SortOrder
+    avatarUrl?: SortOrderInput | SortOrder
+    coverImageUrl?: SortOrderInput | SortOrder
+    preferredLanguage?: SortOrderInput | SortOrder
+    contentPreferences?: SortOrder
+    lastSeen?: SortOrderInput | SortOrder
     userId?: SortOrder
     _count?: ProfileCountOrderByAggregateInput
     _max?: ProfileMaxOrderByAggregateInput
@@ -18467,6 +26440,13 @@ export namespace Prisma {
     location?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     interests?: StringNullableListFilter<"Profile">
     socialLinks?: JsonNullableWithAggregatesFilter<"Profile">
+    theme?: EnumThemeWithAggregatesFilter<"Profile"> | $Enums.Theme
+    securityLevel?: EnumSecurityLevelWithAggregatesFilter<"Profile"> | $Enums.SecurityLevel
+    avatarUrl?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    coverImageUrl?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    preferredLanguage?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    contentPreferences?: StringNullableListFilter<"Profile">
+    lastSeen?: DateTimeNullableWithAggregatesFilter<"Profile"> | Date | string | null
     userId?: StringWithAggregatesFilter<"Profile"> | string
   }
 
@@ -19110,6 +27090,8 @@ export namespace Prisma {
     completedLessons?: JsonFilter<"CourseProgress">
     startedAt?: DateTimeFilter<"CourseProgress"> | Date | string
     completedAt?: DateTimeNullableFilter<"CourseProgress"> | Date | string | null
+    lastAccessedAt?: DateTimeFilter<"CourseProgress"> | Date | string
+    progressPercentage?: FloatFilter<"CourseProgress"> | number
     userId?: StringFilter<"CourseProgress"> | string
     courseId?: StringFilter<"CourseProgress"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -19121,6 +27103,8 @@ export namespace Prisma {
     completedLessons?: SortOrder
     startedAt?: SortOrder
     completedAt?: SortOrderInput | SortOrder
+    lastAccessedAt?: SortOrder
+    progressPercentage?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -19136,6 +27120,8 @@ export namespace Prisma {
     completedLessons?: JsonFilter<"CourseProgress">
     startedAt?: DateTimeFilter<"CourseProgress"> | Date | string
     completedAt?: DateTimeNullableFilter<"CourseProgress"> | Date | string | null
+    lastAccessedAt?: DateTimeFilter<"CourseProgress"> | Date | string
+    progressPercentage?: FloatFilter<"CourseProgress"> | number
     userId?: StringFilter<"CourseProgress"> | string
     courseId?: StringFilter<"CourseProgress"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -19147,11 +27133,15 @@ export namespace Prisma {
     completedLessons?: SortOrder
     startedAt?: SortOrder
     completedAt?: SortOrderInput | SortOrder
+    lastAccessedAt?: SortOrder
+    progressPercentage?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
     _count?: CourseProgressCountOrderByAggregateInput
+    _avg?: CourseProgressAvgOrderByAggregateInput
     _max?: CourseProgressMaxOrderByAggregateInput
     _min?: CourseProgressMinOrderByAggregateInput
+    _sum?: CourseProgressSumOrderByAggregateInput
   }
 
   export type CourseProgressScalarWhereWithAggregatesInput = {
@@ -19162,8 +27152,386 @@ export namespace Prisma {
     completedLessons?: JsonWithAggregatesFilter<"CourseProgress">
     startedAt?: DateTimeWithAggregatesFilter<"CourseProgress"> | Date | string
     completedAt?: DateTimeNullableWithAggregatesFilter<"CourseProgress"> | Date | string | null
+    lastAccessedAt?: DateTimeWithAggregatesFilter<"CourseProgress"> | Date | string
+    progressPercentage?: FloatWithAggregatesFilter<"CourseProgress"> | number
     userId?: StringWithAggregatesFilter<"CourseProgress"> | string
     courseId?: StringWithAggregatesFilter<"CourseProgress"> | string
+  }
+
+  export type BadgeWhereInput = {
+    AND?: BadgeWhereInput | BadgeWhereInput[]
+    OR?: BadgeWhereInput[]
+    NOT?: BadgeWhereInput | BadgeWhereInput[]
+    id?: StringFilter<"Badge"> | string
+    name?: StringFilter<"Badge"> | string
+    description?: StringFilter<"Badge"> | string
+    imageUrl?: StringFilter<"Badge"> | string
+    category?: EnumBadgeCategoryFilter<"Badge"> | $Enums.BadgeCategory
+    difficulty?: EnumLevelFilter<"Badge"> | $Enums.Level
+    points?: IntFilter<"Badge"> | number
+    isHidden?: BoolFilter<"Badge"> | boolean
+    createdAt?: DateTimeFilter<"Badge"> | Date | string
+    updatedAt?: DateTimeFilter<"Badge"> | Date | string
+    userBadges?: UserBadgeListRelationFilter
+  }
+
+  export type BadgeOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    imageUrl?: SortOrder
+    category?: SortOrder
+    difficulty?: SortOrder
+    points?: SortOrder
+    isHidden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userBadges?: UserBadgeOrderByRelationAggregateInput
+  }
+
+  export type BadgeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: BadgeWhereInput | BadgeWhereInput[]
+    OR?: BadgeWhereInput[]
+    NOT?: BadgeWhereInput | BadgeWhereInput[]
+    name?: StringFilter<"Badge"> | string
+    description?: StringFilter<"Badge"> | string
+    imageUrl?: StringFilter<"Badge"> | string
+    category?: EnumBadgeCategoryFilter<"Badge"> | $Enums.BadgeCategory
+    difficulty?: EnumLevelFilter<"Badge"> | $Enums.Level
+    points?: IntFilter<"Badge"> | number
+    isHidden?: BoolFilter<"Badge"> | boolean
+    createdAt?: DateTimeFilter<"Badge"> | Date | string
+    updatedAt?: DateTimeFilter<"Badge"> | Date | string
+    userBadges?: UserBadgeListRelationFilter
+  }, "id">
+
+  export type BadgeOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    imageUrl?: SortOrder
+    category?: SortOrder
+    difficulty?: SortOrder
+    points?: SortOrder
+    isHidden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BadgeCountOrderByAggregateInput
+    _avg?: BadgeAvgOrderByAggregateInput
+    _max?: BadgeMaxOrderByAggregateInput
+    _min?: BadgeMinOrderByAggregateInput
+    _sum?: BadgeSumOrderByAggregateInput
+  }
+
+  export type BadgeScalarWhereWithAggregatesInput = {
+    AND?: BadgeScalarWhereWithAggregatesInput | BadgeScalarWhereWithAggregatesInput[]
+    OR?: BadgeScalarWhereWithAggregatesInput[]
+    NOT?: BadgeScalarWhereWithAggregatesInput | BadgeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Badge"> | string
+    name?: StringWithAggregatesFilter<"Badge"> | string
+    description?: StringWithAggregatesFilter<"Badge"> | string
+    imageUrl?: StringWithAggregatesFilter<"Badge"> | string
+    category?: EnumBadgeCategoryWithAggregatesFilter<"Badge"> | $Enums.BadgeCategory
+    difficulty?: EnumLevelWithAggregatesFilter<"Badge"> | $Enums.Level
+    points?: IntWithAggregatesFilter<"Badge"> | number
+    isHidden?: BoolWithAggregatesFilter<"Badge"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Badge"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Badge"> | Date | string
+  }
+
+  export type UserBadgeWhereInput = {
+    AND?: UserBadgeWhereInput | UserBadgeWhereInput[]
+    OR?: UserBadgeWhereInput[]
+    NOT?: UserBadgeWhereInput | UserBadgeWhereInput[]
+    id?: StringFilter<"UserBadge"> | string
+    earnedAt?: DateTimeFilter<"UserBadge"> | Date | string
+    showcased?: BoolFilter<"UserBadge"> | boolean
+    userId?: StringFilter<"UserBadge"> | string
+    badgeId?: StringFilter<"UserBadge"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    badge?: XOR<BadgeScalarRelationFilter, BadgeWhereInput>
+  }
+
+  export type UserBadgeOrderByWithRelationInput = {
+    id?: SortOrder
+    earnedAt?: SortOrder
+    showcased?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+    user?: UserOrderByWithRelationInput
+    badge?: BadgeOrderByWithRelationInput
+  }
+
+  export type UserBadgeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_badgeId?: UserBadgeUserIdBadgeIdCompoundUniqueInput
+    AND?: UserBadgeWhereInput | UserBadgeWhereInput[]
+    OR?: UserBadgeWhereInput[]
+    NOT?: UserBadgeWhereInput | UserBadgeWhereInput[]
+    earnedAt?: DateTimeFilter<"UserBadge"> | Date | string
+    showcased?: BoolFilter<"UserBadge"> | boolean
+    userId?: StringFilter<"UserBadge"> | string
+    badgeId?: StringFilter<"UserBadge"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    badge?: XOR<BadgeScalarRelationFilter, BadgeWhereInput>
+  }, "id" | "userId_badgeId">
+
+  export type UserBadgeOrderByWithAggregationInput = {
+    id?: SortOrder
+    earnedAt?: SortOrder
+    showcased?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+    _count?: UserBadgeCountOrderByAggregateInput
+    _max?: UserBadgeMaxOrderByAggregateInput
+    _min?: UserBadgeMinOrderByAggregateInput
+  }
+
+  export type UserBadgeScalarWhereWithAggregatesInput = {
+    AND?: UserBadgeScalarWhereWithAggregatesInput | UserBadgeScalarWhereWithAggregatesInput[]
+    OR?: UserBadgeScalarWhereWithAggregatesInput[]
+    NOT?: UserBadgeScalarWhereWithAggregatesInput | UserBadgeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserBadge"> | string
+    earnedAt?: DateTimeWithAggregatesFilter<"UserBadge"> | Date | string
+    showcased?: BoolWithAggregatesFilter<"UserBadge"> | boolean
+    userId?: StringWithAggregatesFilter<"UserBadge"> | string
+    badgeId?: StringWithAggregatesFilter<"UserBadge"> | string
+  }
+
+  export type UserAchievementWhereInput = {
+    AND?: UserAchievementWhereInput | UserAchievementWhereInput[]
+    OR?: UserAchievementWhereInput[]
+    NOT?: UserAchievementWhereInput | UserAchievementWhereInput[]
+    id?: StringFilter<"UserAchievement"> | string
+    totalPoints?: IntFilter<"UserAchievement"> | number
+    level?: IntFilter<"UserAchievement"> | number
+    streak?: IntFilter<"UserAchievement"> | number
+    longestStreak?: IntFilter<"UserAchievement"> | number
+    lastLoginDate?: DateTimeFilter<"UserAchievement"> | Date | string
+    completedCourses?: IntFilter<"UserAchievement"> | number
+    completedLessons?: IntFilter<"UserAchievement"> | number
+    phishingScore?: FloatNullableFilter<"UserAchievement"> | number | null
+    securityScore?: FloatNullableFilter<"UserAchievement"> | number | null
+    weeklyGoal?: IntFilter<"UserAchievement"> | number
+    weeklyProgress?: IntFilter<"UserAchievement"> | number
+    userId?: StringFilter<"UserAchievement"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserAchievementOrderByWithRelationInput = {
+    id?: SortOrder
+    totalPoints?: SortOrder
+    level?: SortOrder
+    streak?: SortOrder
+    longestStreak?: SortOrder
+    lastLoginDate?: SortOrder
+    completedCourses?: SortOrder
+    completedLessons?: SortOrder
+    phishingScore?: SortOrderInput | SortOrder
+    securityScore?: SortOrderInput | SortOrder
+    weeklyGoal?: SortOrder
+    weeklyProgress?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserAchievementWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: UserAchievementWhereInput | UserAchievementWhereInput[]
+    OR?: UserAchievementWhereInput[]
+    NOT?: UserAchievementWhereInput | UserAchievementWhereInput[]
+    totalPoints?: IntFilter<"UserAchievement"> | number
+    level?: IntFilter<"UserAchievement"> | number
+    streak?: IntFilter<"UserAchievement"> | number
+    longestStreak?: IntFilter<"UserAchievement"> | number
+    lastLoginDate?: DateTimeFilter<"UserAchievement"> | Date | string
+    completedCourses?: IntFilter<"UserAchievement"> | number
+    completedLessons?: IntFilter<"UserAchievement"> | number
+    phishingScore?: FloatNullableFilter<"UserAchievement"> | number | null
+    securityScore?: FloatNullableFilter<"UserAchievement"> | number | null
+    weeklyGoal?: IntFilter<"UserAchievement"> | number
+    weeklyProgress?: IntFilter<"UserAchievement"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type UserAchievementOrderByWithAggregationInput = {
+    id?: SortOrder
+    totalPoints?: SortOrder
+    level?: SortOrder
+    streak?: SortOrder
+    longestStreak?: SortOrder
+    lastLoginDate?: SortOrder
+    completedCourses?: SortOrder
+    completedLessons?: SortOrder
+    phishingScore?: SortOrderInput | SortOrder
+    securityScore?: SortOrderInput | SortOrder
+    weeklyGoal?: SortOrder
+    weeklyProgress?: SortOrder
+    userId?: SortOrder
+    _count?: UserAchievementCountOrderByAggregateInput
+    _avg?: UserAchievementAvgOrderByAggregateInput
+    _max?: UserAchievementMaxOrderByAggregateInput
+    _min?: UserAchievementMinOrderByAggregateInput
+    _sum?: UserAchievementSumOrderByAggregateInput
+  }
+
+  export type UserAchievementScalarWhereWithAggregatesInput = {
+    AND?: UserAchievementScalarWhereWithAggregatesInput | UserAchievementScalarWhereWithAggregatesInput[]
+    OR?: UserAchievementScalarWhereWithAggregatesInput[]
+    NOT?: UserAchievementScalarWhereWithAggregatesInput | UserAchievementScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserAchievement"> | string
+    totalPoints?: IntWithAggregatesFilter<"UserAchievement"> | number
+    level?: IntWithAggregatesFilter<"UserAchievement"> | number
+    streak?: IntWithAggregatesFilter<"UserAchievement"> | number
+    longestStreak?: IntWithAggregatesFilter<"UserAchievement"> | number
+    lastLoginDate?: DateTimeWithAggregatesFilter<"UserAchievement"> | Date | string
+    completedCourses?: IntWithAggregatesFilter<"UserAchievement"> | number
+    completedLessons?: IntWithAggregatesFilter<"UserAchievement"> | number
+    phishingScore?: FloatNullableWithAggregatesFilter<"UserAchievement"> | number | null
+    securityScore?: FloatNullableWithAggregatesFilter<"UserAchievement"> | number | null
+    weeklyGoal?: IntWithAggregatesFilter<"UserAchievement"> | number
+    weeklyProgress?: IntWithAggregatesFilter<"UserAchievement"> | number
+    userId?: StringWithAggregatesFilter<"UserAchievement"> | string
+  }
+
+  export type ChallengeWhereInput = {
+    AND?: ChallengeWhereInput | ChallengeWhereInput[]
+    OR?: ChallengeWhereInput[]
+    NOT?: ChallengeWhereInput | ChallengeWhereInput[]
+    id?: StringFilter<"Challenge"> | string
+    title?: StringFilter<"Challenge"> | string
+    description?: StringFilter<"Challenge"> | string
+    startDate?: DateTimeFilter<"Challenge"> | Date | string
+    endDate?: DateTimeFilter<"Challenge"> | Date | string
+    isActive?: BoolFilter<"Challenge"> | boolean
+    points?: IntFilter<"Challenge"> | number
+    maxParticipants?: IntNullableFilter<"Challenge"> | number | null
+    participants?: UserChallengeListRelationFilter
+  }
+
+  export type ChallengeOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isActive?: SortOrder
+    points?: SortOrder
+    maxParticipants?: SortOrderInput | SortOrder
+    participants?: UserChallengeOrderByRelationAggregateInput
+  }
+
+  export type ChallengeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ChallengeWhereInput | ChallengeWhereInput[]
+    OR?: ChallengeWhereInput[]
+    NOT?: ChallengeWhereInput | ChallengeWhereInput[]
+    title?: StringFilter<"Challenge"> | string
+    description?: StringFilter<"Challenge"> | string
+    startDate?: DateTimeFilter<"Challenge"> | Date | string
+    endDate?: DateTimeFilter<"Challenge"> | Date | string
+    isActive?: BoolFilter<"Challenge"> | boolean
+    points?: IntFilter<"Challenge"> | number
+    maxParticipants?: IntNullableFilter<"Challenge"> | number | null
+    participants?: UserChallengeListRelationFilter
+  }, "id">
+
+  export type ChallengeOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isActive?: SortOrder
+    points?: SortOrder
+    maxParticipants?: SortOrderInput | SortOrder
+    _count?: ChallengeCountOrderByAggregateInput
+    _avg?: ChallengeAvgOrderByAggregateInput
+    _max?: ChallengeMaxOrderByAggregateInput
+    _min?: ChallengeMinOrderByAggregateInput
+    _sum?: ChallengeSumOrderByAggregateInput
+  }
+
+  export type ChallengeScalarWhereWithAggregatesInput = {
+    AND?: ChallengeScalarWhereWithAggregatesInput | ChallengeScalarWhereWithAggregatesInput[]
+    OR?: ChallengeScalarWhereWithAggregatesInput[]
+    NOT?: ChallengeScalarWhereWithAggregatesInput | ChallengeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Challenge"> | string
+    title?: StringWithAggregatesFilter<"Challenge"> | string
+    description?: StringWithAggregatesFilter<"Challenge"> | string
+    startDate?: DateTimeWithAggregatesFilter<"Challenge"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"Challenge"> | Date | string
+    isActive?: BoolWithAggregatesFilter<"Challenge"> | boolean
+    points?: IntWithAggregatesFilter<"Challenge"> | number
+    maxParticipants?: IntNullableWithAggregatesFilter<"Challenge"> | number | null
+  }
+
+  export type UserChallengeWhereInput = {
+    AND?: UserChallengeWhereInput | UserChallengeWhereInput[]
+    OR?: UserChallengeWhereInput[]
+    NOT?: UserChallengeWhereInput | UserChallengeWhereInput[]
+    id?: StringFilter<"UserChallenge"> | string
+    joinedAt?: DateTimeFilter<"UserChallenge"> | Date | string
+    completedAt?: DateTimeNullableFilter<"UserChallenge"> | Date | string | null
+    progress?: FloatFilter<"UserChallenge"> | number
+    userId?: StringFilter<"UserChallenge"> | string
+    challengeId?: StringFilter<"UserChallenge"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    challenge?: XOR<ChallengeScalarRelationFilter, ChallengeWhereInput>
+  }
+
+  export type UserChallengeOrderByWithRelationInput = {
+    id?: SortOrder
+    joinedAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    progress?: SortOrder
+    userId?: SortOrder
+    challengeId?: SortOrder
+    user?: UserOrderByWithRelationInput
+    challenge?: ChallengeOrderByWithRelationInput
+  }
+
+  export type UserChallengeWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_challengeId?: UserChallengeUserIdChallengeIdCompoundUniqueInput
+    AND?: UserChallengeWhereInput | UserChallengeWhereInput[]
+    OR?: UserChallengeWhereInput[]
+    NOT?: UserChallengeWhereInput | UserChallengeWhereInput[]
+    joinedAt?: DateTimeFilter<"UserChallenge"> | Date | string
+    completedAt?: DateTimeNullableFilter<"UserChallenge"> | Date | string | null
+    progress?: FloatFilter<"UserChallenge"> | number
+    userId?: StringFilter<"UserChallenge"> | string
+    challengeId?: StringFilter<"UserChallenge"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    challenge?: XOR<ChallengeScalarRelationFilter, ChallengeWhereInput>
+  }, "id" | "userId_challengeId">
+
+  export type UserChallengeOrderByWithAggregationInput = {
+    id?: SortOrder
+    joinedAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    progress?: SortOrder
+    userId?: SortOrder
+    challengeId?: SortOrder
+    _count?: UserChallengeCountOrderByAggregateInput
+    _avg?: UserChallengeAvgOrderByAggregateInput
+    _max?: UserChallengeMaxOrderByAggregateInput
+    _min?: UserChallengeMinOrderByAggregateInput
+    _sum?: UserChallengeSumOrderByAggregateInput
+  }
+
+  export type UserChallengeScalarWhereWithAggregatesInput = {
+    AND?: UserChallengeScalarWhereWithAggregatesInput | UserChallengeScalarWhereWithAggregatesInput[]
+    OR?: UserChallengeScalarWhereWithAggregatesInput[]
+    NOT?: UserChallengeScalarWhereWithAggregatesInput | UserChallengeScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserChallenge"> | string
+    joinedAt?: DateTimeWithAggregatesFilter<"UserChallenge"> | Date | string
+    completedAt?: DateTimeNullableWithAggregatesFilter<"UserChallenge"> | Date | string | null
+    progress?: FloatWithAggregatesFilter<"UserChallenge"> | number
+    userId?: StringWithAggregatesFilter<"UserChallenge"> | string
+    challengeId?: StringWithAggregatesFilter<"UserChallenge"> | string
   }
 
   export type ThreatIntelWhereInput = {
@@ -19238,6 +27606,76 @@ export namespace Prisma {
     source?: StringNullableWithAggregatesFilter<"ThreatIntel"> | string | null
   }
 
+  export type NotificationPreferencesWhereInput = {
+    AND?: NotificationPreferencesWhereInput | NotificationPreferencesWhereInput[]
+    OR?: NotificationPreferencesWhereInput[]
+    NOT?: NotificationPreferencesWhereInput | NotificationPreferencesWhereInput[]
+    id?: StringFilter<"NotificationPreferences"> | string
+    emailNotifications?: BoolFilter<"NotificationPreferences"> | boolean
+    smsNotifications?: BoolFilter<"NotificationPreferences"> | boolean
+    securityAlerts?: BoolFilter<"NotificationPreferences"> | boolean
+    newsUpdates?: BoolFilter<"NotificationPreferences"> | boolean
+    courseUpdates?: BoolFilter<"NotificationPreferences"> | boolean
+    marketingEmails?: BoolFilter<"NotificationPreferences"> | boolean
+    profileId?: StringFilter<"NotificationPreferences"> | string
+    profile?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>
+  }
+
+  export type NotificationPreferencesOrderByWithRelationInput = {
+    id?: SortOrder
+    emailNotifications?: SortOrder
+    smsNotifications?: SortOrder
+    securityAlerts?: SortOrder
+    newsUpdates?: SortOrder
+    courseUpdates?: SortOrder
+    marketingEmails?: SortOrder
+    profileId?: SortOrder
+    profile?: ProfileOrderByWithRelationInput
+  }
+
+  export type NotificationPreferencesWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    profileId?: string
+    AND?: NotificationPreferencesWhereInput | NotificationPreferencesWhereInput[]
+    OR?: NotificationPreferencesWhereInput[]
+    NOT?: NotificationPreferencesWhereInput | NotificationPreferencesWhereInput[]
+    emailNotifications?: BoolFilter<"NotificationPreferences"> | boolean
+    smsNotifications?: BoolFilter<"NotificationPreferences"> | boolean
+    securityAlerts?: BoolFilter<"NotificationPreferences"> | boolean
+    newsUpdates?: BoolFilter<"NotificationPreferences"> | boolean
+    courseUpdates?: BoolFilter<"NotificationPreferences"> | boolean
+    marketingEmails?: BoolFilter<"NotificationPreferences"> | boolean
+    profile?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>
+  }, "id" | "profileId">
+
+  export type NotificationPreferencesOrderByWithAggregationInput = {
+    id?: SortOrder
+    emailNotifications?: SortOrder
+    smsNotifications?: SortOrder
+    securityAlerts?: SortOrder
+    newsUpdates?: SortOrder
+    courseUpdates?: SortOrder
+    marketingEmails?: SortOrder
+    profileId?: SortOrder
+    _count?: NotificationPreferencesCountOrderByAggregateInput
+    _max?: NotificationPreferencesMaxOrderByAggregateInput
+    _min?: NotificationPreferencesMinOrderByAggregateInput
+  }
+
+  export type NotificationPreferencesScalarWhereWithAggregatesInput = {
+    AND?: NotificationPreferencesScalarWhereWithAggregatesInput | NotificationPreferencesScalarWhereWithAggregatesInput[]
+    OR?: NotificationPreferencesScalarWhereWithAggregatesInput[]
+    NOT?: NotificationPreferencesScalarWhereWithAggregatesInput | NotificationPreferencesScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"NotificationPreferences"> | string
+    emailNotifications?: BoolWithAggregatesFilter<"NotificationPreferences"> | boolean
+    smsNotifications?: BoolWithAggregatesFilter<"NotificationPreferences"> | boolean
+    securityAlerts?: BoolWithAggregatesFilter<"NotificationPreferences"> | boolean
+    newsUpdates?: BoolWithAggregatesFilter<"NotificationPreferences"> | boolean
+    courseUpdates?: BoolWithAggregatesFilter<"NotificationPreferences"> | boolean
+    marketingEmails?: BoolWithAggregatesFilter<"NotificationPreferences"> | boolean
+    profileId?: StringWithAggregatesFilter<"NotificationPreferences"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name?: string | null
@@ -19248,11 +27686,17 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
     profile?: ProfileCreateNestedOneWithoutUserInput
     posts?: PostCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
     bookmarks?: BookmarkCreateNestedManyWithoutUserInput
     courseProgress?: CourseProgressCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -19265,11 +27709,17 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
     comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
     courseProgress?: CourseProgressUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementUncheckedCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -19282,11 +27732,17 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
     profile?: ProfileUpdateOneWithoutUserNestedInput
     posts?: PostUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
     bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
     courseProgress?: CourseProgressUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -19299,11 +27755,17 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
     profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
     courseProgress?: CourseProgressUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUncheckedUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -19316,6 +27778,9 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
   }
 
   export type UserUpdateManyMutationInput = {
@@ -19328,6 +27793,9 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -19340,6 +27808,9 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
   }
 
   export type ProfileCreateInput = {
@@ -19350,6 +27821,14 @@ export namespace Prisma {
     location?: string | null
     interests?: ProfileCreateinterestsInput | string[]
     socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: $Enums.Theme
+    securityLevel?: $Enums.SecurityLevel
+    avatarUrl?: string | null
+    coverImageUrl?: string | null
+    preferredLanguage?: string | null
+    contentPreferences?: ProfileCreatecontentPreferencesInput | string[]
+    lastSeen?: Date | string | null
+    notificationPrefs?: NotificationPreferencesCreateNestedOneWithoutProfileInput
     user: UserCreateNestedOneWithoutProfileInput
   }
 
@@ -19361,7 +27840,15 @@ export namespace Prisma {
     location?: string | null
     interests?: ProfileCreateinterestsInput | string[]
     socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: $Enums.Theme
+    securityLevel?: $Enums.SecurityLevel
+    avatarUrl?: string | null
+    coverImageUrl?: string | null
+    preferredLanguage?: string | null
+    contentPreferences?: ProfileCreatecontentPreferencesInput | string[]
+    lastSeen?: Date | string | null
     userId: string
+    notificationPrefs?: NotificationPreferencesUncheckedCreateNestedOneWithoutProfileInput
   }
 
   export type ProfileUpdateInput = {
@@ -19372,6 +27859,14 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: ProfileUpdateinterestsInput | string[]
     socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: EnumThemeFieldUpdateOperationsInput | $Enums.Theme
+    securityLevel?: EnumSecurityLevelFieldUpdateOperationsInput | $Enums.SecurityLevel
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    contentPreferences?: ProfileUpdatecontentPreferencesInput | string[]
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notificationPrefs?: NotificationPreferencesUpdateOneWithoutProfileNestedInput
     user?: UserUpdateOneRequiredWithoutProfileNestedInput
   }
 
@@ -19383,7 +27878,15 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: ProfileUpdateinterestsInput | string[]
     socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: EnumThemeFieldUpdateOperationsInput | $Enums.Theme
+    securityLevel?: EnumSecurityLevelFieldUpdateOperationsInput | $Enums.SecurityLevel
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    contentPreferences?: ProfileUpdatecontentPreferencesInput | string[]
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
+    notificationPrefs?: NotificationPreferencesUncheckedUpdateOneWithoutProfileNestedInput
   }
 
   export type ProfileCreateManyInput = {
@@ -19394,6 +27897,13 @@ export namespace Prisma {
     location?: string | null
     interests?: ProfileCreateinterestsInput | string[]
     socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: $Enums.Theme
+    securityLevel?: $Enums.SecurityLevel
+    avatarUrl?: string | null
+    coverImageUrl?: string | null
+    preferredLanguage?: string | null
+    contentPreferences?: ProfileCreatecontentPreferencesInput | string[]
+    lastSeen?: Date | string | null
     userId: string
   }
 
@@ -19405,6 +27915,13 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: ProfileUpdateinterestsInput | string[]
     socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: EnumThemeFieldUpdateOperationsInput | $Enums.Theme
+    securityLevel?: EnumSecurityLevelFieldUpdateOperationsInput | $Enums.SecurityLevel
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    contentPreferences?: ProfileUpdatecontentPreferencesInput | string[]
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ProfileUncheckedUpdateManyInput = {
@@ -19415,6 +27932,13 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: ProfileUpdateinterestsInput | string[]
     socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: EnumThemeFieldUpdateOperationsInput | $Enums.Theme
+    securityLevel?: EnumSecurityLevelFieldUpdateOperationsInput | $Enums.SecurityLevel
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    contentPreferences?: ProfileUpdatecontentPreferencesInput | string[]
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -20062,6 +28586,8 @@ export namespace Prisma {
     completedLessons: JsonNullValueInput | InputJsonValue
     startedAt?: Date | string
     completedAt?: Date | string | null
+    lastAccessedAt?: Date | string
+    progressPercentage?: number
     user: UserCreateNestedOneWithoutCourseProgressInput
     course: CourseCreateNestedOneWithoutProgressInput
   }
@@ -20071,6 +28597,8 @@ export namespace Prisma {
     completedLessons: JsonNullValueInput | InputJsonValue
     startedAt?: Date | string
     completedAt?: Date | string | null
+    lastAccessedAt?: Date | string
+    progressPercentage?: number
     userId: string
     courseId: string
   }
@@ -20080,6 +28608,8 @@ export namespace Prisma {
     completedLessons?: JsonNullValueInput | InputJsonValue
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    progressPercentage?: FloatFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutCourseProgressNestedInput
     course?: CourseUpdateOneRequiredWithoutProgressNestedInput
   }
@@ -20089,6 +28619,8 @@ export namespace Prisma {
     completedLessons?: JsonNullValueInput | InputJsonValue
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    progressPercentage?: FloatFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
   }
@@ -20098,6 +28630,8 @@ export namespace Prisma {
     completedLessons: JsonNullValueInput | InputJsonValue
     startedAt?: Date | string
     completedAt?: Date | string | null
+    lastAccessedAt?: Date | string
+    progressPercentage?: number
     userId: string
     courseId: string
   }
@@ -20107,6 +28641,8 @@ export namespace Prisma {
     completedLessons?: JsonNullValueInput | InputJsonValue
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    progressPercentage?: FloatFieldUpdateOperationsInput | number
   }
 
   export type CourseProgressUncheckedUpdateManyInput = {
@@ -20114,8 +28650,412 @@ export namespace Prisma {
     completedLessons?: JsonNullValueInput | InputJsonValue
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    progressPercentage?: FloatFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BadgeCreateInput = {
+    id?: string
+    name: string
+    description: string
+    imageUrl: string
+    category: $Enums.BadgeCategory
+    difficulty: $Enums.Level
+    points?: number
+    isHidden?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userBadges?: UserBadgeCreateNestedManyWithoutBadgeInput
+  }
+
+  export type BadgeUncheckedCreateInput = {
+    id?: string
+    name: string
+    description: string
+    imageUrl: string
+    category: $Enums.BadgeCategory
+    difficulty: $Enums.Level
+    points?: number
+    isHidden?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userBadges?: UserBadgeUncheckedCreateNestedManyWithoutBadgeInput
+  }
+
+  export type BadgeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    category?: EnumBadgeCategoryFieldUpdateOperationsInput | $Enums.BadgeCategory
+    difficulty?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    points?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userBadges?: UserBadgeUpdateManyWithoutBadgeNestedInput
+  }
+
+  export type BadgeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    category?: EnumBadgeCategoryFieldUpdateOperationsInput | $Enums.BadgeCategory
+    difficulty?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    points?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userBadges?: UserBadgeUncheckedUpdateManyWithoutBadgeNestedInput
+  }
+
+  export type BadgeCreateManyInput = {
+    id?: string
+    name: string
+    description: string
+    imageUrl: string
+    category: $Enums.BadgeCategory
+    difficulty: $Enums.Level
+    points?: number
+    isHidden?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BadgeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    category?: EnumBadgeCategoryFieldUpdateOperationsInput | $Enums.BadgeCategory
+    difficulty?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    points?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BadgeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    category?: EnumBadgeCategoryFieldUpdateOperationsInput | $Enums.BadgeCategory
+    difficulty?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    points?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserBadgeCreateInput = {
+    id?: string
+    earnedAt?: Date | string
+    showcased?: boolean
+    user: UserCreateNestedOneWithoutBadgesInput
+    badge: BadgeCreateNestedOneWithoutUserBadgesInput
+  }
+
+  export type UserBadgeUncheckedCreateInput = {
+    id?: string
+    earnedAt?: Date | string
+    showcased?: boolean
+    userId: string
+    badgeId: string
+  }
+
+  export type UserBadgeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    showcased?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutBadgesNestedInput
+    badge?: BadgeUpdateOneRequiredWithoutUserBadgesNestedInput
+  }
+
+  export type UserBadgeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    showcased?: BoolFieldUpdateOperationsInput | boolean
+    userId?: StringFieldUpdateOperationsInput | string
+    badgeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserBadgeCreateManyInput = {
+    id?: string
+    earnedAt?: Date | string
+    showcased?: boolean
+    userId: string
+    badgeId: string
+  }
+
+  export type UserBadgeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    showcased?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type UserBadgeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    showcased?: BoolFieldUpdateOperationsInput | boolean
+    userId?: StringFieldUpdateOperationsInput | string
+    badgeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserAchievementCreateInput = {
+    id?: string
+    totalPoints?: number
+    level?: number
+    streak?: number
+    longestStreak?: number
+    lastLoginDate?: Date | string
+    completedCourses?: number
+    completedLessons?: number
+    phishingScore?: number | null
+    securityScore?: number | null
+    weeklyGoal?: number
+    weeklyProgress?: number
+    user: UserCreateNestedOneWithoutAchievementInput
+  }
+
+  export type UserAchievementUncheckedCreateInput = {
+    id?: string
+    totalPoints?: number
+    level?: number
+    streak?: number
+    longestStreak?: number
+    lastLoginDate?: Date | string
+    completedCourses?: number
+    completedLessons?: number
+    phishingScore?: number | null
+    securityScore?: number | null
+    weeklyGoal?: number
+    weeklyProgress?: number
+    userId: string
+  }
+
+  export type UserAchievementUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    lastLoginDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedCourses?: IntFieldUpdateOperationsInput | number
+    completedLessons?: IntFieldUpdateOperationsInput | number
+    phishingScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    securityScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    weeklyGoal?: IntFieldUpdateOperationsInput | number
+    weeklyProgress?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutAchievementNestedInput
+  }
+
+  export type UserAchievementUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    lastLoginDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedCourses?: IntFieldUpdateOperationsInput | number
+    completedLessons?: IntFieldUpdateOperationsInput | number
+    phishingScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    securityScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    weeklyGoal?: IntFieldUpdateOperationsInput | number
+    weeklyProgress?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserAchievementCreateManyInput = {
+    id?: string
+    totalPoints?: number
+    level?: number
+    streak?: number
+    longestStreak?: number
+    lastLoginDate?: Date | string
+    completedCourses?: number
+    completedLessons?: number
+    phishingScore?: number | null
+    securityScore?: number | null
+    weeklyGoal?: number
+    weeklyProgress?: number
+    userId: string
+  }
+
+  export type UserAchievementUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    lastLoginDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedCourses?: IntFieldUpdateOperationsInput | number
+    completedLessons?: IntFieldUpdateOperationsInput | number
+    phishingScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    securityScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    weeklyGoal?: IntFieldUpdateOperationsInput | number
+    weeklyProgress?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserAchievementUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    lastLoginDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedCourses?: IntFieldUpdateOperationsInput | number
+    completedLessons?: IntFieldUpdateOperationsInput | number
+    phishingScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    securityScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    weeklyGoal?: IntFieldUpdateOperationsInput | number
+    weeklyProgress?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChallengeCreateInput = {
+    id?: string
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    isActive?: boolean
+    points: number
+    maxParticipants?: number | null
+    participants?: UserChallengeCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeUncheckedCreateInput = {
+    id?: string
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    isActive?: boolean
+    points: number
+    maxParticipants?: number | null
+    participants?: UserChallengeUncheckedCreateNestedManyWithoutChallengeInput
+  }
+
+  export type ChallengeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    points?: IntFieldUpdateOperationsInput | number
+    maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
+    participants?: UserChallengeUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type ChallengeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    points?: IntFieldUpdateOperationsInput | number
+    maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
+    participants?: UserChallengeUncheckedUpdateManyWithoutChallengeNestedInput
+  }
+
+  export type ChallengeCreateManyInput = {
+    id?: string
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    isActive?: boolean
+    points: number
+    maxParticipants?: number | null
+  }
+
+  export type ChallengeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    points?: IntFieldUpdateOperationsInput | number
+    maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ChallengeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    points?: IntFieldUpdateOperationsInput | number
+    maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type UserChallengeCreateInput = {
+    id?: string
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+    user: UserCreateNestedOneWithoutChallengesInput
+    challenge: ChallengeCreateNestedOneWithoutParticipantsInput
+  }
+
+  export type UserChallengeUncheckedCreateInput = {
+    id?: string
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+    userId: string
+    challengeId: string
+  }
+
+  export type UserChallengeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutChallengesNestedInput
+    challenge?: ChallengeUpdateOneRequiredWithoutParticipantsNestedInput
+  }
+
+  export type UserChallengeUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    challengeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserChallengeCreateManyInput = {
+    id?: string
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+    userId: string
+    challengeId: string
+  }
+
+  export type UserChallengeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type UserChallengeUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    challengeId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ThreatIntelCreateInput = {
@@ -20202,6 +29142,82 @@ export namespace Prisma {
     source?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type NotificationPreferencesCreateInput = {
+    id?: string
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    securityAlerts?: boolean
+    newsUpdates?: boolean
+    courseUpdates?: boolean
+    marketingEmails?: boolean
+    profile: ProfileCreateNestedOneWithoutNotificationPrefsInput
+  }
+
+  export type NotificationPreferencesUncheckedCreateInput = {
+    id?: string
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    securityAlerts?: boolean
+    newsUpdates?: boolean
+    courseUpdates?: boolean
+    marketingEmails?: boolean
+    profileId: string
+  }
+
+  export type NotificationPreferencesUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    smsNotifications?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    newsUpdates?: BoolFieldUpdateOperationsInput | boolean
+    courseUpdates?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    profile?: ProfileUpdateOneRequiredWithoutNotificationPrefsNestedInput
+  }
+
+  export type NotificationPreferencesUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    smsNotifications?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    newsUpdates?: BoolFieldUpdateOperationsInput | boolean
+    courseUpdates?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    profileId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NotificationPreferencesCreateManyInput = {
+    id?: string
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    securityAlerts?: boolean
+    newsUpdates?: boolean
+    courseUpdates?: boolean
+    marketingEmails?: boolean
+    profileId: string
+  }
+
+  export type NotificationPreferencesUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    smsNotifications?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    newsUpdates?: BoolFieldUpdateOperationsInput | boolean
+    courseUpdates?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type NotificationPreferencesUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    smsNotifications?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    newsUpdates?: BoolFieldUpdateOperationsInput | boolean
+    courseUpdates?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+    profileId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -20261,6 +29277,19 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type ProfileNullableScalarRelationFilter = {
     is?: ProfileWhereInput | null
     isNot?: ProfileWhereInput | null
@@ -20290,6 +29319,23 @@ export namespace Prisma {
     none?: CourseProgressWhereInput
   }
 
+  export type UserBadgeListRelationFilter = {
+    every?: UserBadgeWhereInput
+    some?: UserBadgeWhereInput
+    none?: UserBadgeWhereInput
+  }
+
+  export type UserAchievementNullableScalarRelationFilter = {
+    is?: UserAchievementWhereInput | null
+    isNot?: UserAchievementWhereInput | null
+  }
+
+  export type UserChallengeListRelationFilter = {
+    every?: UserChallengeWhereInput
+    some?: UserChallengeWhereInput
+    none?: UserChallengeWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -20311,6 +29357,14 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type UserBadgeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserChallengeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -20321,6 +29375,9 @@ export namespace Prisma {
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrder
+    backupCodes?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -20333,6 +29390,8 @@ export namespace Prisma {
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -20345,6 +29404,8 @@ export namespace Prisma {
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    twoFactorEnabled?: SortOrder
+    twoFactorSecret?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -20421,12 +29482,12 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
   export type JsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -20452,6 +29513,25 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type EnumThemeFilter<$PrismaModel = never> = {
+    equals?: $Enums.Theme | EnumThemeFieldRefInput<$PrismaModel>
+    in?: $Enums.Theme[] | ListEnumThemeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Theme[] | ListEnumThemeFieldRefInput<$PrismaModel>
+    not?: NestedEnumThemeFilter<$PrismaModel> | $Enums.Theme
+  }
+
+  export type EnumSecurityLevelFilter<$PrismaModel = never> = {
+    equals?: $Enums.SecurityLevel | EnumSecurityLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.SecurityLevel[] | ListEnumSecurityLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SecurityLevel[] | ListEnumSecurityLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumSecurityLevelFilter<$PrismaModel> | $Enums.SecurityLevel
+  }
+
+  export type NotificationPreferencesNullableScalarRelationFilter = {
+    is?: NotificationPreferencesWhereInput | null
+    isNot?: NotificationPreferencesWhereInput | null
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -20465,6 +29545,13 @@ export namespace Prisma {
     location?: SortOrder
     interests?: SortOrder
     socialLinks?: SortOrder
+    theme?: SortOrder
+    securityLevel?: SortOrder
+    avatarUrl?: SortOrder
+    coverImageUrl?: SortOrder
+    preferredLanguage?: SortOrder
+    contentPreferences?: SortOrder
+    lastSeen?: SortOrder
     userId?: SortOrder
   }
 
@@ -20474,6 +29561,12 @@ export namespace Prisma {
     organization?: SortOrder
     title?: SortOrder
     location?: SortOrder
+    theme?: SortOrder
+    securityLevel?: SortOrder
+    avatarUrl?: SortOrder
+    coverImageUrl?: SortOrder
+    preferredLanguage?: SortOrder
+    lastSeen?: SortOrder
     userId?: SortOrder
   }
 
@@ -20483,6 +29576,12 @@ export namespace Prisma {
     organization?: SortOrder
     title?: SortOrder
     location?: SortOrder
+    theme?: SortOrder
+    securityLevel?: SortOrder
+    avatarUrl?: SortOrder
+    coverImageUrl?: SortOrder
+    preferredLanguage?: SortOrder
+    lastSeen?: SortOrder
     userId?: SortOrder
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
@@ -20512,9 +29611,24 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+  export type EnumThemeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Theme | EnumThemeFieldRefInput<$PrismaModel>
+    in?: $Enums.Theme[] | ListEnumThemeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Theme[] | ListEnumThemeFieldRefInput<$PrismaModel>
+    not?: NestedEnumThemeWithAggregatesFilter<$PrismaModel> | $Enums.Theme
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumThemeFilter<$PrismaModel>
+    _max?: NestedEnumThemeFilter<$PrismaModel>
+  }
+
+  export type EnumSecurityLevelWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SecurityLevel | EnumSecurityLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.SecurityLevel[] | ListEnumSecurityLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SecurityLevel[] | ListEnumSecurityLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumSecurityLevelWithAggregatesFilter<$PrismaModel> | $Enums.SecurityLevel
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSecurityLevelFilter<$PrismaModel>
+    _max?: NestedEnumSecurityLevelFilter<$PrismaModel>
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -20602,14 +29716,6 @@ export namespace Prisma {
 
   export type PostSumOrderByAggregateInput = {
     views?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -21026,6 +30132,17 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type CourseProgressUserIdCourseIdCompoundUniqueInput = {
     userId: string
     courseId: string
@@ -21036,14 +30153,22 @@ export namespace Prisma {
     completedLessons?: SortOrder
     startedAt?: SortOrder
     completedAt?: SortOrder
+    lastAccessedAt?: SortOrder
+    progressPercentage?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
+  }
+
+  export type CourseProgressAvgOrderByAggregateInput = {
+    progressPercentage?: SortOrder
   }
 
   export type CourseProgressMaxOrderByAggregateInput = {
     id?: SortOrder
     startedAt?: SortOrder
     completedAt?: SortOrder
+    lastAccessedAt?: SortOrder
+    progressPercentage?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
   }
@@ -21052,8 +30177,14 @@ export namespace Prisma {
     id?: SortOrder
     startedAt?: SortOrder
     completedAt?: SortOrder
+    lastAccessedAt?: SortOrder
+    progressPercentage?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
+  }
+
+  export type CourseProgressSumOrderByAggregateInput = {
+    progressPercentage?: SortOrder
   }
   export type JsonWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -21080,6 +30211,282 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedJsonFilter<$PrismaModel>
     _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type EnumBadgeCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.BadgeCategory | EnumBadgeCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.BadgeCategory[] | ListEnumBadgeCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BadgeCategory[] | ListEnumBadgeCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumBadgeCategoryFilter<$PrismaModel> | $Enums.BadgeCategory
+  }
+
+  export type BadgeCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    imageUrl?: SortOrder
+    category?: SortOrder
+    difficulty?: SortOrder
+    points?: SortOrder
+    isHidden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BadgeAvgOrderByAggregateInput = {
+    points?: SortOrder
+  }
+
+  export type BadgeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    imageUrl?: SortOrder
+    category?: SortOrder
+    difficulty?: SortOrder
+    points?: SortOrder
+    isHidden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BadgeMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    imageUrl?: SortOrder
+    category?: SortOrder
+    difficulty?: SortOrder
+    points?: SortOrder
+    isHidden?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BadgeSumOrderByAggregateInput = {
+    points?: SortOrder
+  }
+
+  export type EnumBadgeCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BadgeCategory | EnumBadgeCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.BadgeCategory[] | ListEnumBadgeCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BadgeCategory[] | ListEnumBadgeCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumBadgeCategoryWithAggregatesFilter<$PrismaModel> | $Enums.BadgeCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBadgeCategoryFilter<$PrismaModel>
+    _max?: NestedEnumBadgeCategoryFilter<$PrismaModel>
+  }
+
+  export type BadgeScalarRelationFilter = {
+    is?: BadgeWhereInput
+    isNot?: BadgeWhereInput
+  }
+
+  export type UserBadgeUserIdBadgeIdCompoundUniqueInput = {
+    userId: string
+    badgeId: string
+  }
+
+  export type UserBadgeCountOrderByAggregateInput = {
+    id?: SortOrder
+    earnedAt?: SortOrder
+    showcased?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+  }
+
+  export type UserBadgeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    earnedAt?: SortOrder
+    showcased?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+  }
+
+  export type UserBadgeMinOrderByAggregateInput = {
+    id?: SortOrder
+    earnedAt?: SortOrder
+    showcased?: SortOrder
+    userId?: SortOrder
+    badgeId?: SortOrder
+  }
+
+  export type UserAchievementCountOrderByAggregateInput = {
+    id?: SortOrder
+    totalPoints?: SortOrder
+    level?: SortOrder
+    streak?: SortOrder
+    longestStreak?: SortOrder
+    lastLoginDate?: SortOrder
+    completedCourses?: SortOrder
+    completedLessons?: SortOrder
+    phishingScore?: SortOrder
+    securityScore?: SortOrder
+    weeklyGoal?: SortOrder
+    weeklyProgress?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserAchievementAvgOrderByAggregateInput = {
+    totalPoints?: SortOrder
+    level?: SortOrder
+    streak?: SortOrder
+    longestStreak?: SortOrder
+    completedCourses?: SortOrder
+    completedLessons?: SortOrder
+    phishingScore?: SortOrder
+    securityScore?: SortOrder
+    weeklyGoal?: SortOrder
+    weeklyProgress?: SortOrder
+  }
+
+  export type UserAchievementMaxOrderByAggregateInput = {
+    id?: SortOrder
+    totalPoints?: SortOrder
+    level?: SortOrder
+    streak?: SortOrder
+    longestStreak?: SortOrder
+    lastLoginDate?: SortOrder
+    completedCourses?: SortOrder
+    completedLessons?: SortOrder
+    phishingScore?: SortOrder
+    securityScore?: SortOrder
+    weeklyGoal?: SortOrder
+    weeklyProgress?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserAchievementMinOrderByAggregateInput = {
+    id?: SortOrder
+    totalPoints?: SortOrder
+    level?: SortOrder
+    streak?: SortOrder
+    longestStreak?: SortOrder
+    lastLoginDate?: SortOrder
+    completedCourses?: SortOrder
+    completedLessons?: SortOrder
+    phishingScore?: SortOrder
+    securityScore?: SortOrder
+    weeklyGoal?: SortOrder
+    weeklyProgress?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserAchievementSumOrderByAggregateInput = {
+    totalPoints?: SortOrder
+    level?: SortOrder
+    streak?: SortOrder
+    longestStreak?: SortOrder
+    completedCourses?: SortOrder
+    completedLessons?: SortOrder
+    phishingScore?: SortOrder
+    securityScore?: SortOrder
+    weeklyGoal?: SortOrder
+    weeklyProgress?: SortOrder
+  }
+
+  export type ChallengeCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isActive?: SortOrder
+    points?: SortOrder
+    maxParticipants?: SortOrder
+  }
+
+  export type ChallengeAvgOrderByAggregateInput = {
+    points?: SortOrder
+    maxParticipants?: SortOrder
+  }
+
+  export type ChallengeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isActive?: SortOrder
+    points?: SortOrder
+    maxParticipants?: SortOrder
+  }
+
+  export type ChallengeMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isActive?: SortOrder
+    points?: SortOrder
+    maxParticipants?: SortOrder
+  }
+
+  export type ChallengeSumOrderByAggregateInput = {
+    points?: SortOrder
+    maxParticipants?: SortOrder
+  }
+
+  export type ChallengeScalarRelationFilter = {
+    is?: ChallengeWhereInput
+    isNot?: ChallengeWhereInput
+  }
+
+  export type UserChallengeUserIdChallengeIdCompoundUniqueInput = {
+    userId: string
+    challengeId: string
+  }
+
+  export type UserChallengeCountOrderByAggregateInput = {
+    id?: SortOrder
+    joinedAt?: SortOrder
+    completedAt?: SortOrder
+    progress?: SortOrder
+    userId?: SortOrder
+    challengeId?: SortOrder
+  }
+
+  export type UserChallengeAvgOrderByAggregateInput = {
+    progress?: SortOrder
+  }
+
+  export type UserChallengeMaxOrderByAggregateInput = {
+    id?: SortOrder
+    joinedAt?: SortOrder
+    completedAt?: SortOrder
+    progress?: SortOrder
+    userId?: SortOrder
+    challengeId?: SortOrder
+  }
+
+  export type UserChallengeMinOrderByAggregateInput = {
+    id?: SortOrder
+    joinedAt?: SortOrder
+    completedAt?: SortOrder
+    progress?: SortOrder
+    userId?: SortOrder
+    challengeId?: SortOrder
+  }
+
+  export type UserChallengeSumOrderByAggregateInput = {
+    progress?: SortOrder
   }
 
   export type EnumSeverityLevelFilter<$PrismaModel = never> = {
@@ -21150,6 +30557,48 @@ export namespace Prisma {
     _max?: NestedEnumThreatTypeFilter<$PrismaModel>
   }
 
+  export type ProfileScalarRelationFilter = {
+    is?: ProfileWhereInput
+    isNot?: ProfileWhereInput
+  }
+
+  export type NotificationPreferencesCountOrderByAggregateInput = {
+    id?: SortOrder
+    emailNotifications?: SortOrder
+    smsNotifications?: SortOrder
+    securityAlerts?: SortOrder
+    newsUpdates?: SortOrder
+    courseUpdates?: SortOrder
+    marketingEmails?: SortOrder
+    profileId?: SortOrder
+  }
+
+  export type NotificationPreferencesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    emailNotifications?: SortOrder
+    smsNotifications?: SortOrder
+    securityAlerts?: SortOrder
+    newsUpdates?: SortOrder
+    courseUpdates?: SortOrder
+    marketingEmails?: SortOrder
+    profileId?: SortOrder
+  }
+
+  export type NotificationPreferencesMinOrderByAggregateInput = {
+    id?: SortOrder
+    emailNotifications?: SortOrder
+    smsNotifications?: SortOrder
+    securityAlerts?: SortOrder
+    newsUpdates?: SortOrder
+    courseUpdates?: SortOrder
+    marketingEmails?: SortOrder
+    profileId?: SortOrder
+  }
+
+  export type UserCreatebackupCodesInput = {
+    set: string[]
+  }
+
   export type ProfileCreateNestedOneWithoutUserInput = {
     create?: XOR<ProfileCreateWithoutUserInput, ProfileUncheckedCreateWithoutUserInput>
     connectOrCreate?: ProfileCreateOrConnectWithoutUserInput
@@ -21182,6 +30631,26 @@ export namespace Prisma {
     connectOrCreate?: CourseProgressCreateOrConnectWithoutUserInput | CourseProgressCreateOrConnectWithoutUserInput[]
     createMany?: CourseProgressCreateManyUserInputEnvelope
     connect?: CourseProgressWhereUniqueInput | CourseProgressWhereUniqueInput[]
+  }
+
+  export type UserBadgeCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput> | UserBadgeCreateWithoutUserInput[] | UserBadgeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutUserInput | UserBadgeCreateOrConnectWithoutUserInput[]
+    createMany?: UserBadgeCreateManyUserInputEnvelope
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+  }
+
+  export type UserAchievementCreateNestedOneWithoutUserInput = {
+    create?: XOR<UserAchievementCreateWithoutUserInput, UserAchievementUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserAchievementCreateOrConnectWithoutUserInput
+    connect?: UserAchievementWhereUniqueInput
+  }
+
+  export type UserChallengeCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput> | UserChallengeCreateWithoutUserInput[] | UserChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutUserInput | UserChallengeCreateOrConnectWithoutUserInput[]
+    createMany?: UserChallengeCreateManyUserInputEnvelope
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
   }
 
   export type ProfileUncheckedCreateNestedOneWithoutUserInput = {
@@ -21218,6 +30687,26 @@ export namespace Prisma {
     connect?: CourseProgressWhereUniqueInput | CourseProgressWhereUniqueInput[]
   }
 
+  export type UserBadgeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput> | UserBadgeCreateWithoutUserInput[] | UserBadgeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutUserInput | UserBadgeCreateOrConnectWithoutUserInput[]
+    createMany?: UserBadgeCreateManyUserInputEnvelope
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+  }
+
+  export type UserAchievementUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<UserAchievementCreateWithoutUserInput, UserAchievementUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserAchievementCreateOrConnectWithoutUserInput
+    connect?: UserAchievementWhereUniqueInput
+  }
+
+  export type UserChallengeUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput> | UserChallengeCreateWithoutUserInput[] | UserChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutUserInput | UserChallengeCreateOrConnectWithoutUserInput[]
+    createMany?: UserChallengeCreateManyUserInputEnvelope
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -21236,6 +30725,15 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type UserUpdatebackupCodesInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type ProfileUpdateOneWithoutUserNestedInput = {
@@ -21304,6 +30802,44 @@ export namespace Prisma {
     deleteMany?: CourseProgressScalarWhereInput | CourseProgressScalarWhereInput[]
   }
 
+  export type UserBadgeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput> | UserBadgeCreateWithoutUserInput[] | UserBadgeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutUserInput | UserBadgeCreateOrConnectWithoutUserInput[]
+    upsert?: UserBadgeUpsertWithWhereUniqueWithoutUserInput | UserBadgeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserBadgeCreateManyUserInputEnvelope
+    set?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    disconnect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    delete?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    update?: UserBadgeUpdateWithWhereUniqueWithoutUserInput | UserBadgeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserBadgeUpdateManyWithWhereWithoutUserInput | UserBadgeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
+  export type UserAchievementUpdateOneWithoutUserNestedInput = {
+    create?: XOR<UserAchievementCreateWithoutUserInput, UserAchievementUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserAchievementCreateOrConnectWithoutUserInput
+    upsert?: UserAchievementUpsertWithoutUserInput
+    disconnect?: UserAchievementWhereInput | boolean
+    delete?: UserAchievementWhereInput | boolean
+    connect?: UserAchievementWhereUniqueInput
+    update?: XOR<XOR<UserAchievementUpdateToOneWithWhereWithoutUserInput, UserAchievementUpdateWithoutUserInput>, UserAchievementUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserChallengeUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput> | UserChallengeCreateWithoutUserInput[] | UserChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutUserInput | UserChallengeCreateOrConnectWithoutUserInput[]
+    upsert?: UserChallengeUpsertWithWhereUniqueWithoutUserInput | UserChallengeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserChallengeCreateManyUserInputEnvelope
+    set?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    disconnect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    delete?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    update?: UserChallengeUpdateWithWhereUniqueWithoutUserInput | UserChallengeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserChallengeUpdateManyWithWhereWithoutUserInput | UserChallengeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+  }
+
   export type ProfileUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<ProfileCreateWithoutUserInput, ProfileUncheckedCreateWithoutUserInput>
     connectOrCreate?: ProfileCreateOrConnectWithoutUserInput
@@ -21370,8 +30906,56 @@ export namespace Prisma {
     deleteMany?: CourseProgressScalarWhereInput | CourseProgressScalarWhereInput[]
   }
 
+  export type UserBadgeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput> | UserBadgeCreateWithoutUserInput[] | UserBadgeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutUserInput | UserBadgeCreateOrConnectWithoutUserInput[]
+    upsert?: UserBadgeUpsertWithWhereUniqueWithoutUserInput | UserBadgeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserBadgeCreateManyUserInputEnvelope
+    set?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    disconnect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    delete?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    update?: UserBadgeUpdateWithWhereUniqueWithoutUserInput | UserBadgeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserBadgeUpdateManyWithWhereWithoutUserInput | UserBadgeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
+  export type UserAchievementUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<UserAchievementCreateWithoutUserInput, UserAchievementUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserAchievementCreateOrConnectWithoutUserInput
+    upsert?: UserAchievementUpsertWithoutUserInput
+    disconnect?: UserAchievementWhereInput | boolean
+    delete?: UserAchievementWhereInput | boolean
+    connect?: UserAchievementWhereUniqueInput
+    update?: XOR<XOR<UserAchievementUpdateToOneWithWhereWithoutUserInput, UserAchievementUpdateWithoutUserInput>, UserAchievementUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserChallengeUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput> | UserChallengeCreateWithoutUserInput[] | UserChallengeUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutUserInput | UserChallengeCreateOrConnectWithoutUserInput[]
+    upsert?: UserChallengeUpsertWithWhereUniqueWithoutUserInput | UserChallengeUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserChallengeCreateManyUserInputEnvelope
+    set?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    disconnect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    delete?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    update?: UserChallengeUpdateWithWhereUniqueWithoutUserInput | UserChallengeUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserChallengeUpdateManyWithWhereWithoutUserInput | UserChallengeUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+  }
+
   export type ProfileCreateinterestsInput = {
     set: string[]
+  }
+
+  export type ProfileCreatecontentPreferencesInput = {
+    set: string[]
+  }
+
+  export type NotificationPreferencesCreateNestedOneWithoutProfileInput = {
+    create?: XOR<NotificationPreferencesCreateWithoutProfileInput, NotificationPreferencesUncheckedCreateWithoutProfileInput>
+    connectOrCreate?: NotificationPreferencesCreateOrConnectWithoutProfileInput
+    connect?: NotificationPreferencesWhereUniqueInput
   }
 
   export type UserCreateNestedOneWithoutProfileInput = {
@@ -21380,9 +30964,38 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type NotificationPreferencesUncheckedCreateNestedOneWithoutProfileInput = {
+    create?: XOR<NotificationPreferencesCreateWithoutProfileInput, NotificationPreferencesUncheckedCreateWithoutProfileInput>
+    connectOrCreate?: NotificationPreferencesCreateOrConnectWithoutProfileInput
+    connect?: NotificationPreferencesWhereUniqueInput
+  }
+
   export type ProfileUpdateinterestsInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type EnumThemeFieldUpdateOperationsInput = {
+    set?: $Enums.Theme
+  }
+
+  export type EnumSecurityLevelFieldUpdateOperationsInput = {
+    set?: $Enums.SecurityLevel
+  }
+
+  export type ProfileUpdatecontentPreferencesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type NotificationPreferencesUpdateOneWithoutProfileNestedInput = {
+    create?: XOR<NotificationPreferencesCreateWithoutProfileInput, NotificationPreferencesUncheckedCreateWithoutProfileInput>
+    connectOrCreate?: NotificationPreferencesCreateOrConnectWithoutProfileInput
+    upsert?: NotificationPreferencesUpsertWithoutProfileInput
+    disconnect?: NotificationPreferencesWhereInput | boolean
+    delete?: NotificationPreferencesWhereInput | boolean
+    connect?: NotificationPreferencesWhereUniqueInput
+    update?: XOR<XOR<NotificationPreferencesUpdateToOneWithWhereWithoutProfileInput, NotificationPreferencesUpdateWithoutProfileInput>, NotificationPreferencesUncheckedUpdateWithoutProfileInput>
   }
 
   export type UserUpdateOneRequiredWithoutProfileNestedInput = {
@@ -21391,6 +31004,16 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutProfileInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProfileInput, UserUpdateWithoutProfileInput>, UserUncheckedUpdateWithoutProfileInput>
+  }
+
+  export type NotificationPreferencesUncheckedUpdateOneWithoutProfileNestedInput = {
+    create?: XOR<NotificationPreferencesCreateWithoutProfileInput, NotificationPreferencesUncheckedCreateWithoutProfileInput>
+    connectOrCreate?: NotificationPreferencesCreateOrConnectWithoutProfileInput
+    upsert?: NotificationPreferencesUpsertWithoutProfileInput
+    disconnect?: NotificationPreferencesWhereInput | boolean
+    delete?: NotificationPreferencesWhereInput | boolean
+    connect?: NotificationPreferencesWhereUniqueInput
+    update?: XOR<XOR<NotificationPreferencesUpdateToOneWithWhereWithoutProfileInput, NotificationPreferencesUpdateWithoutProfileInput>, NotificationPreferencesUncheckedUpdateWithoutProfileInput>
   }
 
   export type UserCreateNestedOneWithoutPostsInput = {
@@ -21453,10 +31076,6 @@ export namespace Prisma {
     connectOrCreate?: BookmarkCreateOrConnectWithoutPostInput | BookmarkCreateOrConnectWithoutPostInput[]
     createMany?: BookmarkCreateManyPostInputEnvelope
     connect?: BookmarkWhereUniqueInput | BookmarkWhereUniqueInput[]
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -22027,6 +31646,14 @@ export namespace Prisma {
     connect?: CourseWhereUniqueInput
   }
 
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type UserUpdateOneRequiredWithoutCourseProgressNestedInput = {
     create?: XOR<UserCreateWithoutCourseProgressInput, UserUncheckedCreateWithoutCourseProgressInput>
     connectOrCreate?: UserCreateOrConnectWithoutCourseProgressInput
@@ -22043,12 +31670,184 @@ export namespace Prisma {
     update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutProgressInput, CourseUpdateWithoutProgressInput>, CourseUncheckedUpdateWithoutProgressInput>
   }
 
+  export type UserBadgeCreateNestedManyWithoutBadgeInput = {
+    create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
+    createMany?: UserBadgeCreateManyBadgeInputEnvelope
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+  }
+
+  export type UserBadgeUncheckedCreateNestedManyWithoutBadgeInput = {
+    create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
+    createMany?: UserBadgeCreateManyBadgeInputEnvelope
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+  }
+
+  export type EnumBadgeCategoryFieldUpdateOperationsInput = {
+    set?: $Enums.BadgeCategory
+  }
+
+  export type UserBadgeUpdateManyWithoutBadgeNestedInput = {
+    create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
+    upsert?: UserBadgeUpsertWithWhereUniqueWithoutBadgeInput | UserBadgeUpsertWithWhereUniqueWithoutBadgeInput[]
+    createMany?: UserBadgeCreateManyBadgeInputEnvelope
+    set?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    disconnect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    delete?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    update?: UserBadgeUpdateWithWhereUniqueWithoutBadgeInput | UserBadgeUpdateWithWhereUniqueWithoutBadgeInput[]
+    updateMany?: UserBadgeUpdateManyWithWhereWithoutBadgeInput | UserBadgeUpdateManyWithWhereWithoutBadgeInput[]
+    deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
+  export type UserBadgeUncheckedUpdateManyWithoutBadgeNestedInput = {
+    create?: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput> | UserBadgeCreateWithoutBadgeInput[] | UserBadgeUncheckedCreateWithoutBadgeInput[]
+    connectOrCreate?: UserBadgeCreateOrConnectWithoutBadgeInput | UserBadgeCreateOrConnectWithoutBadgeInput[]
+    upsert?: UserBadgeUpsertWithWhereUniqueWithoutBadgeInput | UserBadgeUpsertWithWhereUniqueWithoutBadgeInput[]
+    createMany?: UserBadgeCreateManyBadgeInputEnvelope
+    set?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    disconnect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    delete?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    connect?: UserBadgeWhereUniqueInput | UserBadgeWhereUniqueInput[]
+    update?: UserBadgeUpdateWithWhereUniqueWithoutBadgeInput | UserBadgeUpdateWithWhereUniqueWithoutBadgeInput[]
+    updateMany?: UserBadgeUpdateManyWithWhereWithoutBadgeInput | UserBadgeUpdateManyWithWhereWithoutBadgeInput[]
+    deleteMany?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutBadgesInput = {
+    create?: XOR<UserCreateWithoutBadgesInput, UserUncheckedCreateWithoutBadgesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBadgesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BadgeCreateNestedOneWithoutUserBadgesInput = {
+    create?: XOR<BadgeCreateWithoutUserBadgesInput, BadgeUncheckedCreateWithoutUserBadgesInput>
+    connectOrCreate?: BadgeCreateOrConnectWithoutUserBadgesInput
+    connect?: BadgeWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutBadgesNestedInput = {
+    create?: XOR<UserCreateWithoutBadgesInput, UserUncheckedCreateWithoutBadgesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBadgesInput
+    upsert?: UserUpsertWithoutBadgesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBadgesInput, UserUpdateWithoutBadgesInput>, UserUncheckedUpdateWithoutBadgesInput>
+  }
+
+  export type BadgeUpdateOneRequiredWithoutUserBadgesNestedInput = {
+    create?: XOR<BadgeCreateWithoutUserBadgesInput, BadgeUncheckedCreateWithoutUserBadgesInput>
+    connectOrCreate?: BadgeCreateOrConnectWithoutUserBadgesInput
+    upsert?: BadgeUpsertWithoutUserBadgesInput
+    connect?: BadgeWhereUniqueInput
+    update?: XOR<XOR<BadgeUpdateToOneWithWhereWithoutUserBadgesInput, BadgeUpdateWithoutUserBadgesInput>, BadgeUncheckedUpdateWithoutUserBadgesInput>
+  }
+
+  export type UserCreateNestedOneWithoutAchievementInput = {
+    create?: XOR<UserCreateWithoutAchievementInput, UserUncheckedCreateWithoutAchievementInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAchievementInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutAchievementNestedInput = {
+    create?: XOR<UserCreateWithoutAchievementInput, UserUncheckedCreateWithoutAchievementInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAchievementInput
+    upsert?: UserUpsertWithoutAchievementInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAchievementInput, UserUpdateWithoutAchievementInput>, UserUncheckedUpdateWithoutAchievementInput>
+  }
+
+  export type UserChallengeCreateNestedManyWithoutChallengeInput = {
+    create?: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput> | UserChallengeCreateWithoutChallengeInput[] | UserChallengeUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutChallengeInput | UserChallengeCreateOrConnectWithoutChallengeInput[]
+    createMany?: UserChallengeCreateManyChallengeInputEnvelope
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+  }
+
+  export type UserChallengeUncheckedCreateNestedManyWithoutChallengeInput = {
+    create?: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput> | UserChallengeCreateWithoutChallengeInput[] | UserChallengeUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutChallengeInput | UserChallengeCreateOrConnectWithoutChallengeInput[]
+    createMany?: UserChallengeCreateManyChallengeInputEnvelope
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+  }
+
+  export type UserChallengeUpdateManyWithoutChallengeNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput> | UserChallengeCreateWithoutChallengeInput[] | UserChallengeUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutChallengeInput | UserChallengeCreateOrConnectWithoutChallengeInput[]
+    upsert?: UserChallengeUpsertWithWhereUniqueWithoutChallengeInput | UserChallengeUpsertWithWhereUniqueWithoutChallengeInput[]
+    createMany?: UserChallengeCreateManyChallengeInputEnvelope
+    set?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    disconnect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    delete?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    update?: UserChallengeUpdateWithWhereUniqueWithoutChallengeInput | UserChallengeUpdateWithWhereUniqueWithoutChallengeInput[]
+    updateMany?: UserChallengeUpdateManyWithWhereWithoutChallengeInput | UserChallengeUpdateManyWithWhereWithoutChallengeInput[]
+    deleteMany?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+  }
+
+  export type UserChallengeUncheckedUpdateManyWithoutChallengeNestedInput = {
+    create?: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput> | UserChallengeCreateWithoutChallengeInput[] | UserChallengeUncheckedCreateWithoutChallengeInput[]
+    connectOrCreate?: UserChallengeCreateOrConnectWithoutChallengeInput | UserChallengeCreateOrConnectWithoutChallengeInput[]
+    upsert?: UserChallengeUpsertWithWhereUniqueWithoutChallengeInput | UserChallengeUpsertWithWhereUniqueWithoutChallengeInput[]
+    createMany?: UserChallengeCreateManyChallengeInputEnvelope
+    set?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    disconnect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    delete?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    connect?: UserChallengeWhereUniqueInput | UserChallengeWhereUniqueInput[]
+    update?: UserChallengeUpdateWithWhereUniqueWithoutChallengeInput | UserChallengeUpdateWithWhereUniqueWithoutChallengeInput[]
+    updateMany?: UserChallengeUpdateManyWithWhereWithoutChallengeInput | UserChallengeUpdateManyWithWhereWithoutChallengeInput[]
+    deleteMany?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutChallengesInput = {
+    create?: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChallengesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ChallengeCreateNestedOneWithoutParticipantsInput = {
+    create?: XOR<ChallengeCreateWithoutParticipantsInput, ChallengeUncheckedCreateWithoutParticipantsInput>
+    connectOrCreate?: ChallengeCreateOrConnectWithoutParticipantsInput
+    connect?: ChallengeWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutChallengesNestedInput = {
+    create?: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChallengesInput
+    upsert?: UserUpsertWithoutChallengesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChallengesInput, UserUpdateWithoutChallengesInput>, UserUncheckedUpdateWithoutChallengesInput>
+  }
+
+  export type ChallengeUpdateOneRequiredWithoutParticipantsNestedInput = {
+    create?: XOR<ChallengeCreateWithoutParticipantsInput, ChallengeUncheckedCreateWithoutParticipantsInput>
+    connectOrCreate?: ChallengeCreateOrConnectWithoutParticipantsInput
+    upsert?: ChallengeUpsertWithoutParticipantsInput
+    connect?: ChallengeWhereUniqueInput
+    update?: XOR<XOR<ChallengeUpdateToOneWithWhereWithoutParticipantsInput, ChallengeUpdateWithoutParticipantsInput>, ChallengeUncheckedUpdateWithoutParticipantsInput>
+  }
+
   export type EnumSeverityLevelFieldUpdateOperationsInput = {
     set?: $Enums.SeverityLevel
   }
 
   export type EnumThreatTypeFieldUpdateOperationsInput = {
     set?: $Enums.ThreatType
+  }
+
+  export type ProfileCreateNestedOneWithoutNotificationPrefsInput = {
+    create?: XOR<ProfileCreateWithoutNotificationPrefsInput, ProfileUncheckedCreateWithoutNotificationPrefsInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutNotificationPrefsInput
+    connect?: ProfileWhereUniqueInput
+  }
+
+  export type ProfileUpdateOneRequiredWithoutNotificationPrefsNestedInput = {
+    create?: XOR<ProfileCreateWithoutNotificationPrefsInput, ProfileUncheckedCreateWithoutNotificationPrefsInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutNotificationPrefsInput
+    upsert?: ProfileUpsertWithoutNotificationPrefsInput
+    connect?: ProfileWhereUniqueInput
+    update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutNotificationPrefsInput, ProfileUpdateWithoutNotificationPrefsInput>, ProfileUncheckedUpdateWithoutNotificationPrefsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -22106,6 +31905,11 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -22201,6 +32005,28 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedEnumThemeFilter<$PrismaModel = never> = {
+    equals?: $Enums.Theme | EnumThemeFieldRefInput<$PrismaModel>
+    in?: $Enums.Theme[] | ListEnumThemeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Theme[] | ListEnumThemeFieldRefInput<$PrismaModel>
+    not?: NestedEnumThemeFilter<$PrismaModel> | $Enums.Theme
+  }
+
+  export type NestedEnumSecurityLevelFilter<$PrismaModel = never> = {
+    equals?: $Enums.SecurityLevel | EnumSecurityLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.SecurityLevel[] | ListEnumSecurityLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SecurityLevel[] | ListEnumSecurityLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumSecurityLevelFilter<$PrismaModel> | $Enums.SecurityLevel
+  }
   export type NestedJsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
@@ -22225,17 +32051,24 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
+  export type NestedEnumThemeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Theme | EnumThemeFieldRefInput<$PrismaModel>
+    in?: $Enums.Theme[] | ListEnumThemeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Theme[] | ListEnumThemeFieldRefInput<$PrismaModel>
+    not?: NestedEnumThemeWithAggregatesFilter<$PrismaModel> | $Enums.Theme
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumThemeFilter<$PrismaModel>
+    _max?: NestedEnumThemeFilter<$PrismaModel>
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+  export type NestedEnumSecurityLevelWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SecurityLevel | EnumSecurityLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.SecurityLevel[] | ListEnumSecurityLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SecurityLevel[] | ListEnumSecurityLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumSecurityLevelWithAggregatesFilter<$PrismaModel> | $Enums.SecurityLevel
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
+    _min?: NestedEnumSecurityLevelFilter<$PrismaModel>
+    _max?: NestedEnumSecurityLevelFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -22348,6 +32181,39 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedEnumBadgeCategoryFilter<$PrismaModel = never> = {
+    equals?: $Enums.BadgeCategory | EnumBadgeCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.BadgeCategory[] | ListEnumBadgeCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BadgeCategory[] | ListEnumBadgeCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumBadgeCategoryFilter<$PrismaModel> | $Enums.BadgeCategory
+  }
+
+  export type NestedEnumBadgeCategoryWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.BadgeCategory | EnumBadgeCategoryFieldRefInput<$PrismaModel>
+    in?: $Enums.BadgeCategory[] | ListEnumBadgeCategoryFieldRefInput<$PrismaModel>
+    notIn?: $Enums.BadgeCategory[] | ListEnumBadgeCategoryFieldRefInput<$PrismaModel>
+    not?: NestedEnumBadgeCategoryWithAggregatesFilter<$PrismaModel> | $Enums.BadgeCategory
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumBadgeCategoryFilter<$PrismaModel>
+    _max?: NestedEnumBadgeCategoryFilter<$PrismaModel>
+  }
+
   export type NestedEnumSeverityLevelFilter<$PrismaModel = never> = {
     equals?: $Enums.SeverityLevel | EnumSeverityLevelFieldRefInput<$PrismaModel>
     in?: $Enums.SeverityLevel[] | ListEnumSeverityLevelFieldRefInput<$PrismaModel>
@@ -22390,6 +32256,14 @@ export namespace Prisma {
     location?: string | null
     interests?: ProfileCreateinterestsInput | string[]
     socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: $Enums.Theme
+    securityLevel?: $Enums.SecurityLevel
+    avatarUrl?: string | null
+    coverImageUrl?: string | null
+    preferredLanguage?: string | null
+    contentPreferences?: ProfileCreatecontentPreferencesInput | string[]
+    lastSeen?: Date | string | null
+    notificationPrefs?: NotificationPreferencesCreateNestedOneWithoutProfileInput
   }
 
   export type ProfileUncheckedCreateWithoutUserInput = {
@@ -22400,6 +32274,14 @@ export namespace Prisma {
     location?: string | null
     interests?: ProfileCreateinterestsInput | string[]
     socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: $Enums.Theme
+    securityLevel?: $Enums.SecurityLevel
+    avatarUrl?: string | null
+    coverImageUrl?: string | null
+    preferredLanguage?: string | null
+    contentPreferences?: ProfileCreatecontentPreferencesInput | string[]
+    lastSeen?: Date | string | null
+    notificationPrefs?: NotificationPreferencesUncheckedCreateNestedOneWithoutProfileInput
   }
 
   export type ProfileCreateOrConnectWithoutUserInput = {
@@ -22510,6 +32392,8 @@ export namespace Prisma {
     completedLessons: JsonNullValueInput | InputJsonValue
     startedAt?: Date | string
     completedAt?: Date | string | null
+    lastAccessedAt?: Date | string
+    progressPercentage?: number
     course: CourseCreateNestedOneWithoutProgressInput
   }
 
@@ -22518,6 +32402,8 @@ export namespace Prisma {
     completedLessons: JsonNullValueInput | InputJsonValue
     startedAt?: Date | string
     completedAt?: Date | string | null
+    lastAccessedAt?: Date | string
+    progressPercentage?: number
     courseId: string
   }
 
@@ -22528,6 +32414,91 @@ export namespace Prisma {
 
   export type CourseProgressCreateManyUserInputEnvelope = {
     data: CourseProgressCreateManyUserInput | CourseProgressCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserBadgeCreateWithoutUserInput = {
+    id?: string
+    earnedAt?: Date | string
+    showcased?: boolean
+    badge: BadgeCreateNestedOneWithoutUserBadgesInput
+  }
+
+  export type UserBadgeUncheckedCreateWithoutUserInput = {
+    id?: string
+    earnedAt?: Date | string
+    showcased?: boolean
+    badgeId: string
+  }
+
+  export type UserBadgeCreateOrConnectWithoutUserInput = {
+    where: UserBadgeWhereUniqueInput
+    create: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserBadgeCreateManyUserInputEnvelope = {
+    data: UserBadgeCreateManyUserInput | UserBadgeCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserAchievementCreateWithoutUserInput = {
+    id?: string
+    totalPoints?: number
+    level?: number
+    streak?: number
+    longestStreak?: number
+    lastLoginDate?: Date | string
+    completedCourses?: number
+    completedLessons?: number
+    phishingScore?: number | null
+    securityScore?: number | null
+    weeklyGoal?: number
+    weeklyProgress?: number
+  }
+
+  export type UserAchievementUncheckedCreateWithoutUserInput = {
+    id?: string
+    totalPoints?: number
+    level?: number
+    streak?: number
+    longestStreak?: number
+    lastLoginDate?: Date | string
+    completedCourses?: number
+    completedLessons?: number
+    phishingScore?: number | null
+    securityScore?: number | null
+    weeklyGoal?: number
+    weeklyProgress?: number
+  }
+
+  export type UserAchievementCreateOrConnectWithoutUserInput = {
+    where: UserAchievementWhereUniqueInput
+    create: XOR<UserAchievementCreateWithoutUserInput, UserAchievementUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserChallengeCreateWithoutUserInput = {
+    id?: string
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+    challenge: ChallengeCreateNestedOneWithoutParticipantsInput
+  }
+
+  export type UserChallengeUncheckedCreateWithoutUserInput = {
+    id?: string
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+    challengeId: string
+  }
+
+  export type UserChallengeCreateOrConnectWithoutUserInput = {
+    where: UserChallengeWhereUniqueInput
+    create: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserChallengeCreateManyUserInputEnvelope = {
+    data: UserChallengeCreateManyUserInput | UserChallengeCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -22550,6 +32521,14 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: ProfileUpdateinterestsInput | string[]
     socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: EnumThemeFieldUpdateOperationsInput | $Enums.Theme
+    securityLevel?: EnumSecurityLevelFieldUpdateOperationsInput | $Enums.SecurityLevel
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    contentPreferences?: ProfileUpdatecontentPreferencesInput | string[]
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notificationPrefs?: NotificationPreferencesUpdateOneWithoutProfileNestedInput
   }
 
   export type ProfileUncheckedUpdateWithoutUserInput = {
@@ -22560,6 +32539,14 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     interests?: ProfileUpdateinterestsInput | string[]
     socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: EnumThemeFieldUpdateOperationsInput | $Enums.Theme
+    securityLevel?: EnumSecurityLevelFieldUpdateOperationsInput | $Enums.SecurityLevel
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    contentPreferences?: ProfileUpdatecontentPreferencesInput | string[]
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notificationPrefs?: NotificationPreferencesUncheckedUpdateOneWithoutProfileNestedInput
   }
 
   export type PostUpsertWithWhereUniqueWithoutAuthorInput = {
@@ -22675,8 +32662,131 @@ export namespace Prisma {
     completedLessons?: JsonFilter<"CourseProgress">
     startedAt?: DateTimeFilter<"CourseProgress"> | Date | string
     completedAt?: DateTimeNullableFilter<"CourseProgress"> | Date | string | null
+    lastAccessedAt?: DateTimeFilter<"CourseProgress"> | Date | string
+    progressPercentage?: FloatFilter<"CourseProgress"> | number
     userId?: StringFilter<"CourseProgress"> | string
     courseId?: StringFilter<"CourseProgress"> | string
+  }
+
+  export type UserBadgeUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserBadgeWhereUniqueInput
+    update: XOR<UserBadgeUpdateWithoutUserInput, UserBadgeUncheckedUpdateWithoutUserInput>
+    create: XOR<UserBadgeCreateWithoutUserInput, UserBadgeUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserBadgeUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserBadgeWhereUniqueInput
+    data: XOR<UserBadgeUpdateWithoutUserInput, UserBadgeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserBadgeUpdateManyWithWhereWithoutUserInput = {
+    where: UserBadgeScalarWhereInput
+    data: XOR<UserBadgeUpdateManyMutationInput, UserBadgeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserBadgeScalarWhereInput = {
+    AND?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+    OR?: UserBadgeScalarWhereInput[]
+    NOT?: UserBadgeScalarWhereInput | UserBadgeScalarWhereInput[]
+    id?: StringFilter<"UserBadge"> | string
+    earnedAt?: DateTimeFilter<"UserBadge"> | Date | string
+    showcased?: BoolFilter<"UserBadge"> | boolean
+    userId?: StringFilter<"UserBadge"> | string
+    badgeId?: StringFilter<"UserBadge"> | string
+  }
+
+  export type UserAchievementUpsertWithoutUserInput = {
+    update: XOR<UserAchievementUpdateWithoutUserInput, UserAchievementUncheckedUpdateWithoutUserInput>
+    create: XOR<UserAchievementCreateWithoutUserInput, UserAchievementUncheckedCreateWithoutUserInput>
+    where?: UserAchievementWhereInput
+  }
+
+  export type UserAchievementUpdateToOneWithWhereWithoutUserInput = {
+    where?: UserAchievementWhereInput
+    data: XOR<UserAchievementUpdateWithoutUserInput, UserAchievementUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserAchievementUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    lastLoginDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedCourses?: IntFieldUpdateOperationsInput | number
+    completedLessons?: IntFieldUpdateOperationsInput | number
+    phishingScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    securityScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    weeklyGoal?: IntFieldUpdateOperationsInput | number
+    weeklyProgress?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserAchievementUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    streak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    lastLoginDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedCourses?: IntFieldUpdateOperationsInput | number
+    completedLessons?: IntFieldUpdateOperationsInput | number
+    phishingScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    securityScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    weeklyGoal?: IntFieldUpdateOperationsInput | number
+    weeklyProgress?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserChallengeUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserChallengeWhereUniqueInput
+    update: XOR<UserChallengeUpdateWithoutUserInput, UserChallengeUncheckedUpdateWithoutUserInput>
+    create: XOR<UserChallengeCreateWithoutUserInput, UserChallengeUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserChallengeUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserChallengeWhereUniqueInput
+    data: XOR<UserChallengeUpdateWithoutUserInput, UserChallengeUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserChallengeUpdateManyWithWhereWithoutUserInput = {
+    where: UserChallengeScalarWhereInput
+    data: XOR<UserChallengeUpdateManyMutationInput, UserChallengeUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserChallengeScalarWhereInput = {
+    AND?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+    OR?: UserChallengeScalarWhereInput[]
+    NOT?: UserChallengeScalarWhereInput | UserChallengeScalarWhereInput[]
+    id?: StringFilter<"UserChallenge"> | string
+    joinedAt?: DateTimeFilter<"UserChallenge"> | Date | string
+    completedAt?: DateTimeNullableFilter<"UserChallenge"> | Date | string | null
+    progress?: FloatFilter<"UserChallenge"> | number
+    userId?: StringFilter<"UserChallenge"> | string
+    challengeId?: StringFilter<"UserChallenge"> | string
+  }
+
+  export type NotificationPreferencesCreateWithoutProfileInput = {
+    id?: string
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    securityAlerts?: boolean
+    newsUpdates?: boolean
+    courseUpdates?: boolean
+    marketingEmails?: boolean
+  }
+
+  export type NotificationPreferencesUncheckedCreateWithoutProfileInput = {
+    id?: string
+    emailNotifications?: boolean
+    smsNotifications?: boolean
+    securityAlerts?: boolean
+    newsUpdates?: boolean
+    courseUpdates?: boolean
+    marketingEmails?: boolean
+  }
+
+  export type NotificationPreferencesCreateOrConnectWithoutProfileInput = {
+    where: NotificationPreferencesWhereUniqueInput
+    create: XOR<NotificationPreferencesCreateWithoutProfileInput, NotificationPreferencesUncheckedCreateWithoutProfileInput>
   }
 
   export type UserCreateWithoutProfileInput = {
@@ -22689,10 +32799,16 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
     posts?: PostCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
     bookmarks?: BookmarkCreateNestedManyWithoutUserInput
     courseProgress?: CourseProgressCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProfileInput = {
@@ -22705,15 +32821,52 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
     comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
     courseProgress?: CourseProgressUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementUncheckedCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProfileInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutProfileInput, UserUncheckedCreateWithoutProfileInput>
+  }
+
+  export type NotificationPreferencesUpsertWithoutProfileInput = {
+    update: XOR<NotificationPreferencesUpdateWithoutProfileInput, NotificationPreferencesUncheckedUpdateWithoutProfileInput>
+    create: XOR<NotificationPreferencesCreateWithoutProfileInput, NotificationPreferencesUncheckedCreateWithoutProfileInput>
+    where?: NotificationPreferencesWhereInput
+  }
+
+  export type NotificationPreferencesUpdateToOneWithWhereWithoutProfileInput = {
+    where?: NotificationPreferencesWhereInput
+    data: XOR<NotificationPreferencesUpdateWithoutProfileInput, NotificationPreferencesUncheckedUpdateWithoutProfileInput>
+  }
+
+  export type NotificationPreferencesUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    smsNotifications?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    newsUpdates?: BoolFieldUpdateOperationsInput | boolean
+    courseUpdates?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type NotificationPreferencesUncheckedUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    smsNotifications?: BoolFieldUpdateOperationsInput | boolean
+    securityAlerts?: BoolFieldUpdateOperationsInput | boolean
+    newsUpdates?: BoolFieldUpdateOperationsInput | boolean
+    courseUpdates?: BoolFieldUpdateOperationsInput | boolean
+    marketingEmails?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUpsertWithoutProfileInput = {
@@ -22737,10 +32890,16 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
     posts?: PostUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
     bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
     courseProgress?: CourseProgressUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfileInput = {
@@ -22753,10 +32912,16 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
     courseProgress?: CourseProgressUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUncheckedUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPostsInput = {
@@ -22769,10 +32934,16 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
     profile?: ProfileCreateNestedOneWithoutUserInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
     bookmarks?: BookmarkCreateNestedManyWithoutUserInput
     courseProgress?: CourseProgressCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
@@ -22785,10 +32956,16 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
     comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
     courseProgress?: CourseProgressUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementUncheckedCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
@@ -22903,10 +33080,16 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
     profile?: ProfileUpdateOneWithoutUserNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
     bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
     courseProgress?: CourseProgressUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
@@ -22919,10 +33102,16 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
     profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
     comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
     courseProgress?: CourseProgressUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUncheckedUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CategoryOnPostUpsertWithWhereUniqueWithoutPostInput = {
@@ -23394,10 +33583,16 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
     profile?: ProfileCreateNestedOneWithoutUserInput
     posts?: PostCreateNestedManyWithoutAuthorInput
     bookmarks?: BookmarkCreateNestedManyWithoutUserInput
     courseProgress?: CourseProgressCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
@@ -23410,10 +33605,16 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
     bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
     courseProgress?: CourseProgressUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementUncheckedCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCommentsInput = {
@@ -23546,10 +33747,16 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
     profile?: ProfileUpdateOneWithoutUserNestedInput
     posts?: PostUpdateManyWithoutAuthorNestedInput
     bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
     courseProgress?: CourseProgressUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -23562,10 +33769,16 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
     profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
     courseProgress?: CourseProgressUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUncheckedUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CommentUpsertWithoutRepliesInput = {
@@ -23625,10 +33838,16 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
     profile?: ProfileCreateNestedOneWithoutUserInput
     posts?: PostCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
     courseProgress?: CourseProgressCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBookmarksInput = {
@@ -23641,10 +33860,16 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
     comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     courseProgress?: CourseProgressUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementUncheckedCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBookmarksInput = {
@@ -23716,10 +33941,16 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
     profile?: ProfileUpdateOneWithoutUserNestedInput
     posts?: PostUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
     courseProgress?: CourseProgressUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBookmarksInput = {
@@ -23732,10 +33963,16 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
     profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     courseProgress?: CourseProgressUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUncheckedUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PostUpsertWithoutBookmarksInput = {
@@ -23818,6 +34055,8 @@ export namespace Prisma {
     completedLessons: JsonNullValueInput | InputJsonValue
     startedAt?: Date | string
     completedAt?: Date | string | null
+    lastAccessedAt?: Date | string
+    progressPercentage?: number
     user: UserCreateNestedOneWithoutCourseProgressInput
   }
 
@@ -23826,6 +34065,8 @@ export namespace Prisma {
     completedLessons: JsonNullValueInput | InputJsonValue
     startedAt?: Date | string
     completedAt?: Date | string | null
+    lastAccessedAt?: Date | string
+    progressPercentage?: number
     userId: string
   }
 
@@ -24073,10 +34314,16 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
     profile?: ProfileCreateNestedOneWithoutUserInput
     posts?: PostCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutAuthorInput
     bookmarks?: BookmarkCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCourseProgressInput = {
@@ -24089,10 +34336,16 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
     profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
     comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
     bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementUncheckedCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCourseProgressInput = {
@@ -24156,10 +34409,16 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
     profile?: ProfileUpdateOneWithoutUserNestedInput
     posts?: PostUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutAuthorNestedInput
     bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCourseProgressInput = {
@@ -24172,10 +34431,16 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
     profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
     comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
     bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUncheckedUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CourseUpsertWithoutProgressInput = {
@@ -24219,6 +34484,616 @@ export namespace Prisma {
     modules?: ModuleUncheckedUpdateManyWithoutCourseNestedInput
   }
 
+  export type UserBadgeCreateWithoutBadgeInput = {
+    id?: string
+    earnedAt?: Date | string
+    showcased?: boolean
+    user: UserCreateNestedOneWithoutBadgesInput
+  }
+
+  export type UserBadgeUncheckedCreateWithoutBadgeInput = {
+    id?: string
+    earnedAt?: Date | string
+    showcased?: boolean
+    userId: string
+  }
+
+  export type UserBadgeCreateOrConnectWithoutBadgeInput = {
+    where: UserBadgeWhereUniqueInput
+    create: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput>
+  }
+
+  export type UserBadgeCreateManyBadgeInputEnvelope = {
+    data: UserBadgeCreateManyBadgeInput | UserBadgeCreateManyBadgeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserBadgeUpsertWithWhereUniqueWithoutBadgeInput = {
+    where: UserBadgeWhereUniqueInput
+    update: XOR<UserBadgeUpdateWithoutBadgeInput, UserBadgeUncheckedUpdateWithoutBadgeInput>
+    create: XOR<UserBadgeCreateWithoutBadgeInput, UserBadgeUncheckedCreateWithoutBadgeInput>
+  }
+
+  export type UserBadgeUpdateWithWhereUniqueWithoutBadgeInput = {
+    where: UserBadgeWhereUniqueInput
+    data: XOR<UserBadgeUpdateWithoutBadgeInput, UserBadgeUncheckedUpdateWithoutBadgeInput>
+  }
+
+  export type UserBadgeUpdateManyWithWhereWithoutBadgeInput = {
+    where: UserBadgeScalarWhereInput
+    data: XOR<UserBadgeUpdateManyMutationInput, UserBadgeUncheckedUpdateManyWithoutBadgeInput>
+  }
+
+  export type UserCreateWithoutBadgesInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    password: string
+    image?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
+    profile?: ProfileCreateNestedOneWithoutUserInput
+    posts?: PostCreateNestedManyWithoutAuthorInput
+    comments?: CommentCreateNestedManyWithoutAuthorInput
+    bookmarks?: BookmarkCreateNestedManyWithoutUserInput
+    courseProgress?: CourseProgressCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutBadgesInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    password: string
+    image?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
+    profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    courseProgress?: CourseProgressUncheckedCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementUncheckedCreateNestedOneWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutBadgesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBadgesInput, UserUncheckedCreateWithoutBadgesInput>
+  }
+
+  export type BadgeCreateWithoutUserBadgesInput = {
+    id?: string
+    name: string
+    description: string
+    imageUrl: string
+    category: $Enums.BadgeCategory
+    difficulty: $Enums.Level
+    points?: number
+    isHidden?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BadgeUncheckedCreateWithoutUserBadgesInput = {
+    id?: string
+    name: string
+    description: string
+    imageUrl: string
+    category: $Enums.BadgeCategory
+    difficulty: $Enums.Level
+    points?: number
+    isHidden?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BadgeCreateOrConnectWithoutUserBadgesInput = {
+    where: BadgeWhereUniqueInput
+    create: XOR<BadgeCreateWithoutUserBadgesInput, BadgeUncheckedCreateWithoutUserBadgesInput>
+  }
+
+  export type UserUpsertWithoutBadgesInput = {
+    update: XOR<UserUpdateWithoutBadgesInput, UserUncheckedUpdateWithoutBadgesInput>
+    create: XOR<UserCreateWithoutBadgesInput, UserUncheckedCreateWithoutBadgesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBadgesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBadgesInput, UserUncheckedUpdateWithoutBadgesInput>
+  }
+
+  export type UserUpdateWithoutBadgesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
+    profile?: ProfileUpdateOneWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+    comments?: CommentUpdateManyWithoutAuthorNestedInput
+    bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
+    courseProgress?: CourseProgressUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBadgesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
+    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    courseProgress?: CourseProgressUncheckedUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUncheckedUpdateOneWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type BadgeUpsertWithoutUserBadgesInput = {
+    update: XOR<BadgeUpdateWithoutUserBadgesInput, BadgeUncheckedUpdateWithoutUserBadgesInput>
+    create: XOR<BadgeCreateWithoutUserBadgesInput, BadgeUncheckedCreateWithoutUserBadgesInput>
+    where?: BadgeWhereInput
+  }
+
+  export type BadgeUpdateToOneWithWhereWithoutUserBadgesInput = {
+    where?: BadgeWhereInput
+    data: XOR<BadgeUpdateWithoutUserBadgesInput, BadgeUncheckedUpdateWithoutUserBadgesInput>
+  }
+
+  export type BadgeUpdateWithoutUserBadgesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    category?: EnumBadgeCategoryFieldUpdateOperationsInput | $Enums.BadgeCategory
+    difficulty?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    points?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BadgeUncheckedUpdateWithoutUserBadgesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    imageUrl?: StringFieldUpdateOperationsInput | string
+    category?: EnumBadgeCategoryFieldUpdateOperationsInput | $Enums.BadgeCategory
+    difficulty?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    points?: IntFieldUpdateOperationsInput | number
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateWithoutAchievementInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    password: string
+    image?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
+    profile?: ProfileCreateNestedOneWithoutUserInput
+    posts?: PostCreateNestedManyWithoutAuthorInput
+    comments?: CommentCreateNestedManyWithoutAuthorInput
+    bookmarks?: BookmarkCreateNestedManyWithoutUserInput
+    courseProgress?: CourseProgressCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAchievementInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    password: string
+    image?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
+    profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    courseProgress?: CourseProgressUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    challenges?: UserChallengeUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAchievementInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAchievementInput, UserUncheckedCreateWithoutAchievementInput>
+  }
+
+  export type UserUpsertWithoutAchievementInput = {
+    update: XOR<UserUpdateWithoutAchievementInput, UserUncheckedUpdateWithoutAchievementInput>
+    create: XOR<UserCreateWithoutAchievementInput, UserUncheckedCreateWithoutAchievementInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAchievementInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAchievementInput, UserUncheckedUpdateWithoutAchievementInput>
+  }
+
+  export type UserUpdateWithoutAchievementInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
+    profile?: ProfileUpdateOneWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+    comments?: CommentUpdateManyWithoutAuthorNestedInput
+    bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
+    courseProgress?: CourseProgressUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAchievementInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
+    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    courseProgress?: CourseProgressUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    challenges?: UserChallengeUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserChallengeCreateWithoutChallengeInput = {
+    id?: string
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+    user: UserCreateNestedOneWithoutChallengesInput
+  }
+
+  export type UserChallengeUncheckedCreateWithoutChallengeInput = {
+    id?: string
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+    userId: string
+  }
+
+  export type UserChallengeCreateOrConnectWithoutChallengeInput = {
+    where: UserChallengeWhereUniqueInput
+    create: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput>
+  }
+
+  export type UserChallengeCreateManyChallengeInputEnvelope = {
+    data: UserChallengeCreateManyChallengeInput | UserChallengeCreateManyChallengeInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserChallengeUpsertWithWhereUniqueWithoutChallengeInput = {
+    where: UserChallengeWhereUniqueInput
+    update: XOR<UserChallengeUpdateWithoutChallengeInput, UserChallengeUncheckedUpdateWithoutChallengeInput>
+    create: XOR<UserChallengeCreateWithoutChallengeInput, UserChallengeUncheckedCreateWithoutChallengeInput>
+  }
+
+  export type UserChallengeUpdateWithWhereUniqueWithoutChallengeInput = {
+    where: UserChallengeWhereUniqueInput
+    data: XOR<UserChallengeUpdateWithoutChallengeInput, UserChallengeUncheckedUpdateWithoutChallengeInput>
+  }
+
+  export type UserChallengeUpdateManyWithWhereWithoutChallengeInput = {
+    where: UserChallengeScalarWhereInput
+    data: XOR<UserChallengeUpdateManyMutationInput, UserChallengeUncheckedUpdateManyWithoutChallengeInput>
+  }
+
+  export type UserCreateWithoutChallengesInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    password: string
+    image?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
+    profile?: ProfileCreateNestedOneWithoutUserInput
+    posts?: PostCreateNestedManyWithoutAuthorInput
+    comments?: CommentCreateNestedManyWithoutAuthorInput
+    bookmarks?: BookmarkCreateNestedManyWithoutUserInput
+    courseProgress?: CourseProgressCreateNestedManyWithoutUserInput
+    badges?: UserBadgeCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutChallengesInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    password: string
+    image?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    twoFactorEnabled?: boolean
+    twoFactorSecret?: string | null
+    backupCodes?: UserCreatebackupCodesInput | string[]
+    profile?: ProfileUncheckedCreateNestedOneWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    bookmarks?: BookmarkUncheckedCreateNestedManyWithoutUserInput
+    courseProgress?: CourseProgressUncheckedCreateNestedManyWithoutUserInput
+    badges?: UserBadgeUncheckedCreateNestedManyWithoutUserInput
+    achievement?: UserAchievementUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutChallengesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+  }
+
+  export type ChallengeCreateWithoutParticipantsInput = {
+    id?: string
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    isActive?: boolean
+    points: number
+    maxParticipants?: number | null
+  }
+
+  export type ChallengeUncheckedCreateWithoutParticipantsInput = {
+    id?: string
+    title: string
+    description: string
+    startDate: Date | string
+    endDate: Date | string
+    isActive?: boolean
+    points: number
+    maxParticipants?: number | null
+  }
+
+  export type ChallengeCreateOrConnectWithoutParticipantsInput = {
+    where: ChallengeWhereUniqueInput
+    create: XOR<ChallengeCreateWithoutParticipantsInput, ChallengeUncheckedCreateWithoutParticipantsInput>
+  }
+
+  export type UserUpsertWithoutChallengesInput = {
+    update: XOR<UserUpdateWithoutChallengesInput, UserUncheckedUpdateWithoutChallengesInput>
+    create: XOR<UserCreateWithoutChallengesInput, UserUncheckedCreateWithoutChallengesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutChallengesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutChallengesInput, UserUncheckedUpdateWithoutChallengesInput>
+  }
+
+  export type UserUpdateWithoutChallengesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
+    profile?: ProfileUpdateOneWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+    comments?: CommentUpdateManyWithoutAuthorNestedInput
+    bookmarks?: BookmarkUpdateManyWithoutUserNestedInput
+    courseProgress?: CourseProgressUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutChallengesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    twoFactorEnabled?: BoolFieldUpdateOperationsInput | boolean
+    twoFactorSecret?: NullableStringFieldUpdateOperationsInput | string | null
+    backupCodes?: UserUpdatebackupCodesInput | string[]
+    profile?: ProfileUncheckedUpdateOneWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    bookmarks?: BookmarkUncheckedUpdateManyWithoutUserNestedInput
+    courseProgress?: CourseProgressUncheckedUpdateManyWithoutUserNestedInput
+    badges?: UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+    achievement?: UserAchievementUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type ChallengeUpsertWithoutParticipantsInput = {
+    update: XOR<ChallengeUpdateWithoutParticipantsInput, ChallengeUncheckedUpdateWithoutParticipantsInput>
+    create: XOR<ChallengeCreateWithoutParticipantsInput, ChallengeUncheckedCreateWithoutParticipantsInput>
+    where?: ChallengeWhereInput
+  }
+
+  export type ChallengeUpdateToOneWithWhereWithoutParticipantsInput = {
+    where?: ChallengeWhereInput
+    data: XOR<ChallengeUpdateWithoutParticipantsInput, ChallengeUncheckedUpdateWithoutParticipantsInput>
+  }
+
+  export type ChallengeUpdateWithoutParticipantsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    points?: IntFieldUpdateOperationsInput | number
+    maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ChallengeUncheckedUpdateWithoutParticipantsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    points?: IntFieldUpdateOperationsInput | number
+    maxParticipants?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ProfileCreateWithoutNotificationPrefsInput = {
+    id?: string
+    bio?: string | null
+    organization?: string | null
+    title?: string | null
+    location?: string | null
+    interests?: ProfileCreateinterestsInput | string[]
+    socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: $Enums.Theme
+    securityLevel?: $Enums.SecurityLevel
+    avatarUrl?: string | null
+    coverImageUrl?: string | null
+    preferredLanguage?: string | null
+    contentPreferences?: ProfileCreatecontentPreferencesInput | string[]
+    lastSeen?: Date | string | null
+    user: UserCreateNestedOneWithoutProfileInput
+  }
+
+  export type ProfileUncheckedCreateWithoutNotificationPrefsInput = {
+    id?: string
+    bio?: string | null
+    organization?: string | null
+    title?: string | null
+    location?: string | null
+    interests?: ProfileCreateinterestsInput | string[]
+    socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: $Enums.Theme
+    securityLevel?: $Enums.SecurityLevel
+    avatarUrl?: string | null
+    coverImageUrl?: string | null
+    preferredLanguage?: string | null
+    contentPreferences?: ProfileCreatecontentPreferencesInput | string[]
+    lastSeen?: Date | string | null
+    userId: string
+  }
+
+  export type ProfileCreateOrConnectWithoutNotificationPrefsInput = {
+    where: ProfileWhereUniqueInput
+    create: XOR<ProfileCreateWithoutNotificationPrefsInput, ProfileUncheckedCreateWithoutNotificationPrefsInput>
+  }
+
+  export type ProfileUpsertWithoutNotificationPrefsInput = {
+    update: XOR<ProfileUpdateWithoutNotificationPrefsInput, ProfileUncheckedUpdateWithoutNotificationPrefsInput>
+    create: XOR<ProfileCreateWithoutNotificationPrefsInput, ProfileUncheckedCreateWithoutNotificationPrefsInput>
+    where?: ProfileWhereInput
+  }
+
+  export type ProfileUpdateToOneWithWhereWithoutNotificationPrefsInput = {
+    where?: ProfileWhereInput
+    data: XOR<ProfileUpdateWithoutNotificationPrefsInput, ProfileUncheckedUpdateWithoutNotificationPrefsInput>
+  }
+
+  export type ProfileUpdateWithoutNotificationPrefsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    interests?: ProfileUpdateinterestsInput | string[]
+    socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: EnumThemeFieldUpdateOperationsInput | $Enums.Theme
+    securityLevel?: EnumSecurityLevelFieldUpdateOperationsInput | $Enums.SecurityLevel
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    contentPreferences?: ProfileUpdatecontentPreferencesInput | string[]
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutProfileNestedInput
+  }
+
+  export type ProfileUncheckedUpdateWithoutNotificationPrefsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    organization?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    interests?: ProfileUpdateinterestsInput | string[]
+    socialLinks?: NullableJsonNullValueInput | InputJsonValue
+    theme?: EnumThemeFieldUpdateOperationsInput | $Enums.Theme
+    securityLevel?: EnumSecurityLevelFieldUpdateOperationsInput | $Enums.SecurityLevel
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    coverImageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    preferredLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    contentPreferences?: ProfileUpdatecontentPreferencesInput | string[]
+    lastSeen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type PostCreateManyAuthorInput = {
     id?: string
     title: string
@@ -24253,7 +35128,24 @@ export namespace Prisma {
     completedLessons: JsonNullValueInput | InputJsonValue
     startedAt?: Date | string
     completedAt?: Date | string | null
+    lastAccessedAt?: Date | string
+    progressPercentage?: number
     courseId: string
+  }
+
+  export type UserBadgeCreateManyUserInput = {
+    id?: string
+    earnedAt?: Date | string
+    showcased?: boolean
+    badgeId: string
+  }
+
+  export type UserChallengeCreateManyUserInput = {
+    id?: string
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+    challengeId: string
   }
 
   export type PostUpdateWithoutAuthorInput = {
@@ -24358,6 +35250,8 @@ export namespace Prisma {
     completedLessons?: JsonNullValueInput | InputJsonValue
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    progressPercentage?: FloatFieldUpdateOperationsInput | number
     course?: CourseUpdateOneRequiredWithoutProgressNestedInput
   }
 
@@ -24366,6 +35260,8 @@ export namespace Prisma {
     completedLessons?: JsonNullValueInput | InputJsonValue
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    progressPercentage?: FloatFieldUpdateOperationsInput | number
     courseId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -24374,7 +35270,54 @@ export namespace Prisma {
     completedLessons?: JsonNullValueInput | InputJsonValue
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    progressPercentage?: FloatFieldUpdateOperationsInput | number
     courseId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserBadgeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    showcased?: BoolFieldUpdateOperationsInput | boolean
+    badge?: BadgeUpdateOneRequiredWithoutUserBadgesNestedInput
+  }
+
+  export type UserBadgeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    showcased?: BoolFieldUpdateOperationsInput | boolean
+    badgeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserBadgeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    showcased?: BoolFieldUpdateOperationsInput | boolean
+    badgeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserChallengeUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    challenge?: ChallengeUpdateOneRequiredWithoutParticipantsNestedInput
+  }
+
+  export type UserChallengeUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    challengeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserChallengeUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    challengeId?: StringFieldUpdateOperationsInput | string
   }
 
   export type CategoryOnPostCreateManyPostInput = {
@@ -24549,6 +35492,8 @@ export namespace Prisma {
     completedLessons: JsonNullValueInput | InputJsonValue
     startedAt?: Date | string
     completedAt?: Date | string | null
+    lastAccessedAt?: Date | string
+    progressPercentage?: number
     userId: string
   }
 
@@ -24580,6 +35525,8 @@ export namespace Prisma {
     completedLessons?: JsonNullValueInput | InputJsonValue
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    progressPercentage?: FloatFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutCourseProgressNestedInput
   }
 
@@ -24588,6 +35535,8 @@ export namespace Prisma {
     completedLessons?: JsonNullValueInput | InputJsonValue
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    progressPercentage?: FloatFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -24596,6 +35545,8 @@ export namespace Prisma {
     completedLessons?: JsonNullValueInput | InputJsonValue
     startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastAccessedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    progressPercentage?: FloatFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -24633,6 +35584,66 @@ export namespace Prisma {
     videoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     order?: IntFieldUpdateOperationsInput | number
     duration?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type UserBadgeCreateManyBadgeInput = {
+    id?: string
+    earnedAt?: Date | string
+    showcased?: boolean
+    userId: string
+  }
+
+  export type UserBadgeUpdateWithoutBadgeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    showcased?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutBadgesNestedInput
+  }
+
+  export type UserBadgeUncheckedUpdateWithoutBadgeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    showcased?: BoolFieldUpdateOperationsInput | boolean
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserBadgeUncheckedUpdateManyWithoutBadgeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    earnedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    showcased?: BoolFieldUpdateOperationsInput | boolean
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserChallengeCreateManyChallengeInput = {
+    id?: string
+    joinedAt?: Date | string
+    completedAt?: Date | string | null
+    progress?: number
+    userId: string
+  }
+
+  export type UserChallengeUpdateWithoutChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutChallengesNestedInput
+  }
+
+  export type UserChallengeUncheckedUpdateWithoutChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserChallengeUncheckedUpdateManyWithoutChallengeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    joinedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: FloatFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
 

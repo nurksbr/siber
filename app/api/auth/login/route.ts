@@ -11,6 +11,7 @@ const prisma = new PrismaClient();
 const loginSchema = z.object({
   email: z.string().email({ message: 'Geçerli bir e-posta adresi giriniz' }),
   password: z.string().min(6, { message: 'Şifre en az 6 karakter olmalıdır' }),
+  twoFactorCode: z.string().optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -26,11 +27,19 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    const { email, password } = result.data;
+    const { email, password, twoFactorCode } = result.data;
     
     // Kullanıcıyı bul
     const user = await prisma.user.findUnique({
       where: { email },
+      select: {
+        id: true,
+        email: true,
+        password: true,
+        role: true,
+        twoFactorEnabled: true,
+        twoFactorSecret: true
+      }
     });
     
     // Kullanıcı bulunamadı veya şifre eşleşmiyor
@@ -50,6 +59,40 @@ export async function POST(request: NextRequest) {
       );
     }
     
+    // 2FA kontrolü
+    if (user.twoFactorEnabled) {
+      // 2FA kodu gönderilmediyse
+      if (!twoFactorCode) {
+        return NextResponse.json(
+          { 
+            requiresTwoFactor: true,
+            message: 'İki faktörlü kimlik doğrulama kodu gerekli'
+          },
+          { status: 200 }  // 200 dönüyoruz çünkü başarıyla kimlik doğrulandı, sadece 2FA kodu gerekli
+        );
+      }
+      
+      // 2FA doğrulama
+      if (!user.twoFactorSecret) {
+        return NextResponse.json(
+          { error: '2FA etkin ancak yapılandırılmamış' },
+          { status: 500 }
+        );
+      }
+      
+      // 2FA doğrulama kodunu kontrol et - bu kısmı ayrı bir endpoint ile de yapabiliriz
+      // Basit tutmak için burada bırakıyoruz
+      const { verifyTwoFactorCode } = await import('@/app/lib/twoFactorAuth');
+      const isValid = verifyTwoFactorCode(twoFactorCode, user.twoFactorSecret);
+      
+      if (!isValid) {
+        return NextResponse.json(
+          { error: 'Geçersiz iki faktörlü kimlik doğrulama kodu' },
+          { status: 401 }
+        );
+      }
+    }
+    
     // JWT token oluştur
     const token = sign(
       { 
@@ -61,9 +104,16 @@ export async function POST(request: NextRequest) {
       { expiresIn: '7d' }
     );
     
+    // Hassas bilgileri çıkar
+    const { password: _, twoFactorSecret: __, ...userWithoutSensitiveInfo } = user;
+    
     // Cookie'ye token'ı kaydet
-    const cookieStore = cookies();
-    cookieStore.set('auth-token', token, {
+    const response = NextResponse.json(
+      { message: 'Giriş başarılı', user: userWithoutSensitiveInfo },
+      { status: 200 }
+    );
+    
+    response.cookies.set('auth-token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: 60 * 60 * 24 * 7, // 7 gün
@@ -71,13 +121,7 @@ export async function POST(request: NextRequest) {
       sameSite: 'strict',
     });
     
-    // Hassas bilgileri çıkar
-    const { password: _, ...userWithoutPassword } = user;
-    
-    return NextResponse.json(
-      { message: 'Giriş başarılı', user: userWithoutPassword },
-      { status: 200 }
-    );
+    return response;
   } catch (error) {
     console.error('Giriş hatası:', error);
     return NextResponse.json(

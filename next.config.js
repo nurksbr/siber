@@ -2,12 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['via.placeholder.com', 'images.unsplash.com'],
+    domains: ['placehold.co', 'images.unsplash.com'],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'via.placeholder.com',
-        pathname: '/**',
+        hostname: 'placehold.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
       },
     ],
   },

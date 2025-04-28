@@ -26,12 +26,20 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
+  // 2FA alanları
+  twoFactorEnabled Boolean  @default(false)
+  twoFactorSecret  String?
+  backupCodes      String[]
+
   // İlişkiler
   profile        Profile?
   posts          Post[]
   comments       Comment[]
   bookmarks      Bookmark[]
   courseProgress CourseProgress[]
+  badges         UserBadge[]
+  achievement    UserAchievement?
+  challenges     UserChallenge[]
 }
 
 // Kullanıcı profili
@@ -43,6 +51,16 @@ model Profile {
   location     String?
   interests    String[]
   socialLinks  Json?
+
+  // Kişiselleştirme özellikleri
+  theme              Theme                    @default(LIGHT)
+  notificationPrefs  NotificationPreferences?
+  securityLevel      SecurityLevel            @default(BEGINNER)
+  avatarUrl          String?
+  coverImageUrl      String?
+  preferredLanguage  String?                  @default("tr")
+  contentPreferences String[] // İlgilenilen içerik kategorileri
+  lastSeen           DateTime?
 
   // İlişkiler
   userId String @unique
@@ -193,10 +211,12 @@ model Lesson {
 
 // Kurs ilerleme durumu
 model CourseProgress {
-  id               String    @id @default(cuid())
-  completedLessons Json // tamamlanan derslerin id'lerini içeren dizi
-  startedAt        DateTime  @default(now())
-  completedAt      DateTime?
+  id                 String    @id @default(cuid())
+  completedLessons   Json // tamamlanan derslerin id'lerini içeren dizi
+  startedAt          DateTime  @default(now())
+  completedAt        DateTime?
+  lastAccessedAt     DateTime  @default(now())
+  progressPercentage Float     @default(0) // 0-100 arası tamamlanma yüzdesi
 
   // İlişkiler
   userId   String
@@ -205,6 +225,89 @@ model CourseProgress {
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@unique([userId, courseId])
+}
+
+// Rozetler
+model Badge {
+  id          String        @id @default(cuid())
+  name        String
+  description String
+  imageUrl    String
+  category    BadgeCategory
+  difficulty  Level
+  points      Int           @default(10)
+  isHidden    Boolean       @default(false) // Gizli rozetler için
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // İlişkiler
+  userBadges UserBadge[]
+}
+
+// Kullanıcı rozetleri
+model UserBadge {
+  id        String   @id @default(cuid())
+  earnedAt  DateTime @default(now())
+  showcased Boolean  @default(false) // Profilde öne çıkarılan rozetler
+
+  // İlişkiler
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badgeId String
+  badge   Badge  @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, badgeId])
+}
+
+// Kullanıcı başarıları ve istatistikleri
+model UserAchievement {
+  id               String   @id @default(cuid())
+  totalPoints      Int      @default(0)
+  level            Int      @default(1)
+  streak           Int      @default(0) // Ardışık günlük giriş sayısı
+  longestStreak    Int      @default(0)
+  lastLoginDate    DateTime @default(now())
+  completedCourses Int      @default(0)
+  completedLessons Int      @default(0)
+  phishingScore    Float? // Phishing simülasyonlarındaki başarı oranı
+  securityScore    Float? // Genel güvenlik bilgi seviyesi skoru
+  weeklyGoal       Int      @default(30) // Dakika cinsinden haftalık hedef
+  weeklyProgress   Int      @default(0) // Dakika cinsinden haftalık ilerleme
+
+  // İlişkiler
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Meydan okumalar
+model Challenge {
+  id              String   @id @default(cuid())
+  title           String
+  description     String
+  startDate       DateTime
+  endDate         DateTime
+  isActive        Boolean  @default(true)
+  points          Int
+  maxParticipants Int?
+
+  // İlişkiler
+  participants UserChallenge[]
+}
+
+// Kullanıcı meydan okumaları
+model UserChallenge {
+  id          String    @id @default(cuid())
+  joinedAt    DateTime  @default(now())
+  completedAt DateTime?
+  progress    Float     @default(0) // 0-100 arası tamamlanma yüzdesi
+
+  // İlişkiler
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challengeId String
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, challengeId])
 }
 
 // Siber tehdit istihbaratı
@@ -248,4 +351,42 @@ enum ThreatType {
   RANSOMWARE
   APT
   OTHER
+}
+
+enum Theme {
+  LIGHT
+  DARK
+  SYSTEM
+}
+
+enum SecurityLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum BadgeCategory {
+  COURSE_COMPLETION
+  STREAK
+  SECURITY_AWARENESS
+  PHISHING_MASTER
+  COMMUNITY
+  SPECIAL_EVENT
+  CHALLENGE_WINNER
+}
+
+// Bildirim tercihleri modeli
+model NotificationPreferences {
+  id                 String  @id @default(cuid())
+  emailNotifications Boolean @default(true)
+  smsNotifications   Boolean @default(false)
+  securityAlerts     Boolean @default(true)
+  newsUpdates        Boolean @default(true)
+  courseUpdates      Boolean @default(true)
+  marketingEmails    Boolean @default(false)
+
+  // İlişkiler
+  profileId String  @unique
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 }

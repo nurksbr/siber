@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 // Kullanıcı oturumunu kontrol etme işlevi
 export async function GET(request: NextRequest) {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const token = cookieStore.get('auth-token')?.value;
     
     if (!token) {
@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
 // Çıkış yapma işlevi
 export async function DELETE(request: NextRequest) {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     
     // Cookie'yi sil
     cookieStore.delete('auth-token');

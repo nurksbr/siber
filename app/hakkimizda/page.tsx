@@ -6,16 +6,16 @@ import Image from 'next/image'
 // Takım üyeleri verileri
 const teamMembers = [
   {
-    name: 'Fevziye Nur Kesebir',
-    position: 'Yazılım Mühendisi',
-    image: 'https://via.placeholder.com/150',
-    bio: 'Web uygulamaları geliştirme ve modern frontend teknolojileri konusunda uzmanlaşmış, kullanıcı deneyimini ön planda tutan yazılım mühendisi.',
+    name: 'Ali Yılmaz',
+    title: 'Kurucu & CEO',
+    bio: 'Siber güvenlik alanında 15 yıldan fazla deneyime sahip olan Ali, CYBERLY\'yi siber güvenlik eğitimini herkes için erişilebilir kılma vizyonuyla kurdu.',
+    image: 'https://placehold.co/150',
   },
   {
-    name: 'Nisanur Gökçen Usta',
-    position: 'Yazılım Mühendisi',
-    image: 'https://via.placeholder.com/150',
-    bio: 'Dijital çözümler ve web teknolojileri alanında uzman, yenilikçi projeler geliştiren yazılım mühendisi.',
+    name: 'Ayşe Kaya',
+    title: 'Siber Güvenlik Uzmanı',
+    bio: 'OSCP sertifikalı bir güvenlik uzmanı olan Ayşe, öncesinde çeşitli finans kuruluşlarında güvenlik açıklarını tespit etme üzerine çalıştı.',
+    image: 'https://placehold.co/150',
   },
 ]
 
@@ -35,7 +35,7 @@ function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
           />
         </div>
         <h3 className="text-2xl font-bold text-white text-center">{member.name}</h3>
-        <p className="text-cyan-400 mb-4 text-center">{member.position}</p>
+        <p className="text-cyan-400 mb-4 text-center">{member.title}</p>
         <p className="text-gray-300 text-center">{member.bio}</p>
         
         <div className="mt-6 flex space-x-4">
