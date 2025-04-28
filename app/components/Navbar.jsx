@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useReducer } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '../context/AuthContext'
+import { AUTH_CHANGE_EVENT } from '../context/AuthContext'
 import UserMenu from './UserMenu'
 
 // Navigasyon linkleri
@@ -19,16 +20,128 @@ const NAV_LINKS = [
   { name: 'Haberler', path: '/haberler' }
 ]
 
-// Kullanıcı giriş yaptığında görünecek linkler
+// Kullanıcı giriş yaptıysa görünecek linkler
 const USER_LINKS = [
   { name: 'Profil', path: '/profil' },
   { name: 'Eğitimlerim', path: '/egitimlerim' },
 ]
 
 function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const pathname = usePathname()
-  const { user, loading, logout } = useAuth()
+  // useAuth hook'u ile user ve diğer fonksiyonları al
+  const { user, loading, logout, checkAuth } = useAuth();
+  
+  // Yerel state'ler
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+  
+  // Giriş durumu ve yerel kullanıcı - başlangıçta false olarak ayarla
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [localUser, setLocalUser] = useState(null);
+  
+  // SSR/CSR uyumsuzluğunu engellemek için kullanacağımız bir bayrak
+  const [isMounted, setIsMounted] = useState(false);
+  
+  // Bileşen mount edildikten sonra isLoggedIn durumunu kontrol et
+  useEffect(() => {
+    setIsMounted(true);
+    
+    // İstemci tarafında çalıştığımızdan emin olalım
+    if (typeof window !== 'undefined') {
+      try {
+        const storedUser = localStorage.getItem('cyberly_user');
+        if (storedUser) {
+          const userData = JSON.parse(storedUser);
+          setLocalUser(userData);
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.error('Navbar: LocalStorage kontrolü sırasında hata:', error);
+      }
+    }
+  }, []);
+  
+  // Tarayıcıda localStorage'dan direkt kullanıcı durumunu kontrol et
+  const checkLocalStorage = () => {
+    if (typeof window === 'undefined') return null;
+    
+    try {
+      const storedUser = localStorage.getItem('cyberly_user');
+      const userData = storedUser ? JSON.parse(storedUser) : null;
+      return userData;
+    } catch (error) {
+      console.error('Navbar: LocalStorage kontrol hatası', error);
+      return null;
+    }
+  };
+  
+  // Özel oturum değişikliği olayını dinle
+  useEffect(() => {
+    if (!isMounted) return;
+    
+    const handleAuthChange = (event) => {
+      console.log('Navbar: Auth değişiklik olayı alındı', event.detail);
+      const { user: authUser, loggedIn } = event.detail;
+      
+      // State'i güncelle
+      if (typeof loggedIn !== 'undefined') {
+        setIsLoggedIn(loggedIn);
+      } else {
+        setIsLoggedIn(!!authUser);
+      }
+      
+      setLocalUser(authUser);
+      forceUpdate();
+    };
+    
+    // Event listener'ı ekle
+    window.addEventListener(AUTH_CHANGE_EVENT, handleAuthChange);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener(AUTH_CHANGE_EVENT, handleAuthChange);
+    };
+  }, [isMounted]);
+  
+  // Sayfa yüklendikten sonra bir kez oturumu kontrol et
+  useEffect(() => {
+    if (!isMounted) return;
+    
+    let mounted = true;
+    
+    const verifyOnce = async () => {
+      try {
+        const isAuth = await checkAuth();
+        if (mounted) {
+          if (isAuth !== isLoggedIn) {
+            console.log('Navbar: checkAuth ile oturum durumu güncellendi:', isAuth);
+            setIsLoggedIn(isAuth);
+          }
+        }
+      } catch (error) {
+        console.error('Navbar oturum kontrolü hatası:', error);
+      }
+    };
+    
+    // Biraz gecikme ile kontrol et
+    if (typeof window !== 'undefined') {
+      setTimeout(verifyOnce, 500);
+    }
+    
+    return () => {
+      mounted = false;
+    };
+  }, [isLoggedIn, checkAuth, isMounted]);
+
+  // User değişikliklerini izle
+  useEffect(() => {
+    if (user) {
+      setIsLoggedIn(true);
+    }
+  }, [user]);
+
+  // Görüntülenecek kullanıcı bilgisi
+  const currentUser = user || localUser;
 
   // Link prefetching için - sayfa yüklendiğinde en sık ziyaret edilen sayfaları önceden yükle
   useEffect(() => {
@@ -59,6 +172,7 @@ function Navbar() {
     try {
       await logout();
       setIsMenuOpen(false);
+      setIsLoggedIn(false);
       window.location.href = '/';
     } catch (error) {
       console.error('Çıkış yapılırken hata:', error);
@@ -109,23 +223,7 @@ function Navbar() {
               )
             })}
             
-            {/* Kullanıcı giriş yaptıysa */}
-            {user && USER_LINKS.map((link) => {
-              const isActive = pathname === link.path
-              return (
-                <Link 
-                  key={link.path}
-                  href={link.path} 
-                  prefetch={true}
-                  className={`px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
-                    isActive ? 'text-cyan-400 bg-gray-800/30' : 'text-white'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              )
-            })}
-            
+            {/* İletişim butonu - her zaman görünür */}
             <a 
               href="#iletisim" 
               onClick={scrollToContact}
@@ -134,29 +232,51 @@ function Navbar() {
               İletişim
             </a>
             
-            {/* Kullanıcı giriş yapmadıysa giriş/kayıt butonları göster */}
-            {!loading && !user ? (
-              <div className="ml-4 flex items-center space-x-2">
-                <Link 
-                  href="/giris" 
-                  className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
-                >
-                  Giriş Yap
-                </Link>
-                <Link 
-                  href="/uye-ol" 
-                  className="px-4 py-2 rounded-md text-sm font-medium bg-cyan-500/80 hover:bg-cyan-600 transition-colors"
-                >
-                  Üye Ol
-                </Link>
-              </div>
-            ) : null}
-            
-            {/* Kullanıcı giriş yaptıysa kullanıcı menüsünü göster */}
-            {!loading && user && (
-              <div className="ml-4">
-                <UserMenu />
-              </div>
+            {/* Kullanıcı giriş linkleri - istemci tarafında (client-side) kontrol edilecek */}
+            {isMounted && (
+              <>
+                {/* Kullanıcı giriş yaptıysa */}
+                {isLoggedIn && USER_LINKS.map((link) => {
+                  const isActive = pathname === link.path
+                  return (
+                    <Link 
+                      key={link.path}
+                      href={link.path} 
+                      prefetch={true}
+                      className={`px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
+                        isActive ? 'text-cyan-400 bg-gray-800/30' : 'text-white'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  )
+                })}
+                
+                {/* Kullanıcı giriş yapmadıysa giriş/kayıt butonları göster */}
+                {!isLoggedIn && (
+                  <div className="ml-4 flex items-center space-x-2">
+                    <Link 
+                      href="/giris" 
+                      className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                    >
+                      Giriş Yap
+                    </Link>
+                    <Link 
+                      href="/uye-ol" 
+                      className="px-4 py-2 rounded-md text-sm font-medium bg-cyan-500/80 hover:bg-cyan-600 transition-colors"
+                    >
+                      Üye Ol
+                    </Link>
+                  </div>
+                )}
+                
+                {/* Kullanıcı giriş yaptıysa kullanıcı menüsünü göster */}
+                {isLoggedIn && (
+                  <div className="ml-4">
+                    <UserMenu />
+                  </div>
+                )}
+              </>
             )}
           </div>
 
@@ -214,24 +334,6 @@ function Navbar() {
             )
           })}
           
-          {/* Kullanıcı giriş yaptıysa gösterilecek menü öğeleri */}
-          {user && USER_LINKS.map((link) => {
-            const isActive = pathname === link.path
-            return (
-              <Link 
-                key={link.path}
-                href={link.path} 
-                prefetch={true}
-                className={`block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
-                  isActive ? 'text-cyan-400 bg-gray-800/30' : 'text-white'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            )
-          })}
-          
           <a 
             href="#iletisim" 
             onClick={scrollToContact}
@@ -240,61 +342,84 @@ function Navbar() {
             İletişim
           </a>
           
-          {/* Kullanıcı giriş yapmadıysa giriş/kayıt butonları göster */}
-          {!loading && !user ? (
+          {/* İstemci tarafındaki kontroller burada */}
+          {isMounted && (
             <>
-              <Link 
-                href="/giris" 
-                className="block px-3 py-2 mt-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Giriş Yap
-              </Link>
-              <Link 
-                href="/uye-ol" 
-                className="block px-3 py-2 mt-2 rounded-md text-base font-medium bg-cyan-500/80 hover:bg-cyan-600 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Üye Ol
-              </Link>
-            </>
-          ) : null}
-          
-          {/* Kullanıcı giriş yaptıysa profil ve çıkış butonları göster */}
-          {!loading && user ? (
-            <>
-              <div className="border-t border-gray-700 my-2"></div>
-              <div className="px-3 py-2 text-sm font-medium text-cyan-400">
-                {user.name || user.email}
-              </div>
-              <button 
-                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
-                onClick={handleMobileNavigation('/profil')}
-              >
-                Profil
-              </button>
-              <button 
-                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
-                onClick={handleMobileNavigation('/ayarlar')}
-              >
-                Ayarlar
-              </button>
-              {user.role === 'ADMIN' && (
-                <button 
-                  className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
-                  onClick={handleMobileNavigation('/panel')}
-                >
-                  Yönetim Paneli
-                </button>
+              {/* Kullanıcı giriş yaptıysa gösterilecek menü öğeleri */}
+              {isLoggedIn && USER_LINKS.map((link) => {
+                const isActive = pathname === link.path
+                return (
+                  <Link 
+                    key={link.path}
+                    href={link.path} 
+                    prefetch={true}
+                    className={`block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
+                      isActive ? 'text-cyan-400 bg-gray-800/30' : 'text-white'
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                )
+              })}
+              
+              {/* Kullanıcı giriş yapmadıysa giriş/kayıt butonları göster */}
+              {!isLoggedIn && (
+                <>
+                  <Link 
+                    href="/giris" 
+                    className="block px-3 py-2 mt-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Giriş Yap
+                  </Link>
+                  <Link 
+                    href="/uye-ol" 
+                    className="block px-3 py-2 mt-2 rounded-md text-base font-medium bg-cyan-500/80 hover:bg-cyan-600 transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Üye Ol
+                  </Link>
+                </>
               )}
-              <button
-                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-400 hover:bg-gray-800/30 transition-colors"
-                onClick={handleLogout}
-              >
-                Çıkış Yap
-              </button>
+              
+              {/* Kullanıcı giriş yaptıysa profil ve çıkış butonları göster */}
+              {isLoggedIn && (
+                <>
+                  <div className="border-t border-gray-700 my-2"></div>
+                  <div className="px-3 py-2 text-sm font-medium text-cyan-400">
+                    {currentUser?.name || currentUser?.email?.split('@')[0] || 'Kullanıcı'}
+                  </div>
+                  <button 
+                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                    onClick={handleMobileNavigation('/profil')}
+                  >
+                    Profil
+                  </button>
+                  <button 
+                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                    onClick={handleMobileNavigation('/ayarlar')}
+                  >
+                    Ayarlar
+                  </button>
+                  {currentUser?.role === 'ADMIN' && (
+                    <button 
+                      className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                      onClick={handleMobileNavigation('/panel')}
+                    >
+                      Yönetim Paneli
+                    </button>
+                  )}
+                  <button
+                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-400 hover:bg-gray-800/30 transition-colors"
+                    onClick={handleLogout}
+                  >
+                    Çıkış Yap
+                  </button>
+                </>
+              )}
             </>
-          ) : null}
+          )}
         </div>
       </div>
     </nav>

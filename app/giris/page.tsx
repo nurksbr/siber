@@ -17,6 +17,7 @@ export default function LoginPage() {
   const [errors, setErrors] = useState<{email?: string; password?: string}>({})
   const [isLoading, setIsLoading] = useState(false)
   const [loginError, setLoginError] = useState('')
+  const [loginSuccess, setLoginSuccess] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target
@@ -56,18 +57,72 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoginError('')
+    setLoginSuccess(false)
     
     if (!validateForm()) return
     
     setIsLoading(true)
+    console.log('Giriş denemesi başlatılıyor...')
     
     try {
-      // AuthContext'teki login fonksiyonunu kullan
-      await login(formData.email, formData.password)
+      // API isteği direkt burada yapalım
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        }),
+        cache: 'no-store',
+      });
       
-      // Başarılı giriş sonrası yönlendirme
-      router.push('/')
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Giriş yapılırken bir hata oluştu');
+      }
+      
+      console.log('Login API yanıtı:', data);
+      
+      // Kullanıcı bilgilerini doğrudan localStorage'a kaydedelim
+      if (data.user) {
+        // İlk olarak localStorage'a manuel olarak kaydet - en hızlı yanıt için
+        localStorage.setItem('cyberly_user', JSON.stringify(data.user));
+        console.log('Kullanıcı bilgileri localStorage\'a kaydedildi');
+        
+        // Başarılı mesajı göster
+        setLoginSuccess(true);
+        
+        // AuthContext'i güncellemek için login fonksiyonunu çağır
+        try {
+          console.log('AuthContext login fonksiyonu çağrılıyor...');
+          await login(formData.email, formData.password);
+          console.log('AuthContext başarıyla güncellendi');
+        } catch (loginError) {
+          console.error('AuthContext login hatası:', loginError);
+          // AuthContext hatası durumunda callback yönlendirmesi yine de çalışsın
+        }
+        
+        // Yönlendirme işlemini başlat
+        setTimeout(() => {
+          // Callback URL'i kontrol et ve yönlendir
+          const urlParams = new URLSearchParams(window.location.search);
+          const callbackUrl = urlParams.get('callbackUrl');
+          
+          if (callbackUrl) {
+            console.log(`Callback URL'e yönlendiriliyor: ${callbackUrl}`);
+            window.location.href = decodeURIComponent(callbackUrl);
+          } else {
+            // Ana sayfaya yönlendir
+            console.log('Ana sayfaya yönlendiriliyor');
+            window.location.href = '/';
+          }
+        }, 800); // Biraz bekle ki AuthContext işlemi tamamlansın
+      }
     } catch (error: unknown) {
+      console.error('Login hatası:', error)
       const errorMessage = error instanceof Error 
         ? error.message 
         : 'Giriş yapılırken bir hata oluştu. Lütfen tekrar deneyin.';
@@ -111,6 +166,12 @@ export default function LoginPage() {
           {loginError && (
             <div className="mb-4 p-3 bg-red-900/40 border border-red-500 rounded-md text-center text-red-300">
               {loginError}
+            </div>
+          )}
+          
+          {loginSuccess && (
+            <div className="mb-4 p-3 bg-green-900/40 border border-green-500 rounded-md text-center text-green-300">
+              Giriş başarılı! Ana sayfaya yönlendiriliyorsunuz...
             </div>
           )}
           

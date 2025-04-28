@@ -35,14 +35,32 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<ProfileTab>('info');
   const [isLoading, setIsLoading] = useState(true);
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  
+  // Tarayıcıda localStorage'dan direkt kullanıcı durumunu kontrol et
+  const checkLocalStorage = () => {
+    if (typeof window === 'undefined') return false;
+    
+    try {
+      const storedUser = localStorage.getItem('cyberly_user');
+      return !!storedUser; // Boolean olarak dönüş
+    } catch (error) {
+      console.error('Profil: LocalStorage kontrol hatası', error);
+      return false;
+    }
+  };
 
   const fetchProfileData = useCallback(async () => {
     try {
       setIsLoading(true);
+      setError(null);
+      
       if (!user?.id) {
         console.error('Kullanıcı ID bulunamadı');
         return;
       }
+      
+      console.log(`Profil verisi çekiliyor: /api/profile/${user.id}`);
       
       const response = await fetch(`/api/profile/${user.id}`, {
         method: 'GET',
@@ -53,29 +71,62 @@ export default function ProfilePage() {
         cache: 'no-store',
       });
       
+      console.log('API yanıtı alındı:', response.status);
+      
       if (response.ok) {
-        const data = await response.json();
-        setProfileData(data);
+        try {
+          const data = await response.json();
+          console.log('Profil verisi başarıyla alındı:', data);
+          setProfileData(data);
+        } catch (jsonError) {
+          console.error('API yanıtı JSON formatında değil:', jsonError);
+          setError('Profil verisi işlenirken bir hata oluştu');
+        }
       } else {
-        const errorData = await response.json();
-        console.error('Profil bilgileri alınamadı:', errorData);
+        try {
+          const errorText = await response.text();
+          console.error(`Profil API hatası (${response.status}):`, errorText);
+          
+          try {
+            const errorData = JSON.parse(errorText);
+            console.error('Profil bilgileri alınamadı:', errorData);
+            setError(errorData.error || `Profil verisi alınamadı (${response.status})`);
+          } catch (jsonError) {
+            console.error('Hata yanıtı JSON formatında değil:', errorText);
+            setError(`Profil verisi alınamadı. Durum kodu: ${response.status}`);
+          }
+        } catch (textError) {
+          console.error('Hata yanıtı alınamadı:', textError);
+          setError(`Profil verisi alınamadı. Durum kodu: ${response.status}`);
+        }
       }
     } catch (error) {
       console.error('Profil bilgileri alınırken hata oluştu:', error);
+      setError('Profil bilgilerinize erişilirken bir sorun oluştu. Lütfen daha sonra tekrar deneyin.');
+      setProfileData(null); // Hata durumunda profil verisini temizle
     } finally {
       setIsLoading(false);
     }
   }, [user?.id]);
 
   useEffect(() => {
+    // Kullanıcı ve localStorage kontrolü
+    const hasLocalUser = checkLocalStorage();
+    
     // Redirect if not logged in
-    if (!loading && !user) {
-      router.push('/giris');
+    if (!loading && !user && !hasLocalUser) {
+      console.log('Kullanıcı giriş yapmamış, giriş sayfasına yönlendiriliyor');
+      // router.push yerine window.location.href kullanarak tam sayfa yenilenmesi sağla
+      window.location.href = '/giris?callbackUrl=' + encodeURIComponent('/profil');
       return;
     }
 
     // Fetch profile data
     if (user) {
+      console.log('Kullanıcı giriş yapmış, profil verisi çekiliyor', user);
+      fetchProfileData();
+    } else if (hasLocalUser) {
+      console.log('LocalStorage\'da kullanıcı bilgisi var, profil verisi çekmeye çalışılıyor');
       fetchProfileData();
     }
   }, [user, loading, router, fetchProfileData]);
@@ -84,6 +135,29 @@ export default function ProfilePage() {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  // Hata durumunda göster
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-lg mx-auto bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+          <div className="text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-red-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <h2 className="text-xl font-semibold mb-2">Profil Bilgileri Yüklenemedi</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">{error}</p>
+            <button 
+              onClick={() => fetchProfileData()}
+              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md font-medium transition-colors"
+            >
+              Tekrar Dene
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

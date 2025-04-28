@@ -30,7 +30,54 @@ export async function middleware(request: NextRequest) {
   // Korumalı sayfalara erişim için token gerekli
   if (!isValidUserToken) {
     console.log(`Korumalı rota erişimi engellendi. Şuraya yönlendiriliyor: /giris?callbackUrl=${callbackUrl}`);
-    return NextResponse.redirect(new URL(`/giris?callbackUrl=${callbackUrl}`, request.url));
+    
+    // LocalStorage kontrolü için özel script ekleyerek response döndür
+    const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Yönlendiriliyor...</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+    <body>
+      <script>
+        // LocalStorage'dan kullanıcı bilgisini kontrol et
+        try {
+          const user = localStorage.getItem('cyberly_user');
+          if (user) {
+            console.log('LocalStorage\'da kullanıcı bilgisi bulundu, sayfayı yeniliyoruz');
+            window.location.reload();
+          } else {
+            console.log('LocalStorage\'da kullanıcı bilgisi bulunamadı, giriş sayfasına yönlendiriliyor');
+            window.location.href = '/giris?callbackUrl=${callbackUrl}';
+          }
+        } catch (error) {
+          console.error('LocalStorage kontrolünde hata:', error);
+          window.location.href = '/giris?callbackUrl=${callbackUrl}';
+        }
+      </script>
+      <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: Arial, sans-serif;">
+        <div style="text-align: center;">
+          <div style="border: 6px solid #f3f3f3; border-radius: 50%; border-top: 6px solid #3498db; width: 50px; height: 50px; margin: 0 auto; animation: spin 1s linear infinite;"></div>
+          <p style="margin-top: 20px;">Kullanıcı bilgileriniz kontrol ediliyor...</p>
+        </div>
+      </div>
+      <style>
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      </style>
+    </body>
+    </html>
+    `;
+    
+    return new NextResponse(html, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+      },
+    });
   }
 
   // Token geçerliyse erişime izin ver

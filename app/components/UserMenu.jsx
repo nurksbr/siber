@@ -1,64 +1,136 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
+import { AUTH_CHANGE_EVENT } from '../context/AuthContext';
+import { useClickOutside } from '../hooks/useClickOutside';
 
 export default function UserMenu() {
   const router = useRouter();
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef(null);
+  const [localUser, setLocalUser] = useState(null);
+  // İstemci tarafında olduğumuzdan emin olmak için bir bayrak
+  const [isMounted, setIsMounted] = useState(false);
 
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  // Bileşen yüklendiğinde bunu işaretle
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Kullanıcı oturumunu kontrol et
+  useEffect(() => {
+    // Eğer istemci tarafında değilsek, bu kodu çalıştırma
+    if (!isMounted) return;
     
+    // LocalStorage'da kullanıcı kontrolü
+    const checkLocalStorage = () => {
+      try {
+        const storedUser = localStorage.getItem('cyberly_user');
+        return storedUser ? JSON.parse(storedUser) : null;
+      } catch (error) {
+        console.error('UserMenu: LocalStorage kontrol hatası', error);
+        return null;
+      }
+    };
+
+    // Sayfa yüklendiğinde localStorage kontrolü
+    const userData = checkLocalStorage();
+    setLocalUser(userData);
+
+    // Düzenli olarak localStorage kontrolü yap
+    const interval = setInterval(() => {
+      const userData = checkLocalStorage();
+      setLocalUser(userData);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isMounted]);
+  
+  // Auth değişikliklerini dinle
+  useEffect(() => {
+    // İstemci tarafında değilsek, event listener'ları ekleme
+    if (!isMounted) return;
+    
+    const handleAuthChange = (event) => {
+      console.log('UserMenu: Auth değişiklik olayı alındı', event.detail);
+      const { user: authUser } = event.detail;
+      setLocalUser(authUser);
+    };
+    
+    // Event listener ekle
+    window.addEventListener(AUTH_CHANGE_EVENT, handleAuthChange);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener(AUTH_CHANGE_EVENT, handleAuthChange);
+    };
+  }, [isMounted]);
+
+  // user state'i değiştiğinde localUser'ı güncelle
+  useEffect(() => {
+    if (user) {
+      setLocalUser(user);
+    }
+  }, [user]);
+
+  // Görüntülenecek kullanıcı bilgisi
+  const currentUser = user || localUser;
+
+  // Dışarıya tıklandığında menüyü kapat
+  useClickOutside(ref, () => setIsOpen(false));
+
+  // Çıkış işlemi ve ana sayfaya yönlendirme
+  const handleLogout = async () => {
     try {
+      // Önce localStorage'ı temizle
+      localStorage.removeItem('cyberly_user');
+      localStorage.removeItem('cyberly_token');
+      
+      // AuthContext üzerinden çıkış yap
       await logout();
-      // Çıkış yapıldıktan sonra ana sayfaya yönlendir
+      
+      // Menüyü kapat
+      setIsOpen(false);
+      
+      // Ana sayfaya doğrudan yönlendir
       window.location.href = '/';
     } catch (error) {
-      console.error('Çıkış yapılırken hata:', error);
-      alert('Çıkış yaparken bir hata oluştu. Lütfen tekrar deneyin.');
+      console.error('Çıkış yaparken hata:', error);
     }
   };
 
-  const handleNavigation = (path) => (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    closeMenu();
-    router.push(path);
-  };
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const closeMenu = () => {
+  // İlgili sayfaya yönlendirme
+  const handleNavigation = (path) => {
     setIsOpen(false);
+    window.location.href = path;
   };
 
-  // Kullanıcı avatarı için baş harflerini al
-  const getUserInitials = () => {
-    if (user?.name) {
-      // İsmin ilk harfi
-      return user.name.charAt(0).toUpperCase();
-    } else if (user?.email) {
-      // E-postanın ilk harfi
-      return user.email.charAt(0).toUpperCase();
-    }
-    return '?';
-  };
-
-  if (!user) {
+  // Kullanıcı yoksa veya SSR ise menüyü gösterme
+  if (!isMounted || !currentUser) {
     return null;
   }
 
+  // Kullanıcı adının ilk harfini ve soyadının ilk harfini göster
+  // Eğer bu bilgiler yoksa e-postanın ilk harfini göster
+  const getInitials = () => {
+    if (!currentUser) return '?';
+    if (currentUser.name) {
+      const nameParts = currentUser.name.split(' ');
+      if (nameParts.length === 1) return nameParts[0].charAt(0).toUpperCase();
+      return (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
+    }
+    if (currentUser.email) return currentUser.email.charAt(0).toUpperCase();
+    return '?';
+  };
+
   return (
-    <div className="relative">
+    <div className="relative" ref={ref}>
       <button
         type="button"
-        onClick={toggleMenu}
+        onClick={() => setIsOpen(!isOpen)}
         className="flex items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-800"
         aria-expanded={isOpen}
         aria-haspopup="true"
@@ -66,10 +138,10 @@ export default function UserMenu() {
         <span className="sr-only">Kullanıcı menüsünü aç</span>
         <div className="flex items-center">
           <div className="h-8 w-8 rounded-full bg-cyan-600 flex items-center justify-center text-white font-medium">
-            {getUserInitials()}
+            {getInitials()}
           </div>
           <span className="ml-2 mr-2 text-sm text-gray-200 hidden sm:block">
-            {user.name || user.email.split('@')[0]}
+            {currentUser.name || currentUser.email.split('@')[0]}
           </span>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -82,7 +154,7 @@ export default function UserMenu() {
           {/* Overlay to capture clicks outside menu */}
           <div 
             className="fixed inset-0 z-10" 
-            onClick={closeMenu}
+            onClick={() => setIsOpen(false)}
             aria-hidden="true"
           />
         
@@ -93,8 +165,8 @@ export default function UserMenu() {
             {/* Kullanıcı bilgileri */}
             <div className="px-4 py-3">
               <p className="text-sm text-gray-300">Giriş yapan kullanıcı</p>
-              <p className="text-sm font-medium text-white truncate">{user.email}</p>
-              {user.role === 'ADMIN' && (
+              <p className="text-sm font-medium text-white truncate">{currentUser.email}</p>
+              {currentUser.role === 'ADMIN' && (
                 <span className="mt-1 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-cyan-800 text-cyan-100">
                   Yönetici
                 </span>
@@ -105,7 +177,7 @@ export default function UserMenu() {
             <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button">
               <button
                 className="group flex items-center w-full text-left px-4 py-2 text-sm text-gray-100 hover:bg-gray-700"
-                onClick={handleNavigation('/profil')}
+                onClick={() => handleNavigation('/profil')}
                 role="menuitem"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -116,7 +188,7 @@ export default function UserMenu() {
               
               <button
                 className="group flex items-center w-full text-left px-4 py-2 text-sm text-gray-100 hover:bg-gray-700"
-                onClick={handleNavigation('/egitimlerim')}
+                onClick={() => handleNavigation('/egitimlerim')}
                 role="menuitem"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -127,7 +199,7 @@ export default function UserMenu() {
               
               <button
                 className="group flex items-center w-full text-left px-4 py-2 text-sm text-gray-100 hover:bg-gray-700"
-                onClick={handleNavigation('/ayarlar')}
+                onClick={() => handleNavigation('/ayarlar')}
                 role="menuitem"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -139,7 +211,7 @@ export default function UserMenu() {
               
               <button
                 className="group flex items-center w-full text-left px-4 py-2 text-sm text-gray-100 hover:bg-gray-700"
-                onClick={handleNavigation('/bildirimler')}
+                onClick={() => handleNavigation('/bildirimler')}
                 role="menuitem"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -150,11 +222,11 @@ export default function UserMenu() {
             </div>
             
             {/* Admin menüsü */}
-            {user.role === 'ADMIN' && (
+            {currentUser.role === 'ADMIN' && (
               <div className="py-1">
                 <button
                   className="group flex items-center w-full text-left px-4 py-2 text-sm text-gray-100 hover:bg-gray-700"
-                  onClick={handleNavigation('/panel')}
+                  onClick={() => handleNavigation('/panel')}
                   role="menuitem"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
