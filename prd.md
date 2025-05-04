@@ -30,8 +30,8 @@ BURASI DEGİSTİ
 
 ### 3.2 Siber Güvenlik Eğitimleri
 
-- [ ] Temel, orta ve ileri seviye eğitim modülleri
-- [ ] Video tabanlı eğitim içerikleri
+- [x] Temel, orta ve ileri seviye eğitim modülleri
+- [x] Video tabanlı eğitim içerikleri
 - [ ] İnteraktif kurslar ve sınavlar
 - [ ] Sertifika programları
 - [ ] Eğitim tamamlama ilerleme çubuğu
