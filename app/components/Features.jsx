@@ -1,6 +1,16 @@
 function Features() {
   const features = [
     {
+      title: 'Phishing Simülasyonu',
+      description: 'Gerçekçi phishing sayfaları ve e-posta örnekleriyle siber saldırıları tanımayı öğrenin.',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M16 12H8m11 4v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-2m4-6V4h4v6m-6 6 2-6m4 6 2-6" />
+        </svg>
+      ),
+      link: '/egitimler/phishing-simulasyonu'
+    },
+    {
       title: 'Siber Farkındalık Nedir?',
       description: 'Dijital dünyada güvenliğinizi artıran farkındalık eğitimleri ve teknikleri hakkında bilgi edinin.',
       icon: (
@@ -9,7 +19,8 @@ function Features() {
           <line x1="12" y1="8" x2="12" y2="12" />
           <line x1="12" y1="16" x2="12.01" y2="16" />
         </svg>
-      )
+      ),
+      link: 'https://www.mimecast.com/content/cyber-security-awareness-training/'
     },
     {
       title: 'Web Güvenliği',
@@ -23,7 +34,8 @@ function Features() {
           <circle cx="18.5" cy="15.5" r="2.5" />
           <path d="M20.27 17.27 22 19" />
         </svg>
-      )
+      ),
+      link: '/siber-tehditler'
     },
     {
       title: 'Veri Koruma Yöntemleri',
@@ -37,7 +49,8 @@ function Features() {
           <path d="M18 11V7h-2" />
           <rect x="10" y="3" width="4" height="4" />
         </svg>
-      )
+      ),
+      link: '/ipuclari'
     },
     {
       title: 'Güvenli Yazılım Geliştirme',
@@ -48,7 +61,8 @@ function Features() {
           <path d="M7 11V7a5 5 0 0 1 10 0v4" />
           <circle cx="12" cy="16" r="1" />
         </svg>
-      )
+      ),
+      link: '/blog'
     },
     {
       title: 'Kişisel Güvenlik İpuçları',
@@ -58,7 +72,8 @@ function Features() {
           <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" />
           <circle cx="12" cy="10" r="3" />
         </svg>
-      )
+      ),
+      link: '/ipuclari'
     },
     {
       title: 'Güvenlik Teknolojileri',
@@ -67,7 +82,8 @@ function Features() {
         <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
         </svg>
-      )
+      ),
+      link: '/kaynaklar'
     },
   ]
 
@@ -98,7 +114,7 @@ function Features() {
                   {feature.description}
                 </p>
                 <div className="mt-6">
-                  <a href="https://www.mimecast.com/content/cyber-security-awareness-training/" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-cyan-400 hover:text-cyan-300 hover:text-glow transition-all">
+                  <a href={feature.link} className="text-sm font-medium text-cyan-400 hover:text-cyan-300 hover:text-glow transition-all">
                     Daha fazla bilgi &rarr;
                   </a>
                 </div>

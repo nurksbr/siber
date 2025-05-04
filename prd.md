@@ -47,7 +47,7 @@ BURASI DEGİSTİ
 
 ### 3.4 İnteraktif Simülasyonlar ve Alıştırmalar
 
-- [ ] Phishing simülasyonları (sahte e-posta tanıma alıştırmaları)
+- [x] Phishing simülasyonları (sahte e-posta tanıma alıştırmaları)
   - Örnek Senaryo: Kullanıcıya gerçek ve sahte e-postalar gösterilerek hangilerinin phishing olduğunu tespit etmesi istenir
 - [ ] Sosyal mühendislik senaryoları
   - Örnek Senaryo: Kullanıcıya bir telefon görüşmesi simülasyonu sunularak, karşı tarafın sosyal mühendislik tekniklerini nasıl kullandığını tespit etmesi istenir
