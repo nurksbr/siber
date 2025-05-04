@@ -26,7 +26,6 @@ CYBERLY, kullanıcıların siber güvenlik konusunda farkındalığını artırm
   - Sosyal karşılaştırma ve liderlik tabloları
   - Özel meydan okumalar ve zaman sınırlı etkinlikler
 - [x] Çok faktörlü kimlik doğrulama (2FA) desteği
-BURASI DEGİSTİ 
 
 ### 3.2 Siber Güvenlik Eğitimleri
 
