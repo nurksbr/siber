@@ -6,15 +6,15 @@ import Image from 'next/image'
 // Takım üyeleri verileri
 const teamMembers = [
   {
-    name: 'Ali Yılmaz',
-    title: 'Kurucu & CEO',
-    bio: 'Siber güvenlik alanında 15 yıldan fazla deneyime sahip olan Ali, CYBERLY&apos;yi siber güvenlik eğitimini herkes için erişilebilir kılma vizyonuyla kurdu.',
+    name: 'Fevziye Nur Kesebir',
+    title: 'Kurucu & Geliştirici',
+    bio: 'Siber güvenlik alanında tutkulu bir yazılım geliştirici olan Fevziye Nur, CYBERLY platformunun teknik altyapısını ve kullanıcı deneyimini oluşturdu.',
     image: 'https://placehold.co/150',
   },
   {
-    name: 'Ayşe Kaya',
-    title: 'Siber Güvenlik Uzmanı',
-    bio: 'OSCP sertifikalı bir güvenlik uzmanı olan Ayşe, öncesinde çeşitli finans kuruluşlarında güvenlik açıklarını tespit etme üzerine çalıştı.',
+    name: 'Nisanur Gökçen Usta',
+    title: 'Kurucu & Siber Güvenlik Uzmanı',
+    bio: 'Siber güvenlik konusunda uzmanlaşan Nisanur, CYBERLY için içerik stratejisi ve güvenlik eğitim modüllerinin geliştirilmesinden sorumludur.',
     image: 'https://placehold.co/150',
   },
 ]

@@ -26,12 +26,11 @@ CYBERLY, kullanıcıların siber güvenlik konusunda farkındalığını artırm
   - Sosyal karşılaştırma ve liderlik tabloları
   - Özel meydan okumalar ve zaman sınırlı etkinlikler
 - [x] Çok faktörlü kimlik doğrulama (2FA) desteği
-BURASI DEGİSTİ 
 
 ### 3.2 Siber Güvenlik Eğitimleri
 
-- [ ] Temel, orta ve ileri seviye eğitim modülleri
-- [ ] Video tabanlı eğitim içerikleri
+- [x] Temel, orta ve ileri seviye eğitim modülleri
+- [x] Video tabanlı eğitim içerikleri
 - [ ] İnteraktif kurslar ve sınavlar
 - [ ] Sertifika programları
 - [ ] Eğitim tamamlama ilerleme çubuğu
