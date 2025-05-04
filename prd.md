@@ -49,13 +49,13 @@ BURASI DEGİSTİ
 
 - [x] Phishing simülasyonları (sahte e-posta tanıma alıştırmaları)
   - Örnek Senaryo: Kullanıcıya gerçek ve sahte e-postalar gösterilerek hangilerinin phishing olduğunu tespit etmesi istenir
-- [ ] Sosyal mühendislik senaryoları
+- [x] Sosyal mühendislik senaryoları
   - Örnek Senaryo: Kullanıcıya bir telefon görüşmesi simülasyonu sunularak, karşı tarafın sosyal mühendislik tekniklerini nasıl kullandığını tespit etmesi istenir
-- [ ] Güvenli şifre oluşturma ve yönetme alıştırmaları
+- [x] Güvenli şifre oluşturma ve yönetme alıştırmaları
   - Örnek Senaryo: Kullanıcının oluşturduğu şifrelerin güvenlik seviyesini ölçen ve iyileştirme önerileri sunan interaktif bir araç
-- [ ] Zararlı yazılım tespit etme alıştırmaları
+- [x] Zararlı yazılım tespit etme alıştırmaları
   - Örnek Senaryo: Kullanıcıya şüpheli dosya ve uygulamalar gösterilerek, hangilerinin zararlı olabileceğini tespit etmesi istenir
-- [ ] Veri sızıntısı önleme senaryoları
+- [x] Veri sızıntısı önleme senaryoları
   - Örnek Senaryo: Kullanıcıya bir ofis ortamı simülasyonu sunularak, potansiyel veri sızıntısı risklerini tespit etmesi istenir
 
 ### 3.5 Kişisel Güvenlik Değerlendirme Araçları
