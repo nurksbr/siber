@@ -405,7 +405,7 @@ function Navbar() {
                   {currentUser?.role === 'ADMIN' && (
                     <button 
                       className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
-                      onClick={handleMobileNavigation('/panel')}
+                      onClick={handleMobileNavigation('/profil')}
                     >
                       Yönetim Paneli
                     </button>

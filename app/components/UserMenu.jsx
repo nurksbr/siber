@@ -226,7 +226,7 @@ export default function UserMenu() {
               <div className="py-1">
                 <button
                   className="group flex items-center w-full text-left px-4 py-2 text-sm text-gray-100 hover:bg-gray-700"
-                  onClick={() => handleNavigation('/panel')}
+                  onClick={() => handleNavigation('/profil')}
                   role="menuitem"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
