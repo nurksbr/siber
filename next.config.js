@@ -13,6 +13,8 @@ const nextConfig = {
         hostname: 'images.unsplash.com',
       },
     ],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   // Next.js 15+ sürümünde appDir artık varsayılan olarak etkinleştirilmiştir
 }

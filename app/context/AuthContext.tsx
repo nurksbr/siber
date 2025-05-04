@@ -121,15 +121,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const checkUserSession = async () => {
       try {
+        // Eğer kullanıcı zaten varsa tekrar kontrol etmeye gerek yok
+        if (user) {
+          setLoading(false);
+          return;
+        }
+
+        // LocalStorage'daki kullanıcı bilgisini kontrol et
+        const storedUser = getStoredUser();
+        if (storedUser) {
+          // Kullanıcı bilgisi localStorage'da varsa doğrudan kullan
+          setUser(storedUser);
+          setLoading(false);
+          return;
+        }
+
         const isAuthenticated = await checkAuth();
         
         // Callback URL'i kontrol et
         const callbackUrl = searchParams?.get('callbackUrl');
         
         // Kullanıcı giriş yapmış ve bir callback URL varsa, pathname'e bakmaksızın yönlendir
-        if (isAuthenticated && callbackUrl) {
+        if (isAuthenticated && callbackUrl && callbackUrl !== pathname) {
           console.log(`Callback URL'e yönlendiriliyor: ${callbackUrl}`);
-          window.location.href = decodeURIComponent(callbackUrl);
+          router.push(decodeURIComponent(callbackUrl));
         }
       } catch (error) {
         console.error('Oturum kontrolü hatası:', error);
@@ -139,36 +154,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     checkUserSession();
-  }, [searchParams, router]);
-
-  // Sayfa değişikliklerinde oturum durumunu kontrol et
-  useEffect(() => {
-    const verifySession = async () => {
-      try {
-        await checkAuth();
-      } catch (error) {
-        console.error('Sayfa değişiminde oturum kontrolü hatası:', error);
-      }
-    };
-
-    verifySession();
-  }, [pathname]);
+  }, [pathname, router, searchParams]);
 
   // Kullanıcı oturumunu kontrol et
   const checkAuth = async (): Promise<boolean> => {
     try {
-      // İstek başlamadan önce loading durumunu güncelle
-      setLoading(true);
-      console.log('checkAuth: Oturum kontrol ediliyor...');
-      
-      // LocalStorage'da oturum varsa ve token korumalı rotalarda sağlama yapmak için kontrol et
+      // LocalStorage'da oturum varsa kontrol et
       const storedUser = getStoredUser();
+      if (storedUser) {
+        // Sadece istemci tarafı doğrulama yaparak işlemi hızlandır
+        setUser(storedUser);
+        return true;
+      }
       
-      // Önce istemci tarafında cookie kontrolü yap
+      // İstemci tarafında cookie kontrolü yap
       const token = getCookie('auth_token');
       
       if (!token) {
-        console.log('checkAuth: Cookie bulunamadı: auth_token');
         setUser(null);
         storeUser(null);
         return false;
@@ -176,15 +178,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       // Token geçerliliğini istemci tarafında kontrol et
       if (!isTokenValid(token)) {
-        console.log('checkAuth: Token geçerli değil veya süresi dolmuş');
         setUser(null);
         storeUser(null);
         return false;
       }
       
-      console.log('checkAuth: İstemci tarafında token doğrulandı, sunucu kontrolüne geçiliyor');
-      
-      // İstemci tarafında token geçerli, sunucu doğrulamasına git
+      // Token geçerli, sunucu doğrulamasına git
       const response = await fetch('/api/auth/session', {
         method: 'GET',
         headers: {
@@ -197,19 +196,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (response.ok) {
         const data = await response.json();
         if (data.user) {
-          console.log('checkAuth: Sunucu tarafında kullanıcı doğrulandı:', data.user.email);
-          
           // Kullanıcı bilgisini güncelle
           setUser(data.user);
           storeUser(data.user);
           return true;
         }
-      } else {
-        console.log('checkAuth: Sunucu tarafında oturum doğrulanamadı');
       }
       
       // Sunucu tarafından doğrulama yapılamadıysa kullanıcı state'ini temizle
-      console.log('checkAuth: Kullanıcı oturumu temizleniyor');
       setUser(null);
       storeUser(null);
       return false;
@@ -218,9 +212,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(null);
       storeUser(null);
       return false;
-    } finally {
-      setLoading(false);
-      console.log('checkAuth: İşlem tamamlandı');
     }
   };
 

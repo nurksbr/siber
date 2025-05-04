@@ -8,8 +8,6 @@ import BlogCards from './components/BlogCards'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
 import MatrixRain from './components/MatrixRain'
-// Geçici olarak bileşenin path'ini ve ismini kontrol edelim
-import { UserProfileButtons } from './components/UserProfileButtons'
 
 export default function Home() {
   return (
@@ -19,12 +17,6 @@ export default function Home() {
         <Navbar />
         <main>
           <Hero />
-          
-          {/* Kullanıcı profil butonları - Daha görünür pozisyonda */}
-          <div className="mb-4">
-            <UserProfileButtons />
-          </div>
-          
           <Features />
           <BlogCards />
           <CTA />

@@ -40,16 +40,16 @@ function Hero() {
           </div>
           
           <div className="relative mt-12 md:mt-0">
-            <div className="aspect-w-5 aspect-h-4 relative rounded-lg overflow-hidden shadow-2xl border border-gray-800 bg-gray-800 border-glow">
-              <div className="absolute inset-0 bg-gradient-to-tr from-cyan-900/50 to-purple-900/50 mix-blend-multiply rounded-lg"></div>
-              <div className="w-full h-full flex items-center justify-center bg-gray-800">
-                <div className="text-cyan-400 text-glow text-xl font-mono">
+            <div className="aspect-w-5 aspect-h-4 relative rounded-lg overflow-hidden shadow-2xl border border-gray-800 bg-gray-800 border-glow" style={{ zIndex: 1 }}>
+              <div className="absolute inset-0 bg-gradient-to-tr from-cyan-900/50 to-purple-900/50 mix-blend-multiply rounded-lg" style={{ zIndex: 1 }}></div>
+              <div className="w-full h-full flex items-center justify-center bg-gray-800" style={{ zIndex: 1 }}>
+                <div className="text-cyan-400 text-glow text-xl font-mono" style={{ zIndex: 1 }}>
                   &lt;/&gt; CYBERLY
                 </div>
               </div>
             </div>
-            <div className="absolute -right-4 -bottom-4 w-36 h-36 bg-cyan-600 rounded-full blur-2xl opacity-40"></div>
-            <div className="absolute -right-1 -bottom-1 w-24 h-24 bg-purple-600 rounded-full blur-2xl opacity-40"></div>
+            <div className="absolute -right-4 -bottom-4 w-36 h-36 bg-cyan-600 rounded-full blur-2xl opacity-40 z-0"></div>
+            <div className="absolute -right-1 -bottom-1 w-24 h-24 bg-purple-600 rounded-full blur-2xl opacity-40 z-0"></div>
           </div>
         </div>
       </div>

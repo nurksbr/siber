@@ -12,20 +12,20 @@ import { FiMenu, FiX } from 'react-icons/fi'
 
 // Navigasyon linkleri
 const NAV_LINKS = [
-  { name: 'Ana Sayfa', path: '/', icon: <FaShieldAlt className="mr-2" /> },
-  { name: 'Hakkımızda', path: '/hakkimizda', icon: <FaInfoCircle className="mr-2" /> },
-  { name: 'Blog', path: '/blog', icon: <FaBook className="mr-2" /> },
-  { name: 'Siber Tehditler', path: '/siber-tehditler', icon: <FaShieldAlt className="mr-2" /> },
-  { name: 'İpuçları', path: '/ipuclari', icon: <FaQuestionCircle className="mr-2" /> },
-  { name: 'Kaynaklar', path: '/kaynaklar', icon: <FaBook className="mr-2" /> },
-  { name: 'SSS', path: '/sss', icon: <FaQuestionCircle className="mr-2" /> },
-  { name: 'Haberler', path: '/haberler', icon: <FaNewspaper className="mr-2" /> },
+  { name: 'Ana Sayfa', path: '/' },
+  { name: 'Hakkımızda', path: '/hakkimizda' },
+  { name: 'Blog', path: '/blog' },
+  { name: 'Siber Tehditler', path: '/siber-tehditler' },
+  { name: 'İpuçları', path: '/ipuclari' },
+  { name: 'Kaynaklar', path: '/kaynaklar' },
+  { name: 'SSS', path: '/sss' },
+  { name: 'Haberler', path: '/haberler' },
 ]
 
 // Kullanıcı giriş yaptıysa görünecek linkler
 const USER_LINKS = [
-  { name: 'Profil', path: '/profil', icon: <FaUserShield className="mr-2" /> },
-  { name: 'Eğitimlerim', path: '/egitimlerim', icon: <FaGraduationCap className="mr-2" /> },
+  { name: 'Profil', path: '/profil', icon: <FaUserShield className="inline-block mr-1" /> },
+  { name: 'Eğitimlerim', path: '/egitimlerim' },
 ]
 
 function Navbar() {
@@ -224,12 +224,13 @@ function Navbar() {
                   key={link.path}
                   href={link.path} 
                   prefetch={true}
-                  className={`px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
+                  className={`flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
                     isActive ? 'text-cyan-400 bg-gray-800/30' : 'text-white'
                   }`}
                 >
-                  {link.icon}
-                  {link.name}
+                  <span className="flex items-center">
+                    {link.name}
+                  </span>
                 </Link>
               )
             })}
@@ -238,7 +239,7 @@ function Navbar() {
             <a 
               href="#iletisim" 
               onClick={scrollToContact}
-              className="px-4 py-2 rounded-md text-sm font-medium bg-cyan-600/60 hover:bg-cyan-700 transition-colors border-glow"
+              className="px-4 py-2 rounded-md text-sm font-medium bg-cyan-600/60 hover:bg-cyan-700 transition-colors border-glow flex items-center"
             >
               İletişim
             </a>
@@ -254,12 +255,14 @@ function Navbar() {
                       key={link.path}
                       href={link.path} 
                       prefetch={true}
-                      className={`px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
+                      className={`flex items-center px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
                         isActive ? 'text-cyan-400 bg-gray-800/30' : 'text-white'
                       }`}
                     >
-                      {link.icon}
-                      {link.name}
+                      <span className="flex items-center">
+                        {link.icon ? link.icon : null}
+                        {link.name}
+                      </span>
                     </Link>
                   )
                 })}
@@ -337,13 +340,14 @@ function Navbar() {
                 key={link.path}
                 href={link.path} 
                 prefetch={true}
-                className={`block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
+                className={`flex items-center block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
                   isActive ? 'text-cyan-400 bg-gray-800/30' : 'text-white'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
-                {link.icon}
-                {link.name}
+                <span className="flex items-center">
+                  {link.name}
+                </span>
               </Link>
             )
           })}
@@ -351,7 +355,7 @@ function Navbar() {
           <a 
             href="#iletisim" 
             onClick={scrollToContact}
-            className="block px-3 py-2 rounded-md text-base font-medium bg-cyan-600/60 hover:bg-cyan-700 transition-colors border-glow"
+            className="block px-3 py-2 rounded-md text-base font-medium bg-cyan-600/60 hover:bg-cyan-700 transition-colors border-glow flex items-center"
           >
             İletişim
           </a>
@@ -367,13 +371,15 @@ function Navbar() {
                     key={link.path}
                     href={link.path} 
                     prefetch={true}
-                    className={`block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
+                    className={`flex items-center block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors ${
                       isActive ? 'text-cyan-400 bg-gray-800/30' : 'text-white'
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    {link.icon}
-                    {link.name}
+                    <span className="flex items-center">
+                      {link.icon ? link.icon : null}
+                      {link.name}
+                    </span>
                   </Link>
                 )
               })}
@@ -406,27 +412,27 @@ function Navbar() {
                     {currentUser?.name || currentUser?.email?.split('@')[0] || 'Kullanıcı'}
                   </div>
                   <button 
-                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                    className="flex items-center w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
                     onClick={handleMobileNavigation('/profil')}
                   >
                     Profil
                   </button>
                   <button 
-                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                    className="flex items-center w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
                     onClick={handleMobileNavigation('/ayarlar')}
                   >
                     Ayarlar
                   </button>
                   {currentUser?.role === 'ADMIN' && (
                     <button 
-                      className="block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
+                      className="flex items-center w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-gray-800/30 hover:text-cyan-400 transition-colors"
                       onClick={handleMobileNavigation('/profil')}
                     >
                       Yönetim Paneli
                     </button>
                   )}
                   <button
-                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-400 hover:bg-gray-800/30 transition-colors"
+                    className="flex items-center w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-400 hover:bg-gray-800/30 transition-colors"
                     onClick={handleLogout}
                   >
                     Çıkış Yap
