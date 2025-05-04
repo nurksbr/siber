@@ -71,8 +71,10 @@ export default function ProfilePage() {
       }
     };
     
-    // Sayfa yüklendiğinde çalıştır
-    checkUser();
+    // Kullanıcı kontrolü sadece useEffect içinde yapılmalı
+    if (!loading) {
+      checkUser();
+    }
   }, [user, loading, router, searchParams]);
 
   // Yükleniyor durumu
@@ -84,12 +86,18 @@ export default function ProfilePage() {
     );
   }
 
-  // Kullanıcı yoksa ve yükleme tamamlandıysa, giriş sayfasına yönlendir
-  // Bu kısım useEffect içinde de yapılıyor ancak ekstra güvenlik için burada da kontrol ediyoruz
+  // Kullanıcı yoksa ve yükleme tamamlandıysa, bir yükleniyor ekranı göster
+  // Router.push işlemini render sırasında çağırmak yerine boş bir içerik gösteriyoruz
+  // Yönlendirme useEffect içerisinde gerçekleşecek
   if (!userData && !loading) {
-    console.log('Profil: Kullanıcı doğrulanamadı, yönlendiriliyor...');
-    router.push('/giris?callbackUrl=/profil');
-    return null;
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gray-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500 mx-auto mb-4"></div>
+          <p className="text-xl text-gray-300">Yönlendiriliyor...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -124,8 +132,8 @@ export default function ProfilePage() {
                             className="rounded-full object-cover"
                           />
                         ) : (
-                          <div className="w-24 h-24 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-2xl text-blue-500">
-                            {userData?.name?.charAt(0) || userData?.email.charAt(0)}
+                          <div className="w-24 h-24 rounded-full bg-cyan-800 flex items-center justify-center text-3xl text-white">
+                            {userData?.name?.charAt(0) || (userData?.email ? userData.email.charAt(0).toUpperCase() : 'U')}
                           </div>
                         )}
                       </div>

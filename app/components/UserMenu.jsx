@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { AUTH_CHANGE_EVENT } from '../context/AuthContext';
 import { useClickOutside } from '../hooks/useClickOutside';
 import { FaUserCircle, FaSignOutAlt, FaUserCog, FaChartBar, FaLock, FaShieldAlt } from 'react-icons/fa';
+import { createPortal } from 'react-dom';
 
 export default function UserMenu() {
   const router = useRouter();
@@ -15,6 +16,31 @@ export default function UserMenu() {
   const [localUser, setLocalUser] = useState(null);
   // İstemci tarafında olduğumuzdan emin olmak için bir bayrak
   const [isMounted, setIsMounted] = useState(false);
+
+  // Dropdown portal için ek state
+  const [menuPortal, setMenuPortal] = useState(null);
+
+  // Portal için DOM elementini tanımla
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      // Eğer zaten bir portal elementi varsa, onu kullan
+      let portalContainer = document.getElementById('user-menu-portal');
+      if (!portalContainer) {
+        // Yoksa yeni bir tane oluştur
+        portalContainer = document.createElement('div');
+        portalContainer.id = 'user-menu-portal';
+        portalContainer.style.position = 'fixed';
+        portalContainer.style.top = '0';
+        portalContainer.style.left = '0';
+        portalContainer.style.width = '100%';
+        portalContainer.style.height = '100%';
+        portalContainer.style.pointerEvents = 'none';
+        portalContainer.style.zIndex = '99999';
+        document.body.appendChild(portalContainer);
+      }
+      setMenuPortal(portalContainer);
+    }
+  }, []);
 
   // Bileşen yüklendiğinde bunu işaretle
   useEffect(() => {
@@ -143,18 +169,26 @@ export default function UserMenu() {
         </div>
       </button>
 
-      {isOpen && (
+      {isOpen && menuPortal && createPortal(
         <>
           {/* Overlay to capture clicks outside menu */}
           <div 
-            className="fixed inset-0 z-10" 
+            className="fixed inset-0" 
             onClick={() => setIsOpen(false)}
+            style={{ zIndex: 99990, pointerEvents: 'auto' }}
             aria-hidden="true"
           />
         
           {/* Dropdown menu */}
           <div 
-            className="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            className="fixed rounded-md bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            style={{ 
+              zIndex: 99999,
+              pointerEvents: 'auto',
+              width: '14rem',
+              top: '60px', 
+              right: '20px'
+            }}
           >
             {/* Kullanıcı bilgileri */}
             <div className="px-4 py-3">
@@ -247,7 +281,8 @@ export default function UserMenu() {
               </button>
             </div>
           </div>
-        </>
+        </>,
+        menuPortal
       )}
     </div>
   );
