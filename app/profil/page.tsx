@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import Image from 'next/image';
 
 // Profile sections
@@ -14,257 +16,249 @@ import ProgressTracking from '../components/profile/ProgressTracking';
 
 type ProfileTab = 'info' | 'security' | 'notifications' | 'appearance' | 'progress';
 
-// Profil verisi için tip tanımı
-interface ProfileData {
+// Kullanıcı tipini tanımlayalım
+type User = {
   id: string;
-  name?: string;
+  name: string;
   email: string;
+  role: string;
   avatarUrl?: string;
-  theme?: string;
-  notificationSettings?: {
-    email: boolean;
-    push: boolean;
-    marketing: boolean;
-  };
-  securitySettings?: {
-    twoFactorEnabled: boolean;
-    lastPasswordChange?: string;
-  };
-  progressData?: {
-    completedCourses?: number;
-    certificates?: string[];
-    level?: number;
-  };
-  // Diğer özellikler için isteğe bağlı alanlar
-  biography?: string;
-  jobTitle?: string;
-  location?: string;
-  socialLinks?: {
-    twitter?: string;
-    linkedin?: string;
-    github?: string;
-  };
-  settings?: Record<string, boolean | string | number>;
-}
+};
 
 export default function ProfilePage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [userData, setUserData] = useState<User | null>(null);
   const [activeTab, setActiveTab] = useState<ProfileTab>('info');
-  const [isLoading, setIsLoading] = useState(true);
-  const [profileData, setProfileData] = useState<ProfileData | null>(null);
-  const [error, setError] = useState<string | null>(null);
   
-  // Tarayıcıda localStorage'dan direkt kullanıcı durumunu kontrol et
-  const checkLocalStorage = () => {
-    if (typeof window === 'undefined') return false;
-    
-    try {
-      const storedUser = localStorage.getItem('cyberly_user');
-      return !!storedUser; // Boolean olarak dönüş
-    } catch (error) {
-      console.error('Profil: LocalStorage kontrol hatası', error);
-      return false;
-    }
-  };
-
-  const fetchProfileData = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      
-      if (!user?.id) {
-        console.error('Kullanıcı ID bulunamadı');
-        return;
-      }
-      
-      console.log(`Profil verisi çekiliyor: /api/profile/${user.id}`);
-      
-      const response = await fetch(`/api/profile/${user.id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        cache: 'no-store',
-      });
-      
-      console.log('API yanıtı alındı:', response.status);
-      
-      if (response.ok) {
-        try {
-          const data = await response.json();
-          console.log('Profil verisi başarıyla alındı:', data);
-          setProfileData(data);
-        } catch (error) {
-          console.error('API yanıtı JSON formatında değil:', error);
-          setError('Profil verisi işlenirken bir hata oluştu');
-        }
-      } else {
-        try {
-          const errorText = await response.text();
-          console.error(`Profil API hatası (${response.status}):`, errorText);
-          
-          try {
-            const errorData = JSON.parse(errorText);
-            console.error('Profil bilgileri alınamadı:', errorData);
-            setError(errorData.error || `Profil verisi alınamadı (${response.status})`);
-          } catch (jsonError) {
-            console.error('Hata yanıtı JSON formatında değil:', errorText);
-            setError(`Profil verisi alınamadı. Durum kodu: ${response.status}`);
-          }
-        } catch (textError) {
-          console.error('Hata yanıtı alınamadı:', textError);
-          setError(`Profil verisi alınamadı. Durum kodu: ${response.status}`);
-        }
-      }
-    } catch (error) {
-      console.error('Profil bilgileri alınırken hata oluştu:', error);
-      setError('Profil bilgilerinize erişilirken bir sorun oluştu. Lütfen daha sonra tekrar deneyin.');
-      setProfileData(null); // Hata durumunda profil verisini temizle
-    } finally {
-      setIsLoading(false);
-    }
-  }, [user?.id]);
-
+  // Sayfa yüklendiğinde veya searchParams değiştiğinde çalışır
   useEffect(() => {
-    // Kullanıcı ve localStorage kontrolü
-    const hasLocalUser = checkLocalStorage();
+    // URL'den tab parametresini al
+    const tabParam = searchParams?.get('tab');
+    if (tabParam) {
+      setActiveTab(tabParam as ProfileTab);
+    }
     
-    // Redirect if not logged in
-    if (!loading && !user && !hasLocalUser) {
-      console.log('Kullanıcı giriş yapmamış, giriş sayfasına yönlendiriliyor');
-      // router.push yerine window.location.href kullanarak tam sayfa yenilenmesi sağla
-      window.location.href = '/giris?callbackUrl=' + encodeURIComponent('/profil');
-      return;
-    }
+    // LocalStorage'dan kullanıcı bilgilerini kontrol et
+    const checkLocalStorage = () => {
+      try {
+        const storedUser = localStorage.getItem('cyberly_user');
+        console.log('Profil: LocalStorage kontrolü', storedUser);
+        if (storedUser) {
+          setUserData(JSON.parse(storedUser));
+          return true;
+        }
+        return false;
+      } catch (error) {
+        console.error('LocalStorage hatası:', error);
+        return false;
+      }
+    };
+    
+    // Kullanıcı kontrolü ve yönlendirme
+    const checkUser = async () => {
+      // İlk önce localStorage'ı kontrol et (daha hızlı yanıt için)
+      const hasLocalUser = checkLocalStorage();
+      
+      // Eğer localStorage'da kullanıcı yoksa ve useAuth hook'undan gelen kullanıcı yoksa
+      if (!hasLocalUser && !user && !loading) {
+        console.log('Kullanıcı giriş yapmamış, yönlendiriliyor...');
+        router.push('/giris?callbackUrl=/profil');
+      } else if (user) {
+        // useAuth hook'undan kullanıcı gelirse state'i güncelle
+        setUserData(user as User);
+      }
+    };
+    
+    // Sayfa yüklendiğinde çalıştır
+    checkUser();
+  }, [user, loading, router, searchParams]);
 
-    // Fetch profile data
-    if (user) {
-      console.log('Kullanıcı giriş yapmış, profil verisi çekiliyor', user);
-      fetchProfileData();
-    } else if (hasLocalUser) {
-      console.log('LocalStorage\'da kullanıcı bilgisi var, profil verisi çekmeye çalışılıyor');
-      fetchProfileData();
-    }
-  }, [user, loading, router, fetchProfileData]);
-
-  if (loading || isLoading) {
+  // Yükleniyor durumu
+  if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="flex justify-center items-center min-h-screen bg-gray-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-500"></div>
       </div>
     );
   }
 
-  // Hata durumunda göster
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-lg mx-auto bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-          <div className="text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-red-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-            <h2 className="text-xl font-semibold mb-2">Profil Bilgileri Yüklenemedi</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">{error}</p>
-            <button 
-              onClick={() => fetchProfileData()}
-              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md font-medium transition-colors"
-            >
-              Tekrar Dene
-            </button>
-          </div>
-        </div>
-      </div>
-    );
+  // Kullanıcı yoksa ve yükleme tamamlandıysa, giriş sayfasına yönlendir
+  // Bu kısım useEffect içinde de yapılıyor ancak ekstra güvenlik için burada da kontrol ediyoruz
+  if (!userData && !loading) {
+    console.log('Profil: Kullanıcı doğrulanamadı, yönlendiriliyor...');
+    router.push('/giris?callbackUrl=/profil');
+    return null;
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Profil Yönetimi</h1>
+    <>
+      <Navbar />
       
-      <div className="flex flex-col md:flex-row gap-8">
-        {/* Sidebar */}
-        <div className="w-full md:w-1/4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-6">
-            <div className="flex flex-col items-center mb-6">
-              <div className="relative w-24 h-24 mb-4">
-                {profileData?.avatarUrl ? (
-                  <Image 
-                    src={profileData.avatarUrl} 
-                    alt="Profil fotoğrafı" 
-                    fill 
-                    className="rounded-full object-cover"
-                  />
-                ) : (
-                  <div className="w-24 h-24 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-2xl text-blue-500">
-                    {user?.name?.charAt(0) || user?.email.charAt(0)}
-                  </div>
+      <main className="min-h-screen bg-gray-900 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gray-800 shadow-xl rounded-lg overflow-hidden">
+            <div className="px-6 py-8">
+              <div className="flex items-center justify-between mb-8">
+                <h1 className="text-3xl font-bold text-white">Profil Sayfam</h1>
+                {userData && userData.role === 'ADMIN' && (
+                  <span className="bg-cyan-600 text-white text-xs px-3 py-1 rounded-full">Admin</span>
+                )}
+                {userData && userData.role === 'USER' && (
+                  <span className="bg-green-600 text-white text-xs px-3 py-1 rounded-full">Kullanıcı</span>
                 )}
               </div>
-              <h2 className="text-xl font-semibold">{user?.name || 'Kullanıcı'}</h2>
-              <p className="text-gray-500 dark:text-gray-400">{user?.email}</p>
+              
+              {/* Profil bilgileri */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="md:col-span-1">
+                  <div className="bg-gray-700 p-6 rounded-lg shadow-md">
+                    <div className="flex flex-col items-center">
+                      <div className="relative w-24 h-24 mb-4">
+                        {userData?.avatarUrl ? (
+                          <Image 
+                            src={userData.avatarUrl} 
+                            alt="Profil fotoğrafı" 
+                            fill 
+                            className="rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-24 h-24 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-2xl text-blue-500">
+                            {userData?.name?.charAt(0) || userData?.email.charAt(0)}
+                          </div>
+                        )}
+                      </div>
+                      <h2 className="text-xl font-semibold text-white mb-1">{userData?.name || 'Kullanıcı'}</h2>
+                      <p className="text-gray-400 text-sm mb-4">{userData?.email || 'kullanici@ornek.com'}</p>
+                      <div className="w-full bg-gray-600 h-1 mb-4"></div>
+                      <ul className="space-y-2 w-full">
+                        <li>
+                          <button 
+                            onClick={() => setActiveTab('info')}
+                            className={`w-full text-left px-4 py-2 rounded-md ${
+                              activeTab === 'info' ? 'bg-cyan-700 text-white' : 'text-gray-300 hover:bg-gray-600'
+                            }`}
+                          >
+                            Profil Bilgileri
+                          </button>
+                        </li>
+                        <li>
+                          <button 
+                            onClick={() => setActiveTab('security')}
+                            className={`w-full text-left px-4 py-2 rounded-md ${
+                              activeTab === 'security' ? 'bg-cyan-700 text-white' : 'text-gray-300 hover:bg-gray-600'
+                            }`}
+                          >
+                            Güvenlik Ayarları
+                          </button>
+                        </li>
+                        <li>
+                          <button 
+                            onClick={() => setActiveTab('notifications')}
+                            className={`w-full text-left px-4 py-2 rounded-md ${
+                              activeTab === 'notifications' ? 'bg-cyan-700 text-white' : 'text-gray-300 hover:bg-gray-600'
+                            }`}
+                          >
+                            Bildirim Tercihleri
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="md:col-span-2">
+                  {activeTab === 'info' && (
+                    <div className="bg-gray-700 p-6 rounded-lg shadow-md">
+                      <h3 className="text-xl font-semibold text-white mb-6">Profil Bilgileri</h3>
+                      
+                      <div className="space-y-6">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-400 mb-1">Ad Soyad</label>
+                          <div className="bg-gray-600 px-4 py-3 rounded-md text-white">{userData?.name || 'Belirtilmemiş'}</div>
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium text-gray-400 mb-1">E-posta Adresi</label>
+                          <div className="bg-gray-600 px-4 py-3 rounded-md text-white">{userData?.email || 'Belirtilmemiş'}</div>
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium text-gray-400 mb-1">Kullanıcı Rolü</label>
+                          <div className="bg-gray-600 px-4 py-3 rounded-md text-white">
+                            {userData?.role === 'ADMIN' ? 'Yönetici' : 'Standart Kullanıcı'}
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium text-gray-400 mb-1">Hesap Durumu</label>
+                          <div className="bg-green-600/30 border border-green-500 px-4 py-3 rounded-md text-green-300">Aktif</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {activeTab === 'security' && (
+                    <div className="bg-gray-700 p-6 rounded-lg shadow-md">
+                      <h3 className="text-xl font-semibold text-white mb-6">Güvenlik Ayarları</h3>
+                      
+                      <div className="space-y-6">
+                        <div>
+                          <h4 className="text-lg font-medium text-white mb-3">Şifre Değiştir</h4>
+                          <div className="space-y-3">
+                            <div>
+                              <label className="block text-sm font-medium text-gray-400 mb-1">Mevcut Şifre</label>
+                              <input 
+                                type="password" 
+                                className="w-full bg-gray-600 border border-gray-500 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-400 mb-1">Yeni Şifre</label>
+                              <input 
+                                type="password" 
+                                className="w-full bg-gray-600 border border-gray-500 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-gray-400 mb-1">Yeni Şifre (Tekrar)</label>
+                              <input 
+                                type="password" 
+                                className="w-full bg-gray-600 border border-gray-500 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                              />
+                            </div>
+                            <button className="px-4 py-2 bg-cyan-600 text-white rounded-md hover:bg-cyan-700 transition-colors">
+                              Şifreyi Güncelle
+                            </button>
+                          </div>
+                        </div>
+                        
+                        <div className="border-t border-gray-600 pt-6">
+                          <h4 className="text-lg font-medium text-white mb-3">Oturum Güvenliği</h4>
+                          <div className="bg-gray-600/50 p-4 rounded-md">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-white font-medium">Aktif Oturumlar</p>
+                                <p className="text-gray-400 text-sm">Tüm cihazlardaki oturumlarınızı yönetin</p>
+                              </div>
+                              <button className="px-4 py-2 bg-red-600/80 text-white rounded-md hover:bg-red-700 transition-colors">
+                                Tüm Oturumları Sonlandır
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-            
-            <nav>
-              <ul className="space-y-2">
-                <li>
-                  <button 
-                    onClick={() => setActiveTab('info')} 
-                    className={`w-full text-left px-4 py-2 rounded-md ${activeTab === 'info' ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
-                  >
-                    Kişisel Bilgiler
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => setActiveTab('security')} 
-                    className={`w-full text-left px-4 py-2 rounded-md ${activeTab === 'security' ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
-                  >
-                    Güvenlik Ayarları
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => setActiveTab('notifications')} 
-                    className={`w-full text-left px-4 py-2 rounded-md ${activeTab === 'notifications' ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
-                  >
-                    Bildirim Tercihleri
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => setActiveTab('appearance')} 
-                    className={`w-full text-left px-4 py-2 rounded-md ${activeTab === 'appearance' ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
-                  >
-                    Görünüm Ayarları
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => setActiveTab('progress')} 
-                    className={`w-full text-left px-4 py-2 rounded-md ${activeTab === 'progress' ? 'bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'}`}
-                  >
-                    İlerleme ve Başarılar
-                  </button>
-                </li>
-              </ul>
-            </nav>
           </div>
         </div>
-        
-        {/* Main content */}
-        <div className="w-full md:w-3/4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            {activeTab === 'info' && <ProfileInfo profileData={profileData} onUpdate={fetchProfileData} />}
-            {activeTab === 'security' && <SecuritySettings />}
-            {activeTab === 'notifications' && <NotificationSettings profileData={profileData} onUpdate={fetchProfileData} />}
-            {activeTab === 'appearance' && <AppearanceSettings profileData={profileData} onUpdate={fetchProfileData} />}
-            {activeTab === 'progress' && <ProgressTracking userId={user?.id} />}
-          </div>
-        </div>
-      </div>
-    </div>
+      </main>
+      
+      <Footer />
+    </>
   );
 }

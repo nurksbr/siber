@@ -115,20 +115,20 @@ model Tag {
 model CategoryOnPost {
   postId     String
   categoryId String
-
+  
   post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-
+  
   @@id([postId, categoryId])
 }
 
 model TagOnPost {
   postId String
   tagId  String
-
+  
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
   tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
-
+  
   @@id([postId, tagId])
 }
 

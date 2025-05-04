@@ -250,7 +250,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (data.user) {
         console.log('Kullanıcı bilgileri alındı, state güncelleniyor');
         setUser(data.user);
-        storeUser(data.user); // Kullanıcıyı localStorage'a kaydet
+        
+        // Kullanıcıyı localStorage'a kaydetme işlemini güçlendirelim
+        try {
+          // Önce localStorage'ı temizle
+          localStorage.removeItem(USER_STORAGE_KEY);
+          // Sonra yeni kullanıcı bilgilerini kaydet
+          localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(data.user));
+          console.log('Kullanıcı bilgileri localStorage\'a kaydedildi', data.user);
+          
+          // Kullanıcı state'ini güncelle
+          storeUser(data.user);
+        } catch (storageError) {
+          console.error('LocalStorage kayıt hatası:', storageError);
+        }
         
         // Navbar'ı ve diğer bileşenleri bilgilendir
         if (typeof window !== 'undefined') {
@@ -267,16 +280,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         
         if (callbackUrl) {
           console.log(`Callback URL'e yönlendiriliyor: ${callbackUrl}`);
-          // Biraz bekleyip yönlendir
-          setTimeout(() => {
-            window.location.href = decodeURIComponent(callbackUrl);
-          }, 300);
+          // Sayfayı tamamen yenile
+          window.location.href = decodeURIComponent(callbackUrl);
         } else {
-          // Ana sayfaya yönlendir - biraz bekleyip user state'ini güncelleyelim
+          // Ana sayfaya yönlendir - tamamen sayfa yenilemesi ile
           console.log('Kullanıcı giriş yaptı, ana sayfaya yönlendiriliyor');
-          setTimeout(() => {
-            window.location.href = '/';
-          }, 300);
+          window.location.href = '/';
         }
       } else {
         // Oturum durumunu kontrol et
