@@ -112,14 +112,15 @@ export default function LoginPage() {
           const callbackUrl = urlParams.get('callbackUrl');
           
           if (callbackUrl) {
-            console.log(`Callback URL'e yönlendiriliyor: ${callbackUrl}`);
-            window.location.href = decodeURIComponent(callbackUrl);
+            console.log(`Callback URL'e yönlendiriliyor: ${decodeURIComponent(callbackUrl)}`);
+            // window.location.href yerine router.push kullanılıyor
+            router.push(decodeURIComponent(callbackUrl));
           } else {
             // Ana sayfaya yönlendir
             console.log('Ana sayfaya yönlendiriliyor');
-            window.location.href = '/';
+            router.push('/');
           }
-        }, 800); // Biraz bekle ki AuthContext işlemi tamamlansın
+        }, 500); // Yönlendirme süresini azalttım
       }
     } catch (error: unknown) {
       console.error('Login hatası:', error)

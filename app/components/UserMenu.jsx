@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 import { AUTH_CHANGE_EVENT } from '../context/AuthContext';
 import { useClickOutside } from '../hooks/useClickOutside';
+import { FaUserCircle, FaSignOutAlt, FaUserCog, FaChartBar, FaLock, FaShieldAlt } from 'react-icons/fa';
 
 export default function UserMenu() {
   const router = useRouter();
@@ -131,21 +132,14 @@ export default function UserMenu() {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+        className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-500"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
         <span className="sr-only">Kullanıcı menüsünü aç</span>
-        <div className="flex items-center">
-          <div className="h-8 w-8 rounded-full bg-cyan-600 flex items-center justify-center text-white font-medium">
-            {getInitials()}
-          </div>
-          <span className="ml-2 mr-2 text-sm text-gray-200 hidden sm:block">
-            {currentUser.name || currentUser.email.split('@')[0]}
-          </span>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
+        <div className="flex items-center px-3 py-2 rounded-md text-white hover:bg-gray-800 transition">
+          <FaUserCircle className="w-6 h-6 text-gray-300 mr-2" />
+          <span className="max-w-[120px] truncate">{currentUser?.name}</span>
         </div>
       </button>
 
@@ -160,7 +154,7 @@ export default function UserMenu() {
         
           {/* Dropdown menu */}
           <div 
-            className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-800 ring-1 ring-black ring-opacity-5 z-20 divide-y divide-gray-700"
+            className="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           >
             {/* Kullanıcı bilgileri */}
             <div className="px-4 py-3">
@@ -180,9 +174,7 @@ export default function UserMenu() {
                 onClick={() => handleNavigation('/profil')}
                 role="menuitem"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
+                <FaUserCog className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" />
                 Profil
               </button>
               
@@ -191,9 +183,7 @@ export default function UserMenu() {
                 onClick={() => handleNavigation('/egitimlerim')}
                 role="menuitem"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
+                <FaChartBar className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" />
                 Eğitimlerim
               </button>
               
@@ -229,25 +219,31 @@ export default function UserMenu() {
                   onClick={() => handleNavigation('/profil')}
                   role="menuitem"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
+                  <FaShieldAlt className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" />
                   Yönetim Paneli
                 </button>
               </div>
             )}
             
+            {/* 2FA Ayarları */}
+            <button
+              className="group flex items-center w-full text-left px-4 py-2 text-sm text-gray-100 hover:bg-gray-700"
+              onClick={() => handleNavigation('/profil?tab=2fa')}
+              role="menuitem"
+            >
+              <FaLock className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" />
+              2FA Ayarları
+            </button>
+            
             {/* Çıkış */}
             <div className="py-1">
               <button
-                className="group flex items-center w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700"
+                className="group flex items-center w-full text-left px-4 py-2 text-sm text-gray-100 hover:bg-gray-700"
                 onClick={handleLogout}
                 role="menuitem"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-                Çıkış Yap
+                <FaSignOutAlt className="h-5 w-5 mr-3 text-gray-400 group-hover:text-cyan-400" />
+                Oturumu Kapat
               </button>
             </div>
           </div>

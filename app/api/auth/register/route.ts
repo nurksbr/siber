@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
         name,
         email,
         password: hashedPassword,
+        role: 'USER', // Varsayılan rol USER olarak ayarlandı
         backupCodes: JSON.stringify([]), // SQLite için String tipinde boş bir array
       },
     });

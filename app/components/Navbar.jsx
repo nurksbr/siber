@@ -7,23 +7,25 @@ import { usePathname } from 'next/navigation'
 import { useAuth } from '../context/AuthContext'
 import { AUTH_CHANGE_EVENT } from '../context/AuthContext'
 import UserMenu from './UserMenu'
+import { FaShieldAlt, FaBook, FaQuestionCircle, FaInfoCircle, FaNewspaper, FaUserShield, FaGraduationCap } from 'react-icons/fa'
+import { FiMenu, FiX } from 'react-icons/fi'
 
 // Navigasyon linkleri
 const NAV_LINKS = [
-  { name: 'Ana Sayfa', path: '/' },
-  { name: 'Hakkımızda', path: '/hakkimizda' },
-  { name: 'Blog', path: '/blog' },
-  { name: 'Siber Tehditler', path: '/siber-tehditler' },
-  { name: 'İpuçları', path: '/ipuclari' },
-  { name: 'Kaynaklar', path: '/kaynaklar' },
-  { name: 'SSS', path: '/sss' },
-  { name: 'Haberler', path: '/haberler' }
+  { name: 'Ana Sayfa', path: '/', icon: <FaShieldAlt className="mr-2" /> },
+  { name: 'Hakkımızda', path: '/hakkimizda', icon: <FaInfoCircle className="mr-2" /> },
+  { name: 'Blog', path: '/blog', icon: <FaBook className="mr-2" /> },
+  { name: 'Siber Tehditler', path: '/siber-tehditler', icon: <FaShieldAlt className="mr-2" /> },
+  { name: 'İpuçları', path: '/ipuclari', icon: <FaQuestionCircle className="mr-2" /> },
+  { name: 'Kaynaklar', path: '/kaynaklar', icon: <FaBook className="mr-2" /> },
+  { name: 'SSS', path: '/sss', icon: <FaQuestionCircle className="mr-2" /> },
+  { name: 'Haberler', path: '/haberler', icon: <FaNewspaper className="mr-2" /> },
 ]
 
 // Kullanıcı giriş yaptıysa görünecek linkler
 const USER_LINKS = [
-  { name: 'Profil', path: '/profil' },
-  { name: 'Eğitimlerim', path: '/egitimlerim' },
+  { name: 'Profil', path: '/profil', icon: <FaUserShield className="mr-2" /> },
+  { name: 'Eğitimlerim', path: '/egitimlerim', icon: <FaGraduationCap className="mr-2" /> },
 ]
 
 function Navbar() {
@@ -50,10 +52,16 @@ function Navbar() {
     if (typeof window !== 'undefined') {
       try {
         const storedUser = localStorage.getItem('cyberly_user');
+        console.log('Navbar: localStorage kontrolü', !!storedUser, storedUser ? JSON.parse(storedUser) : null);
+        
         if (storedUser) {
           const userData = JSON.parse(storedUser);
           setLocalUser(userData);
           setIsLoggedIn(true);
+          console.log('Navbar: Kullanıcı giriş yapmış, isLoggedIn=true');
+        } else {
+          setIsLoggedIn(false);
+          console.log('Navbar: Kullanıcı giriş yapmamış, isLoggedIn=false');
         }
       } catch (error) {
         console.error('Navbar: LocalStorage kontrolü sırasında hata:', error);
@@ -136,7 +144,9 @@ function Navbar() {
   // User değişikliklerini izle
   useEffect(() => {
     if (user) {
+      console.log('Navbar: useAuth hook kullanıcı değişikliği algılandı', user);
       setIsLoggedIn(true);
+      setLocalUser(user);
     }
   }, [user]);
 
@@ -218,6 +228,7 @@ function Navbar() {
                     isActive ? 'text-cyan-400 bg-gray-800/30' : 'text-white'
                   }`}
                 >
+                  {link.icon}
                   {link.name}
                 </Link>
               )
@@ -247,6 +258,7 @@ function Navbar() {
                         isActive ? 'text-cyan-400 bg-gray-800/30' : 'text-white'
                       }`}
                     >
+                      {link.icon}
                       {link.name}
                     </Link>
                   )
@@ -271,9 +283,10 @@ function Navbar() {
                 )}
                 
                 {/* Kullanıcı giriş yaptıysa kullanıcı menüsünü göster */}
-                {isLoggedIn && (
+                {isMounted && isLoggedIn && (
                   <div className="ml-4">
                     <UserMenu />
+                    {console.log('Navbar render: UserMenu gösteriliyor, isLoggedIn=', isLoggedIn, 'currentUser=', currentUser)}
                   </div>
                 )}
               </>
@@ -329,6 +342,7 @@ function Navbar() {
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
+                {link.icon}
                 {link.name}
               </Link>
             )
@@ -358,6 +372,7 @@ function Navbar() {
                     }`}
                     onClick={() => setIsMenuOpen(false)}
                   >
+                    {link.icon}
                     {link.name}
                   </Link>
                 )
