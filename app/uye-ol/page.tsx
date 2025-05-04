@@ -95,11 +95,20 @@ export default function RegisterPage() {
         }),
       })
       
-      const data = await response.json()
-      
+      // Önce yanıtın başarılı olup olmadığını kontrol et
       if (!response.ok) {
-        throw new Error(data.error || 'Kayıt işlemi başarısız oldu')
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const data = await response.json();
+          throw new Error(data.error || `HTTP hata: ${response.status}`);
+        } else {
+          // JSON olmayan bir hata yanıtı
+          const text = await response.text();
+          throw new Error(`HTTP hata: ${response.status}. Yanıt: ${text.substring(0, 100)}...`);
+        }
       }
+      
+      const data = await response.json();
       
       // Başarılı kayıt
       setIsSuccess(true)

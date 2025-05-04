@@ -50,6 +50,13 @@ export default function TrainingModulesPage() {
       duration: '35 dakika',
       level: 'Temel',
       link: '/egitimler/sosyal-medya-guvenligi'
+    },
+    {
+      title: 'Phishing Simülasyonu',
+      description: 'Oltalama saldırılarını tespit etme ve gerçek/sahte e-postaları ayırt etme alıştırmaları',
+      duration: '25 dakika',
+      level: 'Temel',
+      link: '/egitimler/phishing-simulasyonu'
     }
   ]
 
@@ -244,7 +251,7 @@ export default function TrainingModulesPage() {
                   <ModuleCard 
                     key={index} 
                     module={module} 
-                    isActive={index === 1} // Şifre modülü aktif
+                    isActive={index === 1 || index === 4} // Şifre modülü ve Phishing simülasyonu aktif
                   />
                 ))}
               </div>
