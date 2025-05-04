@@ -55,7 +55,7 @@ BURASI DEGİSTİ
   - Örnek Senaryo: Kullanıcının oluşturduğu şifrelerin güvenlik seviyesini ölçen ve iyileştirme önerileri sunan interaktif bir araç
 - [x] Zararlı yazılım tespit etme alıştırmaları
   - Örnek Senaryo: Kullanıcıya şüpheli dosya ve uygulamalar gösterilerek, hangilerinin zararlı olabileceğini tespit etmesi istenir
-- [ ] Veri sızıntısı önleme senaryoları
+- [x] Veri sızıntısı önleme senaryoları
   - Örnek Senaryo: Kullanıcıya bir ofis ortamı simülasyonu sunularak, potansiyel veri sızıntısı risklerini tespit etmesi istenir
 
 ### 3.5 Kişisel Güvenlik Değerlendirme Araçları
